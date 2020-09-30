@@ -6,7 +6,7 @@ output object
 */
 
 const jobList = (() => {
-    let projectArr = ["test", "health", "dailies", "weekly", "work", "school", "art"];
+    let projectArr = [];
     let taskArr = [];
     const addProject = newProject => projectArr.push(newProject);
     const addTask = newTask => taskArr.push(newTask);
@@ -25,8 +25,9 @@ const jobList = (() => {
         }
     }
     const getProjectArr = () => projectArr;
+    const getProjectNames = () => projectArr.map((obj) => obj.getName())
     const getTaskArr = () => taskArr;
-    return { addProject, addTask, removeProject, removeTask, getProjectArr, getTaskArr };
+    return { addProject, addTask, removeProject, removeTask, getProjectArr, getProjectNames, getTaskArr };
 })();
 
 export { jobList }

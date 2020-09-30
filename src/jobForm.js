@@ -1,5 +1,6 @@
 import * as job from "./job.js";
 import {jobList} from "./jobList.js";
+import * as dom from "./dom.js";
 /*
 write a dom form element to accept info for job instantiation
 interface (may break these two into individual modules)
@@ -34,38 +35,49 @@ interface (may break these two into individual modules)
             submitbtn
 */
 
-const makeForm = () => document.createElement("form");
-const makeLabel = () => document.createElement("label");
-const makeInput = () => document.createElement("input");
-const makeSelect = () => document.createElement("select");
-const makeOption = () => document.createElement("option");
-const makeTextArea = () => document.createElement("textarea")
+const formContainerDiv = dom.makeDiv();
+const formTabDiv = dom.makeDiv();
+const taskTab = dom.makeSpan();
+taskTab.id = "taskTab";
+taskTab.textContent = "Add Task";
+taskTab.addEventListener("click", () => {
+    dom.initContainer(formContainerDiv);
+    populateFormContainer("task");
+});
+const projectTab = dom.makeSpan();
+projectTab.id = "projectTab";
+projectTab.textContent = "Add Project";
+projectTab.addEventListener("click", () => {
+    dom.initContainer(formContainerDiv);
+    populateFormContainer("project");
+});
 
-const typeLabel = makeLabel();
+formTabDiv.appendChild(projectTab);
+formTabDiv.appendChild(taskTab);
+
+const typeLabel = dom.makeLabel();
 typeLabel.for = "typeField";
 typeLabel.textContent = "Project Type";
-const typeSelect = makeSelect();
+const typeSelect = dom.makeSelect();
 typeSelect.id = "typeField";
-const dailyOption = makeOption();
+const dailyOption = dom.makeOption();
 dailyOption.value = "daily";
 dailyOption.textContent = "Daily";
-const weeklyOption = makeOption();
+const weeklyOption = dom.makeOption();
 weeklyOption.value = "weekly";
 weeklyOption.textContent = "Weekly";
-const longTermOption = makeOption();
+const longTermOption = dom.makeOption();
 longTermOption.value = "longTerm";
 longTermOption.textContent = "Long Term";
 typeSelect.appendChild(dailyOption);
 typeSelect.appendChild(weeklyOption);
 typeSelect.appendChild(longTermOption);
 
-const categoryLabel = makeLabel();
+const categoryLabel = dom.makeLabel();
 categoryLabel.for = "categoryField";
 categoryLabel.textContent = "Belongs To:";
-const categorySelect = makeSelect();
+const categorySelect = dom.makeSelect();
 categorySelect.id = "categoryField";
-
-const categoryArr = ["test", "health", "dailies", "weekly", "work", "school", "art"];
 
 const genCatOptions = projects => {
     const optionsArr = []
@@ -78,7 +90,7 @@ const genCatOptions = projects => {
 const genCatElements = catArr => {
     const catElementArr = []
     for (let i=0;i<catArr.length;i++) {
-        const newOption = makeOption();
+        const newOption = dom.makeOption();
         newOption.value = catArr[i];
         newOption.textContent = catArr[i];
         catElementArr.push(newOption);
@@ -92,8 +104,8 @@ const populateCatOptions = catElementArr => {
     }
 }
 
-const renderCatOptions = (projects) => {
-    const optionsArr = genCatOptions(projects);
+const renderCatOptions = (projectArr) => {
+    const optionsArr = genCatOptions(projectArr);
     const catElementArr = genCatElements(optionsArr);
     populateCatOptions(catElementArr);
 }
@@ -103,51 +115,51 @@ write a fn to dynamically create option elements, each of which corresponds to o
 */
 
 
-const nameLabel = makeLabel();
+const nameLabel = dom.makeLabel();
 nameLabel.for = 'nameField';
 nameLabel.textContent = 'Name';
-const nameInput = makeInput();
+const nameInput = dom.makeInput();
 nameInput.id = "nameField";
 nameInput.type = "text";
 
-const dateLabel = makeLabel();
+const dateLabel = dom.makeLabel();
 dateLabel.for = "dateField";
 dateLabel.textContent = "Due Date";
-const dateInput = makeInput();
+const dateInput = dom.makeInput();
 dateInput.id = "dateField";
 dateInput.type = "date";
 
-const priorityLabel = makeLabel();
+const priorityLabel = dom.makeLabel();
 priorityLabel.for = "priorityField";
 priorityLabel.textContent = "Priority"
-const prioritySelect = makeSelect();
+const prioritySelect = dom.makeSelect();
 prioritySelect.id = "priorityField";
-const highOption = makeOption();
+const highOption = dom.makeOption();
 highOption.value = "high";
 highOption.textContent = "High";
-const mediumOption = makeOption();
+const mediumOption = dom.makeOption();
 mediumOption.value = "medium";
 mediumOption.textContent = "Medium";
-const lowOption = makeOption();
+const lowOption = dom.makeOption();
 lowOption.value = "low";
 lowOption.textContent = "Low";
 prioritySelect.appendChild(highOption);
 prioritySelect.appendChild(mediumOption);
 prioritySelect.appendChild(lowOption);
 
-const descLabel = makeLabel();
+const descLabel = dom.makeLabel();
 descLabel.for = "descField";
 descLabel.textContent = "Description";
-const descTextArea = makeTextArea();
+const descTextArea = dom.makeTextArea();
 descTextArea.id = "descField";
 
-const notesLabel = makeLabel();
+const notesLabel = dom.makeLabel();
 notesLabel.for = "notesField";
 notesLabel.textContent = "Notes";
-const notesTextArea = makeTextArea();
+const notesTextArea = dom.makeTextArea();
 notesTextArea.id = "notesField";
 
-const projectSubmitInput = makeInput();
+const projectSubmitInput = dom.makeInput();
 projectSubmitInput.id = "projectSubmitBtn";
 projectSubmitInput.type = "submit";
 projectSubmitInput.value = "Submit";
@@ -156,12 +168,14 @@ projectSubmitInput.addEventListener("click", e => {
     jobList.addProject(job.projectMixin(job.makeJob(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, nameInput.value)))
 })
 
-const taskSubmitInput = makeInput();
+const taskSubmitInput = dom.makeInput();
 taskSubmitInput.id = "projectSubmitBtn";
 taskSubmitInput.type = "submit";
 taskSubmitInput.value = "Sumbit";
 
-const populateForm = (tab) => {
+const populateFormContainer = (tab) => {
+    const formContainer = formContainerDiv;
+    formContainerDiv.appendChild(formTabDiv);
     let form;
     let formArr;
     const projectFormArr = [
@@ -194,8 +208,8 @@ const populateForm = (tab) => {
         notesTextArea,
         taskSubmitInput
     ];
-    const projectForm = makeForm();
-    const taskForm = makeForm();
+    const projectForm = dom.makeForm();
+    const taskForm = dom.makeForm();
     if (tab === "project") {
         form = projectForm;
         formArr = Array.from(projectFormArr);
@@ -206,7 +220,8 @@ const populateForm = (tab) => {
     for (let i = 0; i < formArr.length; i++) {
         form.appendChild(formArr[i]);
     };
-    return form;
+    formContainer.appendChild(form);
+    return formContainer;
 };
 
-export { renderCatOptions, populateForm }
+export { formContainerDiv, renderCatOptions, populateFormContainer }

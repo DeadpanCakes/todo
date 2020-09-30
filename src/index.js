@@ -1,22 +1,32 @@
 import * as job from "./job.js";
-import { renderCatOptions, populateForm } from "./jobForm.js";
+import { formContainerDiv, renderCatOptions, populateFormContainer } from "./jobForm.js";
 import {jobList} from "./jobList.js";
+import * as dom from "./dom.js"
 
 
 const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert", "task"),"daily");
 const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "war and peace", "task"),"daily");
 const dailies = job.projectMixin(job.makeJob("dailies","today","high","stuff to do every day","boring chores", "project"),"daily");
-console.log(populateForm("task"))
+const weeklies = job.projectMixin(job.makeJob("weeklies", "sunday", "medium", "things to do throughout the week", "less boring chores","project"), "weekly")
 
-const checkList = () => renderCatOptions(jobList.getProjectArr());
-document.getElementById("toggleTasks").addEventListener("click", checkList)
-//document.getElementById("contentContainer").appendChild(populateForm("task"))
-document.getElementById("taskTab").addEventListener("click", () => {
+jobList.addProject(dailies);
+jobList.addTask(cook);
+jobList.addTask(read);
+jobList.addProject(weeklies);
+renderCatOptions(jobList.getProjectNames())
+console.log(jobList.getProjectArr())
+
+const checkList = () => console.log(jobList.getProjectArr());
+document.getElementById("listTab").addEventListener("click", () => {
     console.log("This would display a list of project and task cards");
+    dom.initContainer(dom.getContentContainer());
 })
 document.getElementById("formTab").addEventListener("click", () => {
-    document.getElementById("contentContainer").appendChild(populateForm("project"));
+    dom.initContainer(dom.getContentContainer());
+    dom.getContentContainer().appendChild(populateFormContainer("project"));
 })
+
+
 /*
 Making a to-do list
 Parts:
