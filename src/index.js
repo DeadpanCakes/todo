@@ -13,7 +13,6 @@ jobList.addProject(dailies);
 jobList.addTask(cook);
 jobList.addTask(read);
 jobList.addProject(weeklies);
-renderCatOptions(jobList.getProjectNames())
 console.log(jobList.getProjectArr())
 
 const checkList = () => console.log(jobList.getProjectArr());

@@ -15,7 +15,7 @@ const getContentContainer = () => document.getElementById("contentContainer")
 const getToggleTasks = () => document.getElementById("toggleTasks")
 
 const initContainer = container => {
-    for (let i=0;i<container.childNodes.length;i++) {
+    for (let i=0;0<container.childElementCount;i++) {
         container.removeChild(container.lastElementChild);
     };
 };

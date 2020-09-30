@@ -42,6 +42,7 @@ taskTab.id = "taskTab";
 taskTab.textContent = "Add Task";
 taskTab.addEventListener("click", () => {
     dom.initContainer(formContainerDiv);
+    renderCatOptions(jobList.getProjectNames());
     populateFormContainer("task");
 });
 const projectTab = dom.makeSpan();
@@ -99,6 +100,7 @@ const genCatElements = catArr => {
 }
 
 const populateCatOptions = catElementArr => {
+    dom.initContainer(categorySelect)
     for (let i=0;i<catElementArr.length;i++){
         categorySelect.appendChild(catElementArr[i])
     }
