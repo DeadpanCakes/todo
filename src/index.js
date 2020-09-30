@@ -1,5 +1,6 @@
 import * as job from "./job.js";
 import { populateForm } from "./jobForm.js";
+import {jobList} from "./jobList.js";
 
 
 const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert", "task"),"daily");
@@ -7,6 +8,8 @@ const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "
 const dailies = job.projectMixin(job.makeJob("dailies","today","high","stuff to do every day","boring chores", "project"),"daily");
 console.log(populateForm("task"))
 
+const checkList = () => console.log(jobList.getProjectArr());
+document.getElementById("toggleTasks").addEventListener("click", checkList)
 document.getElementById("contentContainer").appendChild(populateForm("project"))
 /*
 Making a to-do list

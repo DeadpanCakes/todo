@@ -1,3 +1,5 @@
+import * as job from "./job.js";
+import {jobList} from "./jobList.js";
 /*
 write a dom form element to accept info for job instantiation
 interface (may break these two into individual modules)
@@ -44,6 +46,18 @@ typeLabel.for = "typeField";
 typeLabel.textContent = "Project Type";
 const typeSelect = makeSelect();
 typeSelect.id = "typeField";
+const dailyOption = makeOption();
+dailyOption.value = "daily";
+dailyOption.textContent = "Daily";
+const weeklyOption = makeOption();
+weeklyOption.value = "weekly";
+weeklyOption.textContent = "Weekly";
+const longTermOption = makeOption();
+longTermOption.value = "longTerm";
+longTermOption.textContent = "Long Term";
+typeSelect.appendChild(dailyOption);
+typeSelect.appendChild(weeklyOption);
+typeSelect.appendChild(longTermOption);
 
 const categoryLabel = makeLabel();
 categoryLabel.for = "categoryField";
@@ -99,6 +113,10 @@ const projectSubmitInput = makeInput();
 projectSubmitInput.id = "projectSubmitBtn";
 projectSubmitInput.type = "submit";
 projectSubmitInput.value = "Submit";
+projectSubmitInput.addEventListener("click", e => {
+    e.preventDefault();
+    jobList.addProject(job.projectMixin(job.makeJob(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, nameInput.value)))
+})
 
 const taskSubmitInput = makeInput();
 taskSubmitInput.id = "projectSubmitBtn";
@@ -140,14 +158,14 @@ const populateForm = (tab) => {
     ];
     const projectForm = makeForm();
     const taskForm = makeForm();
-    if (tab ===  "project") {
+    if (tab === "project") {
         form = projectForm;
         formArr = Array.from(projectFormArr);
     } else if (tab === "task") {
         formArr = Array.from(taskFormArr);
         form = taskForm;
     }
-    for (let i=0;i<formArr.length;i++) {
+    for (let i = 0; i < formArr.length; i++) {
         form.appendChild(formArr[i]);
     };
     return form;

@@ -11,7 +11,7 @@ write mixins to turn jobs into tasks and projects
     project mixin will introduce project type property (daily, weekly, long term)
 */
 
-const makeJob = (name,dueDate,priority,desc,notes,jobType) => {
+const makeJob = (name, dueDate, priority, desc, notes, jobType) => {
     const getName = () => name;
     const getDueDate = () => dueDate;
     const getPriority = () => priority;
@@ -20,7 +20,7 @@ const makeJob = (name,dueDate,priority,desc,notes,jobType) => {
     const getJobType = () => jobType;
     const changeName = (newName) => name = newName;
     const changeDueDate = (newDueDate) => dueDate = newDueDate;
-    const changePriority = (newPriority) =>  priority = newPriority;
+    const changePriority = (newPriority) => priority = newPriority;
     const changeDesc = (newDesc) => desc = newDesc;
     const changeNotes = (newNotes) => notes = newNotes;
     return {
@@ -38,12 +38,12 @@ const makeJob = (name,dueDate,priority,desc,notes,jobType) => {
     };
 }
 
-const taskMixin = (job,project) => {
-    return Object.assign(Object.create(job), { getProject() {return project} });
+const taskMixin = (job, project) => {
+    return Object.assign(Object.create(job), { getProject() { return project } });
 };
 
-const projectMixin = (job,projectType) => {
-    return Object.assign(Object.create(job), { getProjectType() {return projectType} });
+const projectMixin = (job, projectType) => {
+    return Object.assign(Object.create(job), { getProjectType() { return projectType } });
 };
 
 export {
