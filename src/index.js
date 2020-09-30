@@ -7,7 +7,7 @@ const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "
 const dailies = job.projectMixin(job.makeJob("dailies","today","high","stuff to do every day","boring chores", "project"),"daily");
 console.log(populateForm("task"))
 
-document.getElementById("projectList").appendChild(populateForm("task"))
+document.getElementById("contentContainer").appendChild(populateForm("project"))
 /*
 Making a to-do list
 Parts:

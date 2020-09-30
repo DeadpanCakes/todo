@@ -95,6 +95,16 @@ notesLabel.textContent = "Notes";
 const notesTextArea = makeTextArea();
 notesTextArea.id = "notesField";
 
+const projectSubmitInput = makeInput();
+projectSubmitInput.id = "projectSubmitBtn";
+projectSubmitInput.type = "submit";
+projectSubmitInput.value = "Submit";
+
+const taskSubmitInput = makeInput();
+taskSubmitInput.id = "projectSubmitBtn";
+taskSubmitInput.type = "submit";
+taskSubmitInput.value = "Sumbit";
+
 const populateForm = (tab) => {
     let form;
     let formArr;
@@ -110,7 +120,8 @@ const populateForm = (tab) => {
         descLabel,
         descTextArea,
         notesLabel,
-        notesTextArea
+        notesTextArea,
+        projectSubmitInput
     ];
     const taskFormArr = [
         categoryLabel,
@@ -124,7 +135,8 @@ const populateForm = (tab) => {
         descLabel,
         descTextArea,
         notesLabel,
-        notesTextArea
+        notesTextArea,
+        taskSubmitInput
     ];
     const projectForm = makeForm();
     const taskForm = makeForm();
@@ -142,4 +154,3 @@ const populateForm = (tab) => {
 };
 
 export { populateForm }
-
