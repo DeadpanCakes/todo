@@ -6,7 +6,7 @@ output object
 */
 
 const jobList = (() => {
-    let projectArr = [];
+    let projectArr = ["test", "health", "dailies", "weekly", "work", "school", "art"];
     let taskArr = [];
     const addProject = newProject => projectArr.push(newProject);
     const addTask = newTask => taskArr.push(newTask);

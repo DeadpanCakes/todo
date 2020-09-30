@@ -1,5 +1,5 @@
 import * as job from "./job.js";
-import { populateForm } from "./jobForm.js";
+import { renderCatOptions, populateForm } from "./jobForm.js";
 import {jobList} from "./jobList.js";
 
 
@@ -8,9 +8,15 @@ const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "
 const dailies = job.projectMixin(job.makeJob("dailies","today","high","stuff to do every day","boring chores", "project"),"daily");
 console.log(populateForm("task"))
 
-const checkList = () => console.log(jobList.getProjectArr());
+const checkList = () => renderCatOptions(jobList.getProjectArr());
 document.getElementById("toggleTasks").addEventListener("click", checkList)
-document.getElementById("contentContainer").appendChild(populateForm("project"))
+//document.getElementById("contentContainer").appendChild(populateForm("task"))
+document.getElementById("taskTab").addEventListener("click", () => {
+    console.log("This would display a list of project and task cards");
+})
+document.getElementById("formTab").addEventListener("click", () => {
+    document.getElementById("contentContainer").appendChild(populateForm("project"));
+})
 /*
 Making a to-do list
 Parts:

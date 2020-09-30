@@ -65,6 +65,44 @@ categoryLabel.textContent = "Belongs To:";
 const categorySelect = makeSelect();
 categorySelect.id = "categoryField";
 
+const categoryArr = ["test", "health", "dailies", "weekly", "work", "school", "art"];
+
+const genCatOptions = projects => {
+    const optionsArr = []
+    for (let i=0;i<projects.length;i++){
+        optionsArr.push(projects[i]);
+    }
+    return optionsArr;
+}
+
+const genCatElements = catArr => {
+    const catElementArr = []
+    for (let i=0;i<catArr.length;i++) {
+        const newOption = makeOption();
+        newOption.value = catArr[i];
+        newOption.textContent = catArr[i];
+        catElementArr.push(newOption);
+    }
+    return catElementArr;
+}
+
+const populateCatOptions = catElementArr => {
+    for (let i=0;i<catElementArr.length;i++){
+        categorySelect.appendChild(catElementArr[i])
+    }
+}
+
+const renderCatOptions = (projects) => {
+    const optionsArr = genCatOptions(projects);
+    const catElementArr = genCatElements(optionsArr);
+    populateCatOptions(catElementArr);
+}
+
+/*
+write a fn to dynamically create option elements, each of which corresponds to one listing in jobList.projectArr
+*/
+
+
 const nameLabel = makeLabel();
 nameLabel.for = 'nameField';
 nameLabel.textContent = 'Name';
@@ -171,4 +209,4 @@ const populateForm = (tab) => {
     return form;
 };
 
-export { populateForm }
+export { renderCatOptions, populateForm }
