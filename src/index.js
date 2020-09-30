@@ -1,10 +1,13 @@
-import * as job from "./job.js"
+import * as job from "./job.js";
+import { populateForm } from "./jobForm.js";
 
 
-const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert"),"daily");
-const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "war and peace"),"daily");
-const dailies = job.projectMixin(job.makeJob("dailies","today","high","stuff to do every day","boring chores"),"daily");
-console.log(cook.getName())
+const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert", "task"),"daily");
+const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "war and peace", "task"),"daily");
+const dailies = job.projectMixin(job.makeJob("dailies","today","high","stuff to do every day","boring chores", "project"),"daily");
+console.log(populateForm("task"))
+
+document.getElementById("projectList").appendChild(populateForm("task"))
 /*
 Making a to-do list
 Parts:
