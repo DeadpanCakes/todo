@@ -1,3 +1,10 @@
+import * as job from "./job.js"
+
+
+const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert"),"daily");
+const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "war and peace"),"daily");
+const dailies = job.projectMixin(job.makeJob("dailies","today","high","stuff to do every day","boring chores"),"daily");
+console.log(cook.getName())
 /*
 Making a to-do list
 Parts:
