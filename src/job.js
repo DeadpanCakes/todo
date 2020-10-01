@@ -1,5 +1,5 @@
 import { format } from "date-fns"; 
-
+import { zonedTimeToUtc } from "date-fns-tz";
 /*
 Write a fn to create a job
 input:
@@ -15,7 +15,7 @@ write mixins to turn jobs into tasks and projects
 
 const makeJob = (name, dueDate, priority, desc, notes, jobType) => {
     const getName = () => name;
-    const getDueDate = () => format(dueDate, "do PPP");
+    const getDueDate = () => format(zonedTimeToUtc(dueDate.toString()), 'PPP')
     const getPriority = () => priority;
     const getDesc = () => desc;
     const getNotes = () => notes;

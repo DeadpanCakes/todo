@@ -4,16 +4,17 @@ import {jobList} from "./jobList.js";
 import * as dom from "./dom.js";
 import * as card from "./card.js";
 import {format} from "date-fns"
+import { zonedTimeToUtc} from "date-fns-tz";
 
-const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert", "task"),"daily");
-const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "war and peace", "task"),"daily");
-const dailies = job.projectMixin(job.makeJob("dailies","today","high","stuff to do every day","boring chores", "project"),"daily");
-const weeklies = job.projectMixin(job.makeJob("weeklies", "sunday", "medium", "things to do throughout the week", "less boring chores","project"), "weekly")
+// const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert", "task"),"daily");
+// const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "war and peace", "task"),"daily");
+// const dailies = job.projectMixin(job.makeJob("dailies","today","high","stuff to do every day","boring chores", "project"),"daily");
+// const weeklies = job.projectMixin(job.makeJob("weeklies", "sunday", "medium", "things to do throughout the week", "less boring chores","project"), "weekly")
 
-jobList.addProject(dailies);
-jobList.addTask(cook);
-jobList.addTask(read);
-jobList.addProject(weeklies);
+// jobList.addProject(dailies);
+// jobList.addTask(cook);
+// jobList.addTask(read);
+// jobList.addProject(weeklies);
 console.log(jobList.getProjectArr())
 
 const checkList = () => console.log(jobList.getProjectArr());
@@ -26,7 +27,7 @@ document.getElementById("formTab").addEventListener("click", () => {
     dom.getContentContainer().appendChild(populateFormContainer("project"));
 })
 
-console.log(format(new Date,"do PPPP"))
+console.log(format(zonedTimeToUtc("2020-03-10"), 'PPP'))
 
 /*
 Making a to-do list
