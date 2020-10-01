@@ -1,8 +1,9 @@
 import * as job from "./job.js";
 import { formContainerDiv, renderCatOptions, populateFormContainer } from "./jobForm.js";
 import {jobList} from "./jobList.js";
-import * as dom from "./dom.js"
-
+import * as dom from "./dom.js";
+import * as card from "./card.js";
+import {format} from "date-fns"
 
 const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert", "task"),"daily");
 const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "war and peace", "task"),"daily");
@@ -17,14 +18,15 @@ console.log(jobList.getProjectArr())
 
 const checkList = () => console.log(jobList.getProjectArr());
 document.getElementById("listTab").addEventListener("click", () => {
-    console.log("This would display a list of project and task cards");
     dom.initContainer(dom.getContentContainer());
+    dom.getContentContainer().appendChild(card.renderList(jobList.getProjectArr()));
 })
 document.getElementById("formTab").addEventListener("click", () => {
     dom.initContainer(dom.getContentContainer());
     dom.getContentContainer().appendChild(populateFormContainer("project"));
 })
 
+console.log(format(new Date,"do PPPP"))
 
 /*
 Making a to-do list
