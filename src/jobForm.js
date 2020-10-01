@@ -168,7 +168,7 @@ projectSubmitInput.value = "Submit";
 projectSubmitInput.addEventListener("click", e => {
     e.preventDefault();
     jobList.addProject(job.projectMixin(job.makeJob(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, typeSelect.value)))
-    document.getElementById("projectForm").reset();
+    clearForm();
 })
 
 const taskSubmitInput = dom.makeInput();
@@ -178,8 +178,15 @@ taskSubmitInput.value = "Sumbit";
 taskSubmitInput.addEventListener("click", e => {
     e.preventDefault();
     jobList.addTask(job.taskMixin(job.makeJob(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, categorySelect.value)))
-    document.getElementById("taskForm").reset();
+    clearForm();
 })
+
+const clearForm = () => {
+    nameInput.value = "";
+    dateInput.value =  "";
+    descTextArea.value = "";
+    notesTextArea.value = "";
+}
 
 const populateFormContainer = (tab) => {
     const formContainer = formContainerDiv;
