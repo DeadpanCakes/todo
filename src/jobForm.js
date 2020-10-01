@@ -190,6 +190,7 @@ const clearForm = () => {
 
 const populateFormContainer = (tab) => {
     const formContainer = formContainerDiv;
+    dom.initContainer(formContainer);
     formContainerDiv.appendChild(formTabDiv);
     let form;
     let formArr;
