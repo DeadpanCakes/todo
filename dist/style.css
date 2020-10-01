@@ -47,7 +47,31 @@ table {
 	border-spacing: 0;
 }
 
+.taskList {
+	display: flex;
+	flex-direction: column;
+}
+
 .card {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+	width: 1000px;
+	padding: 30px;
+}
+
+.expandBtn {
+	height: 20px;
+	width: 20px;
+}
+
+.expandDiv {
+	display: none;
+}
+
+#bottomTabContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.bottomTabs {
+	padding: 10px;
 }

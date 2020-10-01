@@ -1,23 +1,21 @@
 import * as job from "./job.js";
 import { formContainerDiv, renderCatOptions, populateFormContainer } from "./jobForm.js";
-import {jobList} from "./jobList.js";
+import { jobList } from "./jobList.js";
 import * as dom from "./dom.js";
 import * as card from "./card.js";
-import {format} from "date-fns"
-import { zonedTimeToUtc} from "date-fns-tz";
 
 // const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert", "task"),"daily");
 // const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "war and peace", "task"),"daily");
-// const dailies = job.projectMixin(job.makeJob("dailies","today","high","stuff to do every day","boring chores", "project"),"daily");
-// const weeklies = job.projectMixin(job.makeJob("weeklies", "sunday", "medium", "things to do throughout the week", "less boring chores","project"), "weekly")
+const dailies = job.projectMixin(job.makeJob("Dailies", 2021-1-1, "high", "Stuff to do every day", "Boring chores", "project"), "daily");
+const weeklies = job.projectMixin(job.makeJob("Weeklies", 2021-1-1, "medium", "Things to do throughout the week", "Less boring chores", "project"), "weekly")
 
-// jobList.addProject(dailies);
+jobList.addProject(dailies);
 // jobList.addTask(cook);
 // jobList.addTask(read);
-// jobList.addProject(weeklies);
-console.log(jobList.getProjectArr())
+jobList.addProject(weeklies);
 
-const checkList = () => console.log(jobList.getProjectArr());
+dom.getContentContainer().appendChild(card.renderList(jobList.getProjectArr()))
+
 document.getElementById("listTab").addEventListener("click", () => {
     dom.initContainer(dom.getContentContainer());
     dom.getContentContainer().appendChild(card.renderList(jobList.getProjectArr()));
@@ -26,8 +24,6 @@ document.getElementById("formTab").addEventListener("click", () => {
     dom.initContainer(dom.getContentContainer());
     dom.getContentContainer().appendChild(populateFormContainer("project"));
 })
-
-console.log(format(zonedTimeToUtc("2020-03-10"), 'PPP'))
 
 /*
 Making a to-do list
