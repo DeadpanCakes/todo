@@ -26,6 +26,15 @@ const renderCard = obj => {
     cardContainer.classList.add("card");
     const checkRegion = dom.makeDiv();
     checkRegion.classList.add("checkRegion");
+    checkRegion.addEventListener("click", e => {
+        if (e.target.classList.contains("checkedRegion")) {
+            e.target.classList.remove("checkedRegion")
+            setTimeout(() => e.target.textContent = "", 550);
+        } else {
+            e.target.textContent = "X";
+            e.target.classList.add("checkedRegion");
+        }
+    });
     const cardName = dom.makeH1();
     cardName.textContent = obj.getName();
     cardName.classList.add("cardName");
@@ -34,10 +43,10 @@ const renderCard = obj => {
     cardDate.textContent = obj.getDueDate();
     const expandBtn = dom.makeBtn();
     expandBtn.addEventListener("click",() => {
-        if (expandDiv.style.display === "none") {
-            expandDiv.style.display = "flex";
-        } else {
+        if (expandDiv.style.display === "flex") {
             expandDiv.style.display = "none";
+        } else {
+            expandDiv.style.display = "flex";
         }
     })
     expandBtn.classList.add("expandBtn");
@@ -51,9 +60,11 @@ const renderCard = obj => {
     const cardNotes = dom.makeP();
     cardNotes.textContent = obj.getNotes();
     cardNotes.classList.add("cardNotes");
+    cardContainer.appendChild(checkRegion);
     cardContainer.appendChild(cardName);
     cardContainer.appendChild(cardDate);
     cardContainer.appendChild(expandBtn);
+    cardContainer.appendChild(delBtn);
     expandDiv.appendChild(cardDesc);
     expandDiv.appendChild(cardNotes);
     cardContainer.appendChild(expandDiv);

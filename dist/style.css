@@ -47,6 +47,14 @@ table {
 	border-spacing: 0;
 }
 
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+}
+
 .taskList {
 	display: flex;
 	flex-direction: column;
@@ -58,7 +66,28 @@ table {
 	padding: 30px;
 }
 
+.checkRegion {
+	border: 1px solid gray;
+	border-radius: 5px;
+	height: 20px;
+	width: 20px;
+	text-align: center;
+	vertical-align: middle;
+	color: white;
+	transition: color 500ms;
+	cursor: pointer;
+}
+
+.checkedRegion {
+	color: black;
+}
+
 .expandBtn {
+	height: 20px;
+	width: 20px;
+}
+
+.delBtn {
 	height: 20px;
 	width: 20px;
 }
@@ -68,6 +97,9 @@ table {
 }
 
 #bottomTabContainer {
+	position: fixed;
+	width: 100%;
+	bottom: 5%;
 	display: flex;
 	justify-content: center;
 }
