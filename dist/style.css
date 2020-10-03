@@ -55,15 +55,44 @@ body {
 	height: 100%;
 }
 
+h1 {
+	font-size: 2.5em;
+}
+
+h2 {
+	font-size: 2em;
+}
+
+h3 {
+	font-size: 1.5em;
+}
+
 .taskList {
 	display: flex;
 	flex-direction: column;
 }
 
 .card {
-    display: grid;
+	display: flex;
+	flex-direction: column;
 	width: 1000px;
-	padding: 30px;
+	padding: 20px;
+	margin-left: 10px;
+	margin-bottom: 20px;
+	margin-top: 10px;
+	background-color: #aaa;
+	border-radius: 10px;
+	transition: height 2s;
+}
+
+.expandedCard {
+	height: 150%;
+}
+
+.minCardContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 .checkRegion {
@@ -78,22 +107,34 @@ body {
 	cursor: pointer;
 }
 
+.cardName {
+	margin-right: auto;
+}
+
 .checkedRegion {
 	color: black;
 }
 
-.expandBtn {
-	height: 20px;
-	width: 20px;
+.cardName {
+	padding: 20px;
 }
 
-.delBtn {
-	height: 20px;
-	width: 20px;
+.cardDate {
+	justify-self: end;
 }
 
 .expandDiv {
 	display: none;
+	width: 500px;
+}
+
+.cardNotes {
+	overflow: auto;
+	white-space: pre-wrap;
+	height: 60px;
+	width: 400px;
+	background-color: rgb(199, 199, 199);
+	border-radius: 5px;
 }
 
 #bottomTabContainer {
@@ -102,6 +143,7 @@ body {
 	bottom: 5%;
 	display: flex;
 	justify-content: center;
+	background-color: white;
 }
 
 .bottomTabs {

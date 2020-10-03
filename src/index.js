@@ -6,8 +6,8 @@ import * as card from "./card.js";
 
 // const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert", "task"),"daily");
 // const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "war and peace", "task"),"daily");
-const dailies = job.projectMixin(job.makeJob("Dailies", 2021-1-1, "high", "Stuff to do every day", "Boring chores", "project"), "daily");
-const weeklies = job.projectMixin(job.makeJob("Weeklies", 2021-1-1, "medium", "Things to do throughout the week", "Less boring chores", "project"), "weekly")
+const dailies = job.projectMixin(job.makeJob("Dailies", 2021, "high", "Stuff to do every day", "Boring chores", "project"), "daily");
+const weeklies = job.projectMixin(job.makeJob("Weeklies", 2021, "medium", "Things to do throughout the week", "Less boring chores", "project"), "weekly")
 
 jobList.addProject(dailies);
 // jobList.addTask(cook);

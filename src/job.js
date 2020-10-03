@@ -15,7 +15,7 @@ write mixins to turn jobs into tasks and projects
 
 const makeJob = (name, dueDate, priority, desc, notes, jobType) => {
     const getName = () => name;
-    const getDueDate = () => format(zonedTimeToUtc(dueDate.toString()), 'PPP')
+    const getDueDate = () => format(new Date(zonedTimeToUtc(dueDate.toString())), "PPP");
     const getPriority = () => priority;
     const getDesc = () => desc;
     const getNotes = () => notes;

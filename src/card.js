@@ -24,6 +24,8 @@ interface:
 const renderCard = obj => {
     const cardContainer = dom.makeDiv();
     cardContainer.classList.add("card");
+    const minCardContainer = dom.makeDiv();
+    minCardContainer.classList.add("minCardContainer");
     const checkRegion = dom.makeDiv();
     checkRegion.classList.add("checkRegion");
     checkRegion.addEventListener("click", e => {
@@ -43,30 +45,33 @@ const renderCard = obj => {
     cardDate.textContent = obj.getDueDate();
     const expandBtn = dom.makeBtn();
     expandBtn.addEventListener("click",() => {
-        if (expandDiv.style.display === "flex") {
+        if (expandDiv.style.display === "block") {
             expandDiv.style.display = "none";
         } else {
-            expandDiv.style.display = "flex";
+            expandDiv.style.display = "block";
         }
     })
     expandBtn.classList.add("expandBtn");
+    expandBtn.textContent = "V";
     const delBtn = dom.makeBtn();
     delBtn.classList.add("delBtn");
+    delBtn.textContent = "X"
     const expandDiv = dom.makeDiv();
     expandDiv.classList.add("expandDiv");
-    const cardDesc = dom.makeP();
+    const cardDesc = dom.makeH3();
     cardDesc.textContent = obj.getDesc();
     cardDesc.classList.add("cardDesc");
     const cardNotes = dom.makeP();
     cardNotes.textContent = obj.getNotes();
     cardNotes.classList.add("cardNotes");
-    cardContainer.appendChild(checkRegion);
-    cardContainer.appendChild(cardName);
-    cardContainer.appendChild(cardDate);
-    cardContainer.appendChild(expandBtn);
-    cardContainer.appendChild(delBtn);
+    minCardContainer.appendChild(checkRegion);
+    minCardContainer.appendChild(cardName);
+    minCardContainer.appendChild(cardDate);
+    minCardContainer.appendChild(expandBtn);
+    minCardContainer.appendChild(delBtn);
     expandDiv.appendChild(cardDesc);
     expandDiv.appendChild(cardNotes);
+    cardContainer.appendChild(minCardContainer);
     cardContainer.appendChild(expandDiv);
     return cardContainer;
 };

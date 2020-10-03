@@ -7,6 +7,7 @@ const makeSpan = () => document.createElement("span");
 const makeUl = () => document.createElement("ul");
 const makeH1 = () => document.createElement("h1");
 const makeH2 = () => document.createElement("h2")
+const makeH3 = () => document.createElement("h3");
 const makeP = () => document.createElement("p");
 const makeBtn = () => document.createElement("button");
 const makeForm = () => document.createElement("form");
@@ -31,6 +32,7 @@ export {
     makeUl,
     makeH1,
     makeH2,
+    makeH3,
     makeP,
     makeBtn,
     makeForm,
