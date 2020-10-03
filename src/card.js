@@ -45,10 +45,12 @@ const renderCard = obj => {
     cardDate.textContent = obj.getDueDate();
     const expandBtn = dom.makeBtn();
     expandBtn.addEventListener("click",() => {
-        if (expandDiv.style.display === "block") {
-            expandDiv.style.display = "none";
+        if (cardContainer.classList.contains("expandedCard")) {
+            expandDiv.classList.remove("expandedDiv");
+            setTimeout(() => cardContainer.classList.remove("expandedCard"), 200)
         } else {
-            expandDiv.style.display = "block";
+            setTimeout(() => expandDiv.classList.add("expandedDiv"), 200)
+            cardContainer.classList.add("expandedCard");
         }
     })
     expandBtn.classList.add("expandBtn");

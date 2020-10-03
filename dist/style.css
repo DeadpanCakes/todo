@@ -75,18 +75,20 @@ h3 {
 .card {
 	display: flex;
 	flex-direction: column;
+	height: 100px;
 	width: 1000px;
 	padding: 20px;
+	padding-bottom: 5px;
 	margin-left: 10px;
 	margin-bottom: 20px;
 	margin-top: 10px;
 	background-color: #aaa;
 	border-radius: 10px;
-	transition: height 2s;
+	transition: height 400ms;
 }
 
 .expandedCard {
-	height: 150%;
+	height: 200px;
 }
 
 .minCardContainer {
@@ -103,7 +105,7 @@ h3 {
 	text-align: center;
 	vertical-align: middle;
 	color: white;
-	transition: color 500ms;
+	transition: color 500ms ease-in-out;
 	cursor: pointer;
 }
 
@@ -124,8 +126,18 @@ h3 {
 }
 
 .expandDiv {
-	display: none;
+	display: block;
+	opacity: 0;
 	width: 500px;
+	transition: opacity 200ms linear;
+}
+
+.expandedDiv {
+	opacity: 100;
+}
+
+.cardDesc {
+	width: 300px;
 }
 
 .cardNotes {
@@ -135,6 +147,7 @@ h3 {
 	width: 400px;
 	background-color: rgb(199, 199, 199);
 	border-radius: 5px;
+	margin-top: 5px;
 }
 
 #bottomTabContainer {
