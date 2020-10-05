@@ -5,11 +5,9 @@ input? none for the object, objects for the arrays
 output object
 */
 
-const jobList = (() => {
+const projectList = (() => {
     let projectArr = [];
-    let taskArr = [];
     const addProject = newProject => projectArr.push(newProject);
-    const addTask = newTask => taskArr.push(newTask);
     const removeProject = project => {
         if (projectArr.indexOf(project) > -1) {
             let newArr;
@@ -17,17 +15,9 @@ const jobList = (() => {
             projectArr = newArr;
         }
     }
-    const removeTask = task => {
-        if (taskArr.indexOf(task) > -1) {
-            let newArr;
-            newArr = (taskArr.slice(0, taskArr.indexOf(task))).concat(taskArr.slice(taskArr.indexOf(task) + 1))
-            taskArr = newArr;
-        }
-    }
     const getProjectArr = () => projectArr;
-    const getProjectNames = () => projectArr.map((obj) => obj.getName())
-    const getTaskArr = () => taskArr;
-    return { addProject, addTask, removeProject, removeTask, getProjectArr, getProjectNames, getTaskArr };
+    const getProjectNames = () => projectArr.map((obj) => obj.getName());
+    return { addProject, removeProject, getProjectArr, getProjectNames };
 })();
 
-export { jobList }
+export { projectList };

@@ -1,24 +1,33 @@
 import * as job from "./job.js";
 import { formContainerDiv, renderCatOptions, populateFormContainer } from "./jobForm.js";
-import { jobList } from "./jobList.js";
+import { projectList } from "./projectList.js";
 import * as dom from "./dom.js";
 import * as card from "./card.js";
 
-// const cook = job.taskMixin(job.makeJob("cook","today","high","cook yummy food","pizza and ice cream for dessert", "task"),"daily");
-// const read = job.taskMixin(job.makeJob("read","tomorrow","low","read a book!", "war and peace", "task"),"daily");
-const dailies = job.projectMixin(job.makeJob("Dailies", 2021, "high", "Stuff to do every day", "Boring chores", "project"), "daily");
-const weeklies = job.projectMixin(job.makeJob("Weeklies", 2021, "medium", "Things to do throughout the week", "Less boring chores", "project"), "weekly")
+const cook = job.makeTask("cook",2021,"high","cook yummy food","pizza and ice cream for dessert", "task","Dailies");
+const read = job.makeTask("read",2021,"low","read a book!", "war and peace", "task","Dailies");
+const gym = job.makeTask("gym", 2021, "medium", "go to the gym", "actually probably don't there's a pandemic", "task", "Weeklies")
+const dailies = job.makeProject("Dailies", 2021, "high", "Stuff to do every day", "Boring chores", "project", "daily");
+const weeklies = job.makeProject("Weeklies", 2021, "medium", "Things to do throughout the week", "Less boring chores", "project", "weekly")
 
-jobList.addProject(dailies);
-// jobList.addTask(cook);
-// jobList.addTask(read);
-jobList.addProject(weeklies);
+projectList.addProject(dailies);
+projectList.addProject(weeklies);
+dailies.addTask(cook);
+dailies.addTask(read);
+weeklies.addTask(gym);
 
-dom.getContentContainer().appendChild(card.renderList(jobList.getProjectArr()))
+
+dom.getToggleTasks().addEventListener("click", () => {
+    console.log(dailies.getTaskArr()[0].getName());
+    dailies.removeTask(dailies.getTaskArr()[dailies.getTaskNames().indexOf("cook")])
+    console.log(dailies.getTaskArr()[0].getName());
+})
+
+dom.getContentContainer().appendChild(card.renderList(projectList.getProjectArr()))
 
 document.getElementById("listTab").addEventListener("click", () => {
     dom.initContainer(dom.getContentContainer());
-    dom.getContentContainer().appendChild(card.renderList(jobList.getProjectArr()));
+    dom.getContentContainer().appendChild(card.renderList(projectList.getProjectArr()));
 })
 document.getElementById("formTab").addEventListener("click", () => {
     dom.initContainer(dom.getContentContainer());

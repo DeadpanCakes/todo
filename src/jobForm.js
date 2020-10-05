@@ -1,5 +1,5 @@
 import * as job from "./job.js";
-import {jobList} from "./jobList.js";
+import {projectList} from "./projectList.js";
 import * as dom from "./dom.js";
 /*
 write a dom form element to accept info for job instantiation
@@ -42,7 +42,7 @@ taskTab.id = "taskTab";
 taskTab.textContent = "Add Task";
 taskTab.addEventListener("click", () => {
     dom.initContainer(formContainerDiv);
-    renderCatOptions(jobList.getProjectNames());
+    renderCatOptions(projectList.getProjectNames());
     populateFormContainer("task");
 });
 const projectTab = dom.makeSpan();
@@ -113,7 +113,7 @@ const renderCatOptions = (projectArr) => {
 }
 
 /*
-write a fn to dynamically create option elements, each of which corresponds to one listing in jobList.projectArr
+write a fn to dynamically create option elements, each of which corresponds to one listing in projectList.projectArr
 */
 
 
@@ -167,7 +167,7 @@ projectSubmitInput.type = "submit";
 projectSubmitInput.value = "Submit";
 projectSubmitInput.addEventListener("click", e => {
     e.preventDefault();
-    jobList.addProject(job.projectMixin(job.makeJob(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, typeSelect.value)))
+    projectList.addProject(job.makeProject(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, typeSelect.value));
     clearForm();
 })
 
@@ -177,7 +177,17 @@ taskSubmitInput.type = "submit";
 taskSubmitInput.value = "Sumbit";
 taskSubmitInput.addEventListener("click", e => {
     e.preventDefault();
-    jobList.addTask(job.taskMixin(job.makeJob(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, categorySelect.value)))
+    /*
+    Write fns to accept categorySelect.value to find appropriate project object and call its addTask method, using the new object as an argument;
+    input = catSelect
+    output = corresponding project
+    write fn that finds index of selected category
+    const findIndex = (projectArr, categoryName) => projectArr.indexOf(categoryName);
+    write fn to accept an index and a task obj, and call the indexed project obj's addTask method, passing in the new obj
+    const addNewTask = (projectIndex, task) => projectList.getProjectArr()[projectIndex].addTask(task);
+    */
+    categorySelect.value;
+    (job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value));
     clearForm();
 })
 
