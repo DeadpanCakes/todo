@@ -1,5 +1,5 @@
 import * as job from "./job.js";
-import { formContainerDiv, renderCatOptions, populateFormContainer } from "./jobForm.js";
+import { populateFormContainer } from "./jobForm.js";
 import { projectList } from "./projectList.js";
 import * as dom from "./dom.js";
 import * as card from "./card.js";
@@ -18,21 +18,27 @@ weeklies.addTask(gym);
 
 
 dom.getToggleTasks().addEventListener("click", () => {
-    console.log(dailies.getTaskArr()[0].getName());
-    dailies.removeTask(dailies.getTaskArr()[dailies.getTaskNames().indexOf("cook")])
-    console.log(dailies.getTaskArr()[0].getName());
+    console.log(projectList.getProjectArr()[1].getTaskArr()[0].getName());
 })
 
-dom.getContentContainer().appendChild(card.renderList(projectList.getProjectArr()))
+dom.getContentContainer().appendChild(card.renderProjectList(projectList.getProjectArr()))
 
-document.getElementById("listTab").addEventListener("click", () => {
+console.log(card.projectCard("cook", "2020", "high", "yummy", "food!", projectList.getProjectArr()[0].getTaskArr()).renderTasks);
+
+
+//dom.getProjectElements()[0].appendChild(card.renderList(projectList.getProjectArr()[0].getTaskArr()));
+
+const goToList = () => {
     dom.initContainer(dom.getContentContainer());
     dom.getContentContainer().appendChild(card.renderList(projectList.getProjectArr()));
-})
-document.getElementById("formTab").addEventListener("click", () => {
+}
+document.getElementById("listTab").addEventListener("click", goToList);
+
+const goToForm = () => {
     dom.initContainer(dom.getContentContainer());
     dom.getContentContainer().appendChild(populateFormContainer("project"));
-})
+};
+document.getElementById("formTab").addEventListener("click", goToForm);
 
 /*
 Making a to-do list

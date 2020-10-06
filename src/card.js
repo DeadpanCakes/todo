@@ -1,90 +1,102 @@
 import * as dom from "./dom.js";
 
-/*
-write fn to create and display a card based on the info contained in the project objects
-interface:
-    Project List
-        Project Card (Color based on priority)
-            Completion Checkbox
-            Name
-            Due Date
-            Button to Expand for more info
-                Description
-                Notes
-                Task Card (Color based on priority)
-                    Name
-                    Due Date
-                    Btn to Expand for more info
-                        Description
-                        Notes
-                    Delete Btn (With Confirmation)
-            Delete Btn (With Confirmation)
-*/
+const card = (name, dueDate, description, notes) => {
+    const card = dom.makeDiv();
+    card.classList.add("card");
 
-const renderCard = obj => {
-    const cardContainer = dom.makeDiv();
-    cardContainer.classList.add("card");
     const minCardContainer = dom.makeDiv();
     minCardContainer.classList.add("minCardContainer");
+
     const checkRegion = dom.makeDiv();
     checkRegion.classList.add("checkRegion");
-    checkRegion.addEventListener("click", e => {
-        if (e.target.classList.contains("checkedRegion")) {
-            e.target.classList.remove("checkedRegion")
-            setTimeout(() => e.target.textContent = "", 550);
+
+    const animateCheck = (event) => {
+        if (event.target.classList.contains("checkedRegion")) {
+            event.target.classList.remove("checkedRegion");
+            setTimeout(() => event.target.textContent = "", 550);
         } else {
-            e.target.textContent = "X";
-            e.target.classList.add("checkedRegion");
-        }
-    });
+            event.target.textContent = "X";
+            event.target.classList.add("checkedRegion");
+        };
+    };
+    checkRegion.addEventListener("click", e => animateCheck(e));
+
     const cardName = dom.makeH1();
-    cardName.textContent = obj.getName();
+    cardName.textContent = name;
     cardName.classList.add("cardName");
+
     const cardDate = dom.makeH2();
     cardDate.classList.add("cardDate");
-    cardDate.textContent = obj.getDueDate();
+    cardDate.textContent = dueDate;
+
     const expandBtn = dom.makeBtn();
-    expandBtn.addEventListener("click",() => {
-        if (cardContainer.classList.contains("expandedCard")) {
+    expandBtn.addEventListener("click", () => {
+        if (card.classList.contains("expandedCard")) {
             expandDiv.classList.remove("expandedDiv");
-            setTimeout(() => cardContainer.classList.remove("expandedCard"), 200)
+            setTimeout(() => card.classList.remove("expandedCard"), 200)
         } else {
             setTimeout(() => expandDiv.classList.add("expandedDiv"), 200)
-            cardContainer.classList.add("expandedCard");
+            card.classList.add("expandedCard");
         }
     })
     expandBtn.classList.add("expandBtn");
     expandBtn.textContent = "V";
+
     const delBtn = dom.makeBtn();
     delBtn.classList.add("delBtn");
-    delBtn.textContent = "X"
+    delBtn.textContent = "X";
+
     const expandDiv = dom.makeDiv();
     expandDiv.classList.add("expandDiv");
+
     const cardDesc = dom.makeH3();
-    cardDesc.textContent = obj.getDesc();
+    cardDesc.textContent = description;
     cardDesc.classList.add("cardDesc");
+
     const cardNotes = dom.makeP();
-    cardNotes.textContent = obj.getNotes();
+    cardNotes.textContent = notes;
     cardNotes.classList.add("cardNotes");
-    minCardContainer.appendChild(checkRegion);
-    minCardContainer.appendChild(cardName);
-    minCardContainer.appendChild(cardDate);
-    minCardContainer.appendChild(expandBtn);
-    minCardContainer.appendChild(delBtn);
-    expandDiv.appendChild(cardDesc);
-    expandDiv.appendChild(cardNotes);
-    cardContainer.appendChild(minCardContainer);
-    cardContainer.appendChild(expandDiv);
-    return cardContainer;
+    
+    const renderCard = () => {
+        minCardContainer.appendChild(checkRegion);
+        minCardContainer.appendChild(cardName);
+        minCardContainer.appendChild(cardDate);
+        minCardContainer.appendChild(expandBtn);
+        minCardContainer.appendChild(delBtn);
+        expandDiv.appendChild(cardDesc);
+        expandDiv.appendChild(cardNotes);
+        card.appendChild(minCardContainer);
+        card.appendChild(expandDiv);
+        return card;
+    }
+
+    return {renderCard};
 };
 
-const renderList = objArr =>  {
+
+const projectCard = (name, dueDate, desc, notes, taskArr) => {
+    return Object.assign(Object.create(card (name, dueDate, desc, notes)), {renderTasks() {return renderList(taskArr)}});
+};
+
+const renderList = objArr => {
     const taskList = dom.makeUl();
-    taskList.classList.add("taskList")
-    for (let i=0;i<objArr.length;i++) {
-        taskList.appendChild(renderCard(objArr[i]))
-    };
+    taskList.classList.add("taskList");
+    objArr.forEach((obj) => taskList.appendChild(card(obj.getName(), obj.getDueDate(), obj.getDesc(), obj.getNotes()).renderCard()));
     return taskList;
 };
 
-export {renderList};
+const renderProjectList = (projectArr) => {
+    const projectList = dom.makeUl();
+    projectList.classList.add("projectList");
+    projectArr.forEach((project) => {
+        const cardContainer = dom.makeDiv();
+        cardContainer.classList.add("cardContainer");
+        const newCard = projectCard(project.getName(), project.getDueDate(), project.getDesc(), project.getNotes(), project.getTaskArr());
+        cardContainer.appendChild(newCard.renderCard());
+        cardContainer.appendChild(newCard.renderTasks());
+        projectList.appendChild(cardContainer);
+    });
+    return projectList;
+};
+
+export { renderList, renderProjectList, projectCard, card };

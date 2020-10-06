@@ -1,39 +1,6 @@
 import * as job from "./job.js";
 import {projectList} from "./projectList.js";
 import * as dom from "./dom.js";
-/*
-write a dom form element to accept info for job instantiation
-interface (may break these two into individual modules)
-    form
-        Project Tab
-            Project type label
-            preject type field (dropdown?)
-            Name label
-            name field
-            date label
-            date field
-            priority label
-            priority field (color dropdown?)
-            description label
-            desc field
-            notes label
-            notes field
-            submitbtn
-        Task Tab
-            Project category label
-            preject category field (dropdown?)
-            Name label
-            name field
-            date label
-            date field
-            priority label
-            priority field (color dropdown?)
-            description label
-            desc field
-            notes label
-            notes field
-            submitbtn
-*/
 
 const formContainerDiv = dom.makeDiv();
 const formTabDiv = dom.makeDiv();
@@ -112,11 +79,6 @@ const renderCatOptions = (projectArr) => {
     populateCatOptions(catElementArr);
 }
 
-/*
-write a fn to dynamically create option elements, each of which corresponds to one listing in projectList.projectArr
-*/
-
-
 const nameLabel = dom.makeLabel();
 nameLabel.for = 'nameField';
 nameLabel.textContent = 'Name';
@@ -177,17 +139,10 @@ taskSubmitInput.type = "submit";
 taskSubmitInput.value = "Sumbit";
 taskSubmitInput.addEventListener("click", e => {
     e.preventDefault();
-    /*
-    Write fns to accept categorySelect.value to find appropriate project object and call its addTask method, using the new object as an argument;
-    input = catSelect
-    output = corresponding project
-    write fn that finds index of selected category
-    const findIndex = (projectArr, categoryName) => projectArr.indexOf(categoryName);
-    write fn to accept an index and a task obj, and call the indexed project obj's addTask method, passing in the new obj
+    const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value);
+    const findIndex = (projectArr,categoryName) => projectArr.indexOf(categoryName);
     const addNewTask = (projectIndex, task) => projectList.getProjectArr()[projectIndex].addTask(task);
-    */
-    categorySelect.value;
-    (job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value));
+    addNewTask(findIndex(projectList.getProjectNames(),categorySelect.value), newTask);
     clearForm();
 })
 
@@ -252,4 +207,4 @@ const populateFormContainer = (tab) => {
     return formContainer;
 };
 
-export { formContainerDiv, renderCatOptions, populateFormContainer }
+export { populateFormContainer }

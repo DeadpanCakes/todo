@@ -1,10 +1,3 @@
-/*
-write an object that privately stores all of the tasks along with inbuilt methods to add, remove
-interface? IIFE
-input? none for the object, objects for the arrays
-output object
-*/
-
 const projectList = (() => {
     let projectArr = [];
     const addProject = newProject => projectArr.push(newProject);
