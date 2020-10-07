@@ -3,9 +3,10 @@ import { populateFormContainer } from "./jobForm.js";
 import { projectList } from "./projectList.js";
 import * as dom from "./dom.js";
 import * as card from "./card.js";
+import { emitter } from "./emitter.js";
 
-const cook = job.makeTask("cook",2021,"high","cook yummy food","pizza and ice cream for dessert", "task","Dailies");
-const read = job.makeTask("read",2021,"low","read a book!", "war and peace", "task","Dailies");
+const cook = job.makeTask("cook", 2021, "high", "cook yummy food", "pizza and ice cream for dessert", "task", "Dailies");
+const read = job.makeTask("read", 2021, "low", "read a book!", "war and peace", "task", "Dailies");
 const gym = job.makeTask("gym", 2021, "medium", "go to the gym", "actually probably don't there's a pandemic", "task", "Weeklies")
 const dailies = job.makeProject("Dailies", 2021, "high", "Stuff to do every day", "Boring chores", "project", "daily");
 const weeklies = job.makeProject("Weeklies", 2021, "medium", "Things to do throughout the week", "Less boring chores", "project", "weekly")
@@ -17,20 +18,15 @@ dailies.addTask(read);
 weeklies.addTask(gym);
 
 
-dom.getToggleTasks().addEventListener("click", () => {
-    console.log(projectList.getProjectArr()[1].getTaskArr()[0].getName());
-})
+emitter.on("allTasksBtnPressed", dom.toggleAllTasks);
+dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPressed"));
 
 dom.getContentContainer().appendChild(card.renderProjectList(projectList.getProjectArr()))
 
-console.log(card.projectCard("cook", "2020", "high", "yummy", "food!", projectList.getProjectArr()[0].getTaskArr()).renderTasks);
-
-
-//dom.getProjectElements()[0].appendChild(card.renderList(projectList.getProjectArr()[0].getTaskArr()));
-
 const goToList = () => {
     dom.initContainer(dom.getContentContainer());
-    dom.getContentContainer().appendChild(card.renderList(projectList.getProjectArr()));
+    dom.getContentContainer().appendChild(card.renderProjectList(projectList.getProjectArr()));
+    dom.assignTaskClass();
 }
 document.getElementById("listTab").addEventListener("click", goToList);
 
@@ -39,6 +35,7 @@ const goToForm = () => {
     dom.getContentContainer().appendChild(populateFormContainer("project"));
 };
 document.getElementById("formTab").addEventListener("click", goToForm);
+dom.assignTaskClass();
 
 /*
 Making a to-do list

@@ -19,9 +19,41 @@ const getToggleTasks = () => document.getElementById("toggleTasks")
 const getProjectElements = () => document.querySelectorAll(".cardContainer");
 
 const initContainer = container => {
-    for (let i=0;0<container.childElementCount;i++) {
+    for (let i = 0; 0 < container.childElementCount; i++) {
         container.removeChild(container.lastElementChild);
     };
+};
+
+const assignTaskClass = () => {
+    const cards = document.querySelectorAll(".card");
+    cards.forEach((card) => {
+        if (!card.classList.contains("projects") && (!card.classList.contains("tasks"))) {
+            card.classList.add("tasks");
+        };
+    });
+};
+
+const toggleCssClass = (element, cssClass) => {
+    element.classList.toggle(cssClass);
+};
+
+const toggleTaskList = (taskListNodes) => {
+    taskListNodes.forEach(task => toggleCssClass(task,"shownTasks"));
+}
+
+const toggleExpandDiv = (container, element) => {
+    if (container.classList.contains("expandedCard")) {
+        element.classList.remove("expandedDiv");
+        container.classList.remove("expandedCard");
+    } else {
+        setTimeout(() => element.classList.add("expandedDiv"), 200);
+        container.classList.add("expandedCard");
+    }
+}
+
+const toggleAllTasks = () => {
+    const tasks = document.querySelectorAll(".tasks")
+    tasks.forEach((task) => toggleCssClass(task, "shownTasks"));
 };
 
 export {
@@ -42,5 +74,9 @@ export {
     getContentContainer,
     getToggleTasks,
     getProjectElements,
-    initContainer
+    initContainer,
+    assignTaskClass,
+    toggleTaskList,
+    toggleExpandDiv,
+    toggleAllTasks
 }

@@ -47,8 +47,12 @@ const projectMixin = (job, projectType) => {
     });
 };
 
-const makeTask = (name, dueDate, priority, desc, notes, project) => taskMixin(Object.create(makeJob(name, dueDate, priority, desc, notes)), project);
-const makeProject = (name, dueDate, priority, desc, notes, type) => projectMixin(Object.create(makeJob(name, dueDate, priority, desc, notes, type)), type);
+const makeTask = (name, dueDate, priority, desc, notes, project) => {
+    return taskMixin(Object.create(makeJob(name, dueDate, priority, desc, notes)), project)
+};
+const makeProject = (name, dueDate, priority, desc, notes, type) => {
+    return projectMixin(Object.create(makeJob(name, dueDate, priority, desc, notes, type)), type)
+};
 
 export {
     makeTask,

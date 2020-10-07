@@ -1,4 +1,5 @@
 import * as dom from "./dom.js";
+import { emitter } from "./emitter.js";
 
 const card = (name, dueDate, description, notes) => {
     const card = dom.makeDiv();
@@ -30,17 +31,11 @@ const card = (name, dueDate, description, notes) => {
     cardDate.textContent = dueDate;
 
     const expandBtn = dom.makeBtn();
-    expandBtn.addEventListener("click", () => {
-        if (card.classList.contains("expandedCard")) {
-            expandDiv.classList.remove("expandedDiv");
-            setTimeout(() => card.classList.remove("expandedCard"), 200)
-        } else {
-            setTimeout(() => expandDiv.classList.add("expandedDiv"), 200)
-            card.classList.add("expandedCard");
-        }
-    })
     expandBtn.classList.add("expandBtn");
     expandBtn.textContent = "V";
+    expandBtn.addEventListener("click", () => {
+        emitter.emit("expandBtnPressed", card, expandDiv);
+    })
 
     const delBtn = dom.makeBtn();
     delBtn.classList.add("delBtn");
@@ -56,7 +51,7 @@ const card = (name, dueDate, description, notes) => {
     const cardNotes = dom.makeP();
     cardNotes.textContent = notes;
     cardNotes.classList.add("cardNotes");
-    
+
     const renderCard = () => {
         minCardContainer.appendChild(checkRegion);
         minCardContainer.appendChild(cardName);
@@ -70,12 +65,11 @@ const card = (name, dueDate, description, notes) => {
         return card;
     }
 
-    return {renderCard};
+    return { renderCard, expandBtn };
 };
 
-
-const projectCard = (name, dueDate, desc, notes, taskArr) => {
-    return Object.assign(Object.create(card (name, dueDate, desc, notes)), {renderTasks() {return renderList(taskArr)}});
+const projectCardObj = (name, dueDate, desc, notes, taskArr) => {
+    return Object.assign(Object.create(card(name, dueDate, desc, notes)), { renderTasks() { return renderList(taskArr) } });
 };
 
 const renderList = objArr => {
@@ -90,13 +84,20 @@ const renderProjectList = (projectArr) => {
     projectList.classList.add("projectList");
     projectArr.forEach((project) => {
         const cardContainer = dom.makeDiv();
-        cardContainer.classList.add("cardContainer");
-        const newCard = projectCard(project.getName(), project.getDueDate(), project.getDesc(), project.getNotes(), project.getTaskArr());
-        cardContainer.appendChild(newCard.renderCard());
-        cardContainer.appendChild(newCard.renderTasks());
+        cardContainer.classList.add("cardContainers");
+        const newCardObj = projectCardObj(project.getName(), project.getDueDate(), project.getDesc(), project.getNotes(), project.getTaskArr());
+        const projectCard = newCardObj.renderCard();
+        projectCard.classList.add("projects");
+        const taskCards = newCardObj.renderTasks();
+        newCardObj.expandBtn.addEventListener("click", () => emitter.emit("projectExpandBtnPressed", taskCards.childNodes))
+        cardContainer.appendChild(projectCard);
+        cardContainer.appendChild(taskCards);
         projectList.appendChild(cardContainer);
     });
+
+    emitter.on("expandBtnPressed", dom.toggleExpandDiv);
+    emitter.on("projectExpandBtnPressed", dom.toggleTaskList)
     return projectList;
 };
 
-export { renderList, renderProjectList, projectCard, card };
+export { renderList, renderProjectList, };
