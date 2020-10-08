@@ -8,9 +8,12 @@ const projectList = (() => {
             projectArr = newArr;
         }
     }
-    const getProjectArr = () => projectArr;
-    const getProjectNames = () => projectArr.map((obj) => obj.getName());
-    return { addProject, removeProject, getProjectArr, getProjectNames };
+    return {
+        addProject,
+        removeProject,
+        get projectArr() { return projectArr },
+        get projectNames() { return projectArr.map((obj) => obj.getName())}
+    };
 })();
 
 export { projectList };
