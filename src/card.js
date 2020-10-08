@@ -3,6 +3,7 @@ import { emitter } from "./emitter.js";
 
 const card = (name, dueDate, description, notes) => {
     const card = dom.makeDiv();
+    card.id = name;
     card.classList.add("card");
 
     const minCardContainer = dom.makeDiv();
@@ -87,7 +88,7 @@ const projectListRenderer = (projectArr) => {
         const projectUl = dom.makeUl();
         projectUl.classList.add("projectList");
         projectArr.forEach((project) => {
-            const projectContainer = dom.makeDiv();
+            const projectContainer = dom.makeLi();
             projectContainer.classList.add("projectContainers");
 
             const taskList = dom.makeUl();

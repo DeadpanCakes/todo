@@ -5,9 +5,9 @@ import * as dom from "./dom.js";
 import * as card from "./card.js";
 import { emitter } from "./emitter.js";
 
-const cook = job.makeTask("cook", 2021, "high", "cook yummy food", "pizza and ice cream for dessert", "task", "Dailies");
-const read = job.makeTask("read", 2021, "low", "read a book!", "war and peace", "task", "Dailies");
-const gym = job.makeTask("gym", 2021, "medium", "go to the gym", "actually probably don't there's a pandemic", "task", "Weeklies")
+const cook = job.makeTask("Cook", 2021, "high", "Cook yummy food", "Pizza and ice cream for dessert", "task", "Dailies");
+const read = job.makeTask("Read", 2021, "low", "Read a book!", "War and Peace", "task", "Dailies");
+const gym = job.makeTask("Gym", 2021, "medium", "Go to the gym!", "Actually probably don't there's a pandemic!", "task", "Weeklies")
 const dailies = job.makeProject("Dailies", 2021, "high", "Stuff to do every day", "Boring chores", "project", "daily");
 const weeklies = job.makeProject("Weeklies", 2021, "medium", "Things to do throughout the week", "Less boring chores", "project", "weekly")
 
@@ -21,11 +21,11 @@ weeklies.addTask(gym);
 emitter.on("allTasksBtnPressed", dom.toggleAllTasks);
 dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPressed"));
 
-dom.getContentContainer().appendChild(card.projectListRenderer(projectList.getProjectArr()).renderProjectList());
+dom.getContentContainer().appendChild(card.projectListRenderer(projectList.projectArr).renderProjectList());
 
 const goToList = () => {
     dom.initContainer(dom.getContentContainer());
-    dom.getContentContainer().appendChild(card.projectListRenderer(projectList.getProjectArr()).renderProjectList());
+    dom.getContentContainer().appendChild(card.projectListRenderer(projectList.projectArr).renderProjectList());
     dom.assignTaskClass();
 }
 document.getElementById("listTab").addEventListener("click", goToList);
@@ -36,6 +36,9 @@ const goToForm = () => {
 };
 document.getElementById("formTab").addEventListener("click", goToForm);
 dom.assignTaskClass();
+
+
+console.log(projectList.projectArr)
 
 /*
 Making a to-do list

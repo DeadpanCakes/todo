@@ -4,6 +4,7 @@ import { emitter } from "./emitter.js";
 const makeDiv = () => document.createElement("div");
 const makeSpan = () => document.createElement("span");
 const makeUl = () => document.createElement("ul");
+const makeLi = () => document.createElement("li");
 const makeH1 = () => document.createElement("h1");
 const makeH2 = () => document.createElement("h2")
 const makeH3 = () => document.createElement("h3");
@@ -127,6 +128,7 @@ export {
     makeDiv,
     makeSpan,
     makeUl,
+    makeLi,
     makeH1,
     makeH2,
     makeH3,
