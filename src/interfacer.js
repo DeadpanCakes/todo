@@ -1,0 +1,5 @@
+const objToCard = (()=> {
+
+})();
+
+export { objToCard }

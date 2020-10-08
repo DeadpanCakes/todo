@@ -21,11 +21,11 @@ weeklies.addTask(gym);
 emitter.on("allTasksBtnPressed", dom.toggleAllTasks);
 dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPressed"));
 
-dom.getContentContainer().appendChild(card.renderProjectList(projectList.getProjectArr()))
+dom.getContentContainer().appendChild(card.projectListRenderer(projectList.getProjectArr()).renderProjectList());
 
 const goToList = () => {
     dom.initContainer(dom.getContentContainer());
-    dom.getContentContainer().appendChild(card.renderProjectList(projectList.getProjectArr()));
+    dom.getContentContainer().appendChild(card.projectListRenderer(projectList.getProjectArr()).renderProjectList());
     dom.assignTaskClass();
 }
 document.getElementById("listTab").addEventListener("click", goToList);

@@ -1,3 +1,5 @@
+import { animationController } from "./anmationController.js";
+import { emitter } from "./emitter.js";
 
 const makeDiv = () => document.createElement("div");
 const makeSpan = () => document.createElement("span");
@@ -33,12 +35,77 @@ const assignTaskClass = () => {
     });
 };
 
-const toggleCssClass = (element, cssClass) => {
-    element.classList.toggle(cssClass);
+const toggleAddElement = (elementArr, container) => {
+    if (!animationController.isPlaying) {
+        animationController.toggleAnim()
+        for (let i = 0; i < elementArr.length; i++) {
+            if (container.contains(elementArr[i])) {
+                setTimeout(() => container.removeChild(elementArr[i]), 500);
+            } else {
+                container.appendChild(elementArr[i]);
+            }
+        }
+        animationController.toggleAnim();
+    }
+}
+
+const replaceEdit = (element) => {
+    replaceElement(makeEditElement(element), element)
+}
+
+const makeEditElement = (element) => {
+    const editForm = makeForm();
+    const input = makeInput();
+    input.value = element.textContent;
+    editForm.appendChild(input);
+    switch(element.nodeName) {
+        case "P":
+            editForm.appendChild(input)
+            break;
+        default:
+            input.type = "text";
+            break;
+    }
+    editForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        emitter.emit("editSubmitted", input.value, e.target, element.nodeName)
+    })
+    return editForm;
+}
+
+const submitEdit = (newElementContent, oldElement, nodeType) => {
+    let newElement
+    switch (nodeType) {
+        case "H1":
+            newElement = makeH1();
+            break;
+        case "H2":
+            newElement = makeH2();
+            break;
+        case "H3":
+            newElement = makeH3();
+            break;
+        case "P":
+            newElement = makeP();
+            break;
+    }
+    newElement.textContent = newElementContent
+    newElement.addEventListener("click", (e) => emitter.emit("editRequested", e.target))
+    replaceElement(newElement,oldElement);
+}
+
+const replaceElement = (newElement, element) => {
+    element.parentNode.replaceChild(newElement, element)
+}
+
+const toggleCssClass = (elements, cssClass) => {
+        elements.classList.toggle(cssClass);
 };
 
-const toggleTaskList = (taskListNodes) => {
-    taskListNodes.forEach(task => toggleCssClass(task,"shownTasks"));
+const toggleTaskList = (taskListArr) => {
+    if (!animationController.isPlaying) {
+        taskListArr.forEach(task => toggleCssClass(task, "shownTasks"));
+    }
 }
 
 const toggleExpandDiv = (container, element) => {
@@ -75,6 +142,11 @@ export {
     getToggleTasks,
     getProjectElements,
     initContainer,
+    toggleAddElement,
+    replaceEdit,
+    makeEditElement,
+    submitEdit,
+    replaceElement,
     assignTaskClass,
     toggleTaskList,
     toggleExpandDiv,

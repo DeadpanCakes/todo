@@ -47,7 +47,7 @@ table {
 	border-spacing: 0;
 }
 
-html {
+/* html {
 	height: 100%;
 }
 
@@ -83,7 +83,7 @@ ul {
 	flex-direction: column;
 }
 
-.cardContainers {
+.projectContainers {
 	display: flex;
 	flex-direction: column;
 }
@@ -91,6 +91,19 @@ ul {
 .taskList {
 	display: flex;
 	flex-direction: column;
+	max-height: 0;
+	opacity: 0;
+	transition: all 400ms;
+}
+
+.taskList:not(:empty) {
+	max-height: 500px;
+	opacity: 1;
+}
+
+#testDiv {
+	height: 100px;
+	opacity: 1;
 }
 
 .card {
@@ -216,4 +229,4 @@ ul {
 .testContainer:not(:empty) {
 	background-color: blue;
 	height: 100px;
-}
+} */
