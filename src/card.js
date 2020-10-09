@@ -1,6 +1,6 @@
 import * as dom from "./dom.js";
 import { emitter } from "./emitter.js";
-import {objToCard} from "./interfacer.js";
+import { objToCard } from "./interfacer.js";
 
 const card = (name, dueDate, description, notes) => {
     const card = dom.makeDiv();
@@ -27,13 +27,12 @@ const card = (name, dueDate, description, notes) => {
     const cardName = dom.makeH1();
     cardName.textContent = name;
     cardName.classList.add("cardName");
-    cardName.addEventListener("click", (e) => {
-        emitter.emit("editRequested", e.target)
-        })
+    cardName.addEventListener("click", (e) => emitter.emit("editRequested", e.target))
 
     const cardDate = dom.makeH2();
     cardDate.classList.add("cardDate");
     cardDate.textContent = dueDate;
+    cardDate.addEventListener("click", (e) => emitter.emit("editRequested", e.target))
 
     const expandBtn = dom.makeBtn();
     expandBtn.classList.add("expandBtn");

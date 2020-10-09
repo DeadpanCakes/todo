@@ -56,12 +56,20 @@ const replaceEdit = (element) => {
 }
 
 const makeEditElement = (element) => {
+    const className = element.classList[0];
     const editForm = makeForm();
     const input = makeInput();
+    const submitBtn = makeInput();
+    submitBtn.type = "submit";
+    submitBtn.value = "O";
     input.value = element.textContent;
     editForm.appendChild(input);
-    switch (element.nodeName) {
-        case "P":
+    editForm.appendChild(submitBtn);
+    switch (className) {
+        case "cardDate":
+            input.type = "date";
+            break;
+        case "cardNotes":
             input.type = "textarea";
             break;
         default:
@@ -75,32 +83,14 @@ const makeEditElement = (element) => {
     return editForm;
 }
 
-const makeEditedElement = (className) => {
-    let element;
-    switch (className) {
-        case "cardName":
-            element = makeH1();
-            break;
-        case "cardDueDate":
-            element = makeH2();
-            break;
-        case "cardDesc":
-            element = makeH3();
-            break;
-        case "cardNotes":
-            element = makeP();
-            break;
-    }
-    return element
-}
-
 const editObj = (obj, newContent, className) => {
     switch (className) {
         case "cardName":
             obj.changeName(newContent);
             break;
-        case "cardDueDate":
-            obj.changeDesc(newContent);
+        case "cardDate":
+            console.log("editingobj")
+            obj.changeDueDate(newContent);
             break;
         case "cardDesc":
             obj.changeDesc(newContent);
@@ -113,9 +103,9 @@ const editObj = (obj, newContent, className) => {
 
 const submitEdit = (newElementContent, oldElement, className) => {
     const obj = objToCard.getObj(oldElement);
-    console.log(obj.name);
+    console.log(obj.dueDate);
     editObj(obj, newElementContent, className);
-    console.log(obj.name);
+    console.log(obj.dueDate);
 }
 
 const replaceElement = (newElement, element) => {

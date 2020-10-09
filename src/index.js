@@ -23,10 +23,8 @@ dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPr
 
 dom.getContentContainer().appendChild(card.projectListRenderer(projectList.projectArr).renderProjectList());
 
-const goToList = () => {
-    dom.goToList()
-}
-document.getElementById("listTab").addEventListener("click", goToList);
+
+document.getElementById("listTab").addEventListener("click", dom.goToList);
 
 const goToForm = () => {
     dom.initContainer(dom.getContentContainer());
