@@ -17,9 +17,6 @@ dailies.addTask(cook);
 dailies.addTask(read);
 weeklies.addTask(gym);
 
-console.log(projectList.projectArr[0].getTaskArr()[0].name)
-
-
 emitter.on("allTasksBtnPressed", dom.toggleAllTasks);
 dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPressed"));
 
@@ -37,6 +34,7 @@ dom.assignTaskClass();
 
 emitter.on("editRequested", dom.replaceEdit);
 emitter.on("editSubmitted", dom.submitEdit);
+emitter.on("priorityChanged", dom.changePriority)
 emitter.on("delBtnPressed", dom.removeObj);
 emitter.on("editSubmitted", dom.goToList);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);

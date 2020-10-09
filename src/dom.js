@@ -91,7 +91,6 @@ const editObj = (obj, newContent, className) => {
             obj.changeName(newContent);
             break;
         case "cardDate":
-            console.log("editingobj")
             obj.changeDueDate(newContent);
             break;
         case "cardDesc":
@@ -105,9 +104,7 @@ const editObj = (obj, newContent, className) => {
 
 const submitEdit = (newElementContent, oldElement, className) => {
     const obj = objToCard.getObj(oldElement);
-    console.log(obj.dueDate);
     editObj(obj, newElementContent, className);
-    console.log(obj.dueDate);
 }
 
 const replaceElement = (newElement, element) => {
@@ -119,7 +116,6 @@ const toggleCssClass = (elements, cssClass) => {
 };
 
 const toggleTaskList = (taskListArr) => {
-    console.log(taskListArr)
     if (!animationController.isPlaying) {
         taskListArr.forEach(task => toggleCssClass(task, "shownTasks"));
     }
@@ -160,10 +156,20 @@ const removeObj = (element) => {
         project.removeTask(task);
         goToList();
     } else {
-        console.log("projectreached")
         projectList.removeProject(obj)
         goToList();
     }
+}
+
+const changePriority = (element) => {
+    const obj = objToCard.getObj(element);
+    if (!projectList.projectArr.some((i) => i === obj)){
+        const task = objToCard.findTask(element);
+        task.changePriority(element.value)
+    } else {
+        obj.changePriority(element.value);
+    }
+    goToList();
 }
 
 export {
@@ -197,5 +203,6 @@ export {
     toggleAllTasks,
     renderList,
     goToList,
-    removeObj
+    removeObj,
+    changePriority
 }

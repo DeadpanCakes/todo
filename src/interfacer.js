@@ -10,7 +10,6 @@ const objToCard = (() => {
         if (projectList.projectNames.some(name => name === id)) {
             objIndex = projectList.projectNames.indexOf(id);
         }
-        console.log("reached")
         return projectList.projectArr[objIndex];
     }
 
@@ -29,7 +28,6 @@ const objToCard = (() => {
         const id = getId(taskInfo);
         const project = findProjectCat(taskInfo)
         const taskIndex = project.getTaskNames().indexOf(id)
-        console.log(project.getTaskArr());
         return project.getTaskArr()[taskIndex];
     }
 

@@ -42,7 +42,6 @@ const card = (name, dueDate, priority, description, notes) => {
     prioritySelect.appendChild(highOption);
     prioritySelect.appendChild(mediumOption);
     prioritySelect.appendChild(lowOption);
-
     const setDefaultSelect = (defaultValue) => {
         switch (defaultValue) {
             case "high":
@@ -56,6 +55,7 @@ const card = (name, dueDate, priority, description, notes) => {
                 break;
         }
     }
+    prioritySelect.addEventListener("change", (e) => emitter.emit("priorityChanged", e.target))
 
     const cardName = dom.makeH1();
     cardName.textContent = name;
