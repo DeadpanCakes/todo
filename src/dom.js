@@ -103,8 +103,13 @@ const editObj = (obj, newContent, className) => {
 }
 
 const submitEdit = (newElementContent, oldElement, className) => {
-    const project = objToCard.getProject(oldElement);
-    editObj(project, newElementContent, className);
+    if (!!objToCard.getProject(oldElement)) {
+        const project = objToCard.getProject(oldElement);
+        editObj(project, newElementContent, className);
+    } else {
+        const task = objToCard.findTask(oldElement);
+        editObj(task, newElementContent, className);
+    }
 }
 
 const replaceElement = (newElement, element) => {
@@ -149,25 +154,25 @@ const goToList = () => {
 }
 
 const removeObj = (element) => {
-    const project = objToCard.getProject(element);
-    if (!projectList.projectArr.some((i) => i === project)) {
+    if (!!objToCard.getProject(element)) {
+        const project = objToCard.getProject(element);
+        projectList.removeProject(project)
+        goToList();
+    } else {
         const task = objToCard.findTask(element);
         const projectCat = objToCard.findProjectCat(element);
         projectCat.removeTask(task);
-        goToList();
-    } else {
-        projectList.removeProject(project)
         goToList();
     }
 }
 
 const changePriority = (element) => {
-    const project = objToCard.getProject(element);
-    if (!projectList.projectArr.some((i) => i === project)){
+    if (!!objToCard.getProject(element)) {
+        const project = objToCard.getProject(element);
+        project.changePriority(element.value);
+    } else {
         const task = objToCard.findTask(element);
         task.changePriority(element.value)
-    } else {
-        project.changePriority(element.value);
     }
 }
 
