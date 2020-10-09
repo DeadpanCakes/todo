@@ -43,6 +43,20 @@ const card = (name, dueDate, priority, description, notes) => {
     prioritySelect.appendChild(mediumOption);
     prioritySelect.appendChild(lowOption);
 
+    const setDefaultSelect = (defaultValue) => {
+        switch (defaultValue) {
+            case "high":
+                highOption.selected = "selected";
+                break;
+            case "medium":
+                mediumOption.selected = "selected";
+                break;
+            case "low":
+                lowOption.selected = "selected";
+                break;
+        }
+    }
+
     const cardName = dom.makeH1();
     cardName.textContent = name;
     cardName.classList.add("cardName");
@@ -84,6 +98,7 @@ const card = (name, dueDate, priority, description, notes) => {
         minCardContainer.appendChild(checkRegion);
         minCardContainer.appendChild(prioritySelectLabel);
         minCardContainer.appendChild(prioritySelect);
+        setDefaultSelect(priority);
         minCardContainer.appendChild(cardName);
         minCardContainer.appendChild(cardDate);
         minCardContainer.appendChild(expandBtn);
