@@ -154,8 +154,13 @@ const goToList = () => {
 
 const removeObj = (element) => {
     const obj = objToCard.getObj(element);
-    projectList.removeProject(obj)
-    goToList();
+    if (!projectList.projectArr.some((i) => i === obj)) {
+        console.log("del task")
+    } else {
+        console.log("projectreached")
+        projectList.removeProject(obj)
+        goToList();
+    }
 }
 
 export {
