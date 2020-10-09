@@ -1,8 +1,11 @@
 import { projectList } from "./projectList.js";
 
 const objToCard = (() => {
+
+    const getId = (element) => element.parentNode.parentNode.id;
+
     const getObj = (elementInfo) => {
-        const id = elementInfo.parentNode.parentNode.id;
+        const id = getId(elementInfo);
         let objIndex
         if (projectList.projectNames.some(name => name === id)) {
             objIndex = projectList.projectNames.indexOf(id);
@@ -10,8 +13,27 @@ const objToCard = (() => {
         console.log("reached")
         return projectList.projectArr[objIndex];
     }
+
     const getCard = (projectName) => document.getElementById(projectName);
-    return { getObj, getCard }
+
+    const findProjectCat = (taskInfo) => {
+        const id = getId(taskInfo);
+        for (let i=0;i<projectList.projectArr.length;i++) {
+            if (projectList.projectArr[i].getTaskNames().some(j => j === id)) {
+                return projectList.projectArr[i];
+            }
+        }
+    }
+
+    const findTask = (taskInfo) => {
+        const id = getId(taskInfo);
+        const project = findProjectCat(taskInfo)
+        const taskIndex = project.getTaskNames().indexOf(id)
+        console.log(project.getTaskArr());
+        return project.getTaskArr()[taskIndex];
+    }
+
+    return { getObj, getCard, findProjectCat, findTask }
 })();
 
 /*

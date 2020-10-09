@@ -37,7 +37,7 @@ const projectMixin = (job, projectType) => {
             };
         },
         getTaskArr() { return this.taskArr },
-        getTaskNames() { return this.taskArr.map((task) => task.getName())},
+        getTaskNames() { return this.taskArr.map((task) => task.name)},
         getProjectType() { return projectType }
     });
 };

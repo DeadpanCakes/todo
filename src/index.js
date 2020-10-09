@@ -17,6 +17,8 @@ dailies.addTask(cook);
 dailies.addTask(read);
 weeklies.addTask(gym);
 
+console.log(projectList.projectArr[0].getTaskArr()[0].name)
+
 
 emitter.on("allTasksBtnPressed", dom.toggleAllTasks);
 dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPressed"));
