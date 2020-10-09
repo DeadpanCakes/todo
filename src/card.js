@@ -82,6 +82,8 @@ const card = (name, dueDate, priority, description, notes) => {
 
     const renderCard = () => {
         minCardContainer.appendChild(checkRegion);
+        minCardContainer.appendChild(prioritySelectLabel);
+        minCardContainer.appendChild(prioritySelect);
         minCardContainer.appendChild(cardName);
         minCardContainer.appendChild(cardDate);
         minCardContainer.appendChild(expandBtn);
