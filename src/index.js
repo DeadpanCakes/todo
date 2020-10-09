@@ -35,6 +35,7 @@ dom.assignTaskClass();
 
 emitter.on("editRequested", dom.replaceEdit);
 emitter.on("editSubmitted", dom.submitEdit);
+emitter.on("delBtnPressed", dom.removeObj);
 emitter.on("editSubmitted", dom.goToList);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
 emitter.on("projectExpandBtnPressed", dom.toggleAddElement);

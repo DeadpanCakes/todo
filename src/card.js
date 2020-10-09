@@ -1,6 +1,7 @@
 import * as dom from "./dom.js";
 import { emitter } from "./emitter.js";
 import { objToCard } from "./interfacer.js";
+import { projectList } from "./projectList.js";
 
 const card = (name, dueDate, description, notes) => {
     const card = dom.makeDiv();
@@ -44,6 +45,9 @@ const card = (name, dueDate, description, notes) => {
     const delBtn = dom.makeBtn();
     delBtn.classList.add("delBtn");
     delBtn.textContent = "X";
+    delBtn.addEventListener("click", (e) => {
+        emitter.emit("delBtnPressed", e.target);
+    })
 
     const expandDiv = dom.makeDiv();
     expandDiv.classList.add("expandDiv");

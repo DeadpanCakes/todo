@@ -150,6 +150,12 @@ const goToList = () => {
     container.appendChild(renderList());
 }
 
+const removeObj = (element) => {
+    const obj = objToCard.getObj(element);
+    projectList.removeProject(obj)
+    goToList();
+}
+
 export {
     makeDiv,
     makeSpan,
@@ -180,5 +186,6 @@ export {
     toggleExpandDiv,
     toggleAllTasks,
     renderList,
-    goToList
+    goToList,
+    removeObj
 }
