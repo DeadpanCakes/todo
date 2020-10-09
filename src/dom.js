@@ -113,11 +113,9 @@ const editObj = (obj, newContent, className) => {
 
 const submitEdit = (newElementContent, oldElement, className) => {
     const obj = objToCard.getObj(oldElement);
-    console.log(obj.name)
+    console.log(obj.name);
     editObj(obj, newElementContent, className);
-    console.log(obj.name)
-    initContainer(getContentContainer())
-    getContentContainer().appendChild(renderList())
+    console.log(obj.name);
 }
 
 const replaceElement = (newElement, element) => {
@@ -156,6 +154,12 @@ const renderList = () => {
     return projectUl;
 }
 
+const goToList = () => {
+    const container = getContentContainer();
+    initContainer(container);
+    container.appendChild(renderList());
+}
+
 export {
     makeDiv,
     makeSpan,
@@ -185,5 +189,6 @@ export {
     toggleTaskList,
     toggleExpandDiv,
     toggleAllTasks,
-    renderList
+    renderList,
+    goToList
 }

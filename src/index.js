@@ -24,8 +24,7 @@ dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPr
 dom.getContentContainer().appendChild(card.projectListRenderer(projectList.projectArr).renderProjectList());
 
 const goToList = () => {
-    dom.initContainer(dom.getContentContainer());
-    dom.getContentContainer().appendChild(dom.renderList())
+    dom.goToList()
 }
 document.getElementById("listTab").addEventListener("click", goToList);
 
@@ -38,7 +37,7 @@ dom.assignTaskClass();
 
 emitter.on("editRequested", dom.replaceEdit);
 emitter.on("editSubmitted", dom.submitEdit);
-//emitter.on("edutSubmitted", dom.renderList);
+emitter.on("editSubmitted", dom.goToList);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
 emitter.on("projectExpandBtnPressed", dom.toggleAddElement);
 emitter.on("projectExpandBtnPressed", dom.toggleTaskList);
