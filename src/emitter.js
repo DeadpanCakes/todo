@@ -9,6 +9,8 @@ const emitter = (() => {
         }
     }
     const emit = (event,arg1,arg2,arg3,arg4,arg5) => {
+        console.log(`${event} fired`);
+        console.log(events)
         for (let i=0;i<events[event].length;i++) {
             events[event][i](arg1,arg2,arg3,arg4,arg5);
         }

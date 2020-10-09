@@ -9,7 +9,7 @@ taskTab.id = "taskTab";
 taskTab.textContent = "Add Task";
 taskTab.addEventListener("click", () => {
     dom.initContainer(formContainerDiv);
-    renderCatOptions(projectList.getProjectNames());
+    renderCatOptions(projectList.projectNames);
     populateFormContainer("task");
 });
 const projectTab = dom.makeSpan();
@@ -141,8 +141,8 @@ taskSubmitInput.addEventListener("click", e => {
     e.preventDefault();
     const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value);
     const findIndex = (projectArr,categoryName) => projectArr.indexOf(categoryName);
-    const addNewTask = (projectIndex, task) => projectList.getProjectArr()[projectIndex].addTask(task);
-    addNewTask(findIndex(projectList.getProjectNames(),categorySelect.value), newTask);
+    const addNewTask = (projectIndex, task) => projectList.projectArr[projectIndex].addTask(task);
+    addNewTask(findIndex(projectList.projectNames,categorySelect.value), newTask);
     clearForm();
 })
 

@@ -2,22 +2,17 @@ import { format } from "date-fns";
 import { zonedTimeToUtc } from "date-fns-tz";
 
 const makeJob = (name, dueDate, priority, desc, notes) => {
-    const getName = () => name;
-    const getDueDate = () => format(new Date(zonedTimeToUtc(dueDate.toString())), "PPP");
-    const getPriority = () => priority;
-    const getDesc = () => desc;
-    const getNotes = () => notes;
     const changeName = (newName) => name = newName;
     const changeDueDate = (newDueDate) => dueDate = newDueDate;
     const changePriority = (newPriority) => priority = newPriority;
     const changeDesc = (newDesc) => desc = newDesc;
     const changeNotes = (newNotes) => notes = newNotes;
     return {
-        getName,
-        getDueDate,
-        getPriority,
-        getDesc,
-        getNotes,
+        get name() { return name },
+        get dueDate() { return format(new Date(zonedTimeToUtc(dueDate.toString())), "PPP") },
+        get priority() { return priority },
+        get desc() { return desc },
+        get notes() { return notes },
         changeName,
         changeDueDate,
         changePriority,

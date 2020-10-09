@@ -1,5 +1,8 @@
 import { animationController } from "./anmationController.js";
+import { objToCard } from "./interfacer.js";
 import { emitter } from "./emitter.js";
+import { projectList } from "./projectList.js";
+import * as card from "./card.js";
 
 const makeDiv = () => document.createElement("div");
 const makeSpan = () => document.createElement("span");
@@ -17,7 +20,9 @@ const makeSelect = () => document.createElement("select");
 const makeOption = () => document.createElement("option");
 const makeTextArea = () => document.createElement("textarea");
 
-const getContentContainer = () => document.getElementById("contentContainer")
+const getContentContainer = () => {
+    return document.getElementById("contentContainer")
+}
 const getToggleTasks = () => document.getElementById("toggleTasks")
 const getProjectElements = () => document.querySelectorAll(".cardContainer");
 
@@ -37,16 +42,12 @@ const assignTaskClass = () => {
 };
 
 const toggleAddElement = (elementArr, container) => {
-    if (!animationController.isPlaying) {
-        animationController.toggleAnim()
-        for (let i = 0; i < elementArr.length; i++) {
-            if (container.contains(elementArr[i])) {
-                setTimeout(() => container.removeChild(elementArr[i]), 500);
-            } else {
-                container.appendChild(elementArr[i]);
-            }
+    for (let i = 0; i < elementArr.length; i++) {
+        if (container.contains(elementArr[i])) {
+            container.removeChild(elementArr[i])
+        } else {
+            container.appendChild(elementArr[i]);
         }
-        animationController.toggleAnim();
     }
 }
 
@@ -59,9 +60,9 @@ const makeEditElement = (element) => {
     const input = makeInput();
     input.value = element.textContent;
     editForm.appendChild(input);
-    switch(element.nodeName) {
+    switch (element.nodeName) {
         case "P":
-            editForm.appendChild(input)
+            input.type = "textarea";
             break;
         default:
             input.type = "text";
@@ -69,30 +70,54 @@ const makeEditElement = (element) => {
     }
     editForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        emitter.emit("editSubmitted", input.value, e.target, element.nodeName)
+        emitter.emit("editSubmitted", input.value, e.target, element.classList[0])
     })
     return editForm;
 }
 
-const submitEdit = (newElementContent, oldElement, nodeType) => {
-    let newElement
-    switch (nodeType) {
-        case "H1":
-            newElement = makeH1();
+const makeEditedElement = (className) => {
+    let element;
+    switch (className) {
+        case "cardName":
+            element = makeH1();
             break;
-        case "H2":
-            newElement = makeH2();
+        case "cardDueDate":
+            element = makeH2();
             break;
-        case "H3":
-            newElement = makeH3();
+        case "cardDesc":
+            element = makeH3();
             break;
-        case "P":
-            newElement = makeP();
+        case "cardNotes":
+            element = makeP();
             break;
     }
-    newElement.textContent = newElementContent
-    newElement.addEventListener("click", (e) => emitter.emit("editRequested", e.target))
-    replaceElement(newElement,oldElement);
+    return element
+}
+
+const editObj = (obj, newContent, className) => {
+    switch (className) {
+        case "cardName":
+            obj.changeName(newContent);
+            break;
+        case "cardDueDate":
+            obj.changeDesc(newContent);
+            break;
+        case "cardDesc":
+            obj.changeDesc(newContent);
+            break;
+        case "cardNotes":
+            obj.channgeNotes(newContent);
+            break;
+    }
+}
+
+const submitEdit = (newElementContent, oldElement, className) => {
+    const obj = objToCard.getObj(oldElement);
+    console.log(obj.name)
+    editObj(obj, newElementContent, className);
+    console.log(obj.name)
+    initContainer(getContentContainer())
+    getContentContainer().appendChild(renderList())
 }
 
 const replaceElement = (newElement, element) => {
@@ -100,10 +125,11 @@ const replaceElement = (newElement, element) => {
 }
 
 const toggleCssClass = (elements, cssClass) => {
-        elements.classList.toggle(cssClass);
+    elements.classList.toggle(cssClass);
 };
 
 const toggleTaskList = (taskListArr) => {
+    console.log(taskListArr)
     if (!animationController.isPlaying) {
         taskListArr.forEach(task => toggleCssClass(task, "shownTasks"));
     }
@@ -123,6 +149,12 @@ const toggleAllTasks = () => {
     const tasks = document.querySelectorAll(".tasks")
     tasks.forEach((task) => toggleCssClass(task, "shownTasks"));
 };
+
+const renderList = () => {
+    const projectArr = projectList.projectArr;
+    const projectUl = card.projectListRenderer(projectArr).renderProjectList();
+    return projectUl;
+}
 
 export {
     makeDiv,
@@ -152,5 +184,6 @@ export {
     assignTaskClass,
     toggleTaskList,
     toggleExpandDiv,
-    toggleAllTasks
+    toggleAllTasks,
+    renderList
 }

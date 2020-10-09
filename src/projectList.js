@@ -12,7 +12,7 @@ const projectList = (() => {
         addProject,
         removeProject,
         get projectArr() { return projectArr },
-        get projectNames() { return projectArr.map((obj) => obj.getName())}
+        get projectNames() { return projectArr.map((obj) => obj.name)}
     };
 })();
 

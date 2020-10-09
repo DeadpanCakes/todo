@@ -36,8 +36,9 @@ const goToForm = () => {
 document.getElementById("formTab").addEventListener("click", goToForm);
 dom.assignTaskClass();
 
-emitter.on("editRequested", dom.replaceEdit)
+emitter.on("editRequested", dom.replaceEdit);
 emitter.on("editSubmitted", dom.submitEdit);
+//emitter.on("edutSubmitted", dom.renderList);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
 emitter.on("projectExpandBtnPressed", dom.toggleAddElement);
 emitter.on("projectExpandBtnPressed", dom.toggleTaskList);
