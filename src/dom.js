@@ -58,28 +58,30 @@ const replaceEdit = (element) => {
 const makeEditElement = (element) => {
     const className = element.classList[0];
     const editForm = makeForm();
-    const input = makeInput();
+    let editInput;
     const submitBtn = makeInput();
-    submitBtn.type = "submit";
-    submitBtn.value = "O";
-    input.value = element.textContent;
-    editForm.appendChild(input);
-    editForm.appendChild(submitBtn);
     switch (className) {
         case "cardDate":
-            input.type = "date";
+            editInput = makeInput();
+            editInput.type = "date";
             break;
         case "cardNotes":
-            input.type = "textarea";
+            editInput = makeTextArea();
             break;
         default:
-            input.type = "text";
+            editInput = makeInput()
+            editInput.type = "text";
             break;
     }
     editForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        emitter.emit("editSubmitted", input.value, e.target, element.classList[0])
-    })
+        emitter.emit("editSubmitted", editInput.value, e.target, element.classList[0])
+    });
+    submitBtn.type = "submit";
+    submitBtn.value = "O";
+    editInput.value = element.textContent;
+    editForm.appendChild(editInput);
+    editForm.appendChild(submitBtn);
     return editForm;
 }
 
