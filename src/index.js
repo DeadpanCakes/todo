@@ -25,8 +25,7 @@ dom.getContentContainer().appendChild(card.projectListRenderer(projectList.proje
 
 const goToList = () => {
     dom.initContainer(dom.getContentContainer());
-    dom.getContentContainer().appendChild(card.projectListRenderer(projectList.projectArr).renderProjectList());
-    dom.assignTaskClass();
+    dom.getContentContainer().appendChild(dom.renderList())
 }
 document.getElementById("listTab").addEventListener("click", goToList);
 
@@ -37,9 +36,11 @@ const goToForm = () => {
 document.getElementById("formTab").addEventListener("click", goToForm);
 dom.assignTaskClass();
 
-
-console.log(projectList.projectArr)
-
+emitter.on("editRequested", dom.replaceEdit)
+emitter.on("editSubmitted", dom.submitEdit);
+emitter.on("expandBtnPressed", dom.toggleExpandDiv);
+emitter.on("projectExpandBtnPressed", dom.toggleAddElement);
+emitter.on("projectExpandBtnPressed", dom.toggleTaskList);
 /*
 Making a to-do list
 Parts:

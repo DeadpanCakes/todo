@@ -1,5 +1,6 @@
 import * as dom from "./dom.js";
 import { emitter } from "./emitter.js";
+import {objToCard} from "./interfacer.js";
 
 const card = (name, dueDate, description, notes) => {
     const card = dom.makeDiv();
@@ -28,7 +29,7 @@ const card = (name, dueDate, description, notes) => {
     cardName.classList.add("cardName");
     cardName.addEventListener("click", (e) => {
         emitter.emit("editRequested", e.target)
-    })
+        })
 
     const cardDate = dom.makeH2();
     cardDate.classList.add("cardDate");
@@ -78,7 +79,7 @@ const projectCardObj = (name, dueDate, desc, notes, taskArr) => {
 
 const populateTaskListMixin = objArr => {
     const taskList = []
-    objArr.forEach((obj) => taskList.push(card(obj.getName(), obj.getDueDate(), obj.getDesc(), obj.getNotes()).renderCard()));
+    objArr.forEach((obj) => taskList.push(card(obj.name, obj.dueDate, obj.desc, obj.notes).renderCard()));
     taskList.forEach(task => task.classList.add("tasks"));
     return taskList;
 };
@@ -94,7 +95,7 @@ const projectListRenderer = (projectArr) => {
             const taskList = dom.makeUl();
             taskList.classList.add("taskLists");
 
-            const cardObj = projectCardObj(project.getName(), project.getDueDate(), project.getDesc(), project.getNotes(), project.getTaskArr());
+            const cardObj = projectCardObj(project.name, project.dueDate, project.desc, project.notes, project.getTaskArr());
             cardObj.expandBtn.addEventListener("click", () => emitter.emit("projectExpandBtnPressed", taskCardArr, taskList))
 
             const projectCard = cardObj.renderCard();
@@ -108,11 +109,6 @@ const projectListRenderer = (projectArr) => {
         })
         return projectUl;
     }
-    emitter.on("editRequested", dom.replaceEdit)
-    emitter.on("editSubmitted", dom.submitEdit);
-    emitter.on("expandBtnPressed", dom.toggleExpandDiv);
-    emitter.on("projectExpandBtnPressed", dom.toggleAddElement);
-    emitter.on("projectExpandBtnPressed", dom.toggleTaskList);
     return { renderProjectList };
 };
 
