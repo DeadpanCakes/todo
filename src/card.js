@@ -27,12 +27,12 @@ const card = (name, dueDate, description, notes) => {
     const cardName = dom.makeH1();
     cardName.textContent = name;
     cardName.classList.add("cardName");
-    cardName.addEventListener("click", (e) => emitter.emit("editRequested", e.target))
+    cardName.addEventListener("click", (e) => emitter.emit("editRequested", e.target));
 
     const cardDate = dom.makeH2();
     cardDate.classList.add("cardDate");
     cardDate.textContent = dueDate;
-    cardDate.addEventListener("click", (e) => emitter.emit("editRequested", e.target))
+    cardDate.addEventListener("click", (e) => emitter.emit("editRequested", e.target));
 
     const expandBtn = dom.makeBtn();
     expandBtn.classList.add("expandBtn");
@@ -51,10 +51,12 @@ const card = (name, dueDate, description, notes) => {
     const cardDesc = dom.makeH3();
     cardDesc.textContent = description;
     cardDesc.classList.add("cardDesc");
+    cardDesc.addEventListener("click", (e) => emitter.emit("editRequested", e.target));
 
     const cardNotes = dom.makeP();
     cardNotes.textContent = notes;
     cardNotes.classList.add("cardNotes");
+    cardNotes.addEventListener("click", (e) => emitter.emit("editRequested", e.target));
 
     const renderCard = () => {
         minCardContainer.appendChild(checkRegion);

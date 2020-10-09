@@ -96,7 +96,7 @@ const editObj = (obj, newContent, className) => {
             obj.changeDesc(newContent);
             break;
         case "cardNotes":
-            obj.channgeNotes(newContent);
+            obj.changeNotes(newContent);
             break;
     }
 }
