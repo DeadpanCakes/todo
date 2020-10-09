@@ -4,7 +4,7 @@ const objToCard = (() => {
 
     const getId = (element) => element.parentNode.parentNode.id;
 
-    const getObj = (elementInfo) => {
+    const getProject = (elementInfo) => {
         const id = getId(elementInfo);
         let objIndex
         if (projectList.projectNames.some(name => name === id)) {
@@ -31,7 +31,7 @@ const objToCard = (() => {
         return project.getTaskArr()[taskIndex];
     }
 
-    return { getObj, getCard, findProjectCat, findTask }
+    return { getProject, getCard, findProjectCat, findTask }
 })();
 
 /*

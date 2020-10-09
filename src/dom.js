@@ -103,8 +103,8 @@ const editObj = (obj, newContent, className) => {
 }
 
 const submitEdit = (newElementContent, oldElement, className) => {
-    const obj = objToCard.getObj(oldElement);
-    editObj(obj, newElementContent, className);
+    const project = objToCard.getProject(oldElement);
+    editObj(project, newElementContent, className);
 }
 
 const replaceElement = (newElement, element) => {
@@ -149,25 +149,25 @@ const goToList = () => {
 }
 
 const removeObj = (element) => {
-    const obj = objToCard.getObj(element);
-    if (!projectList.projectArr.some((i) => i === obj)) {
+    const project = objToCard.getProject(element);
+    if (!projectList.projectArr.some((i) => i === project)) {
         const task = objToCard.findTask(element);
-        const project = objToCard.findProjectCat(element);
-        project.removeTask(task);
+        const projectCat = objToCard.findProjectCat(element);
+        projectCat.removeTask(task);
         goToList();
     } else {
-        projectList.removeProject(obj)
+        projectList.removeProject(project)
         goToList();
     }
 }
 
 const changePriority = (element) => {
-    const obj = objToCard.getObj(element);
-    if (!projectList.projectArr.some((i) => i === obj)){
+    const project = objToCard.getProject(element);
+    if (!projectList.projectArr.some((i) => i === project)){
         const task = objToCard.findTask(element);
         task.changePriority(element.value)
     } else {
-        obj.changePriority(element.value);
+        project.changePriority(element.value);
     }
 }
 
