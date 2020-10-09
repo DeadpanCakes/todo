@@ -169,7 +169,6 @@ const changePriority = (element) => {
     } else {
         obj.changePriority(element.value);
     }
-    goToList();
 }
 
 export {
