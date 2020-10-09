@@ -3,7 +3,7 @@ import { emitter } from "./emitter.js";
 import { objToCard } from "./interfacer.js";
 import { projectList } from "./projectList.js";
 
-const card = (name, dueDate, description, notes) => {
+const card = (name, dueDate, priority, description, notes) => {
     const card = dom.makeDiv();
     card.id = name;
     card.classList.add("card");
@@ -24,6 +24,24 @@ const card = (name, dueDate, description, notes) => {
         };
     };
     checkRegion.addEventListener("click", e => animateCheck(e));
+
+    const prioritySelectLabel = dom.makeLabel();
+    prioritySelectLabel.for = "priority";
+    prioritySelectLabel.textContent = "Priority";
+    const prioritySelect = dom.makeSelect();
+    prioritySelect.name = "priority";
+    const highOption = dom.makeOption();
+    highOption.value = "high";
+    highOption.textContent = "High";
+    const mediumOption = dom.makeOption();
+    mediumOption.value = "medium";
+    mediumOption.textContent = "Medium";
+    const lowOption = dom.makeOption();
+    lowOption.value = "low";
+    lowOption.textContent = "Low";
+    prioritySelect.appendChild(highOption);
+    prioritySelect.appendChild(mediumOption);
+    prioritySelect.appendChild(lowOption);
 
     const cardName = dom.makeH1();
     cardName.textContent = name;
@@ -78,13 +96,13 @@ const card = (name, dueDate, description, notes) => {
     return { renderCard, expandBtn };
 };
 
-const projectCardObj = (name, dueDate, desc, notes, taskArr) => {
-    return Object.assign(Object.create(card(name, dueDate, desc, notes)), { populateTaskList() { return populateTaskListMixin(taskArr) } });
+const projectCardObj = (name, dueDate, priority, desc, notes, taskArr) => {
+    return Object.assign(Object.create(card(name, dueDate, priority, desc, notes)), { populateTaskList() { return populateTaskListMixin(taskArr) } });
 };
 
 const populateTaskListMixin = objArr => {
     const taskList = []
-    objArr.forEach((obj) => taskList.push(card(obj.name, obj.dueDate, obj.desc, obj.notes).renderCard()));
+    objArr.forEach((obj) => taskList.push(card(obj.name, obj.dueDate, obj.priority, obj.desc, obj.notes).renderCard()));
     taskList.forEach(task => task.classList.add("tasks"));
     return taskList;
 };
@@ -100,7 +118,7 @@ const projectListRenderer = (projectArr) => {
             const taskList = dom.makeUl();
             taskList.classList.add("taskLists");
 
-            const cardObj = projectCardObj(project.name, project.dueDate, project.desc, project.notes, project.getTaskArr());
+            const cardObj = projectCardObj(project.name, project.dueDate, project.priority, project.desc, project.notes, project.getTaskArr());
             cardObj.expandBtn.addEventListener("click", () => emitter.emit("projectExpandBtnPressed", taskCardArr, taskList))
 
             const projectCard = cardObj.renderCard();
