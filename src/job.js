@@ -2,12 +2,14 @@ import { format } from "date-fns";
 import { zonedTimeToUtc } from "date-fns-tz";
 
 const makeJob = (name, dueDate, priority, desc, notes) => {
+    const timeCreated = new Date;
     const changeName = (newName) => name = newName;
     const changeDueDate = (newDueDate) => dueDate = newDueDate;
     const changePriority = (newPriority) => priority = newPriority;
     const changeDesc = (newDesc) => desc = newDesc;
     const changeNotes = (newNotes) => notes = newNotes;
     return {
+        get timeOfCreation() { return timeCreated },
         get name() { return name },
         get dueDate() { return dueDate },
         get formattedDueDate() { return format(new Date(zonedTimeToUtc(dueDate.toString())), "PPP") },
