@@ -17,19 +17,13 @@ const projectList = (() => {
                 break;
 
             case "priority":
-                const priorityToNum = (priority) => {
-                    switch (priority) {
-                        case "low":
-                            return 1;
-                        case "medium":
-                            return 2;
-                        case "high":
-                            return 3;
-                    };
-                };
-                projectArr.sort((a, b) => {
-                    return priorityToNum(b.priority) - priorityToNum(a.priority)
-                });
+                const lowArr = projectArr.filter(project => project.priority === "low");
+                const medArr = projectArr.filter(project => project.priority === "medium");
+                const highArr = projectArr.filter(project => project.priority === "high");
+                lowArr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+                medArr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+                highArr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+                projectArr = highArr.concat(medArr.concat(lowArr));
         };
     };
     return {
