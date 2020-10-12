@@ -4,6 +4,8 @@ import { projectList } from "./projectList.js";
 import * as dom from "./dom.js";
 import * as card from "./card.js";
 import { emitter } from "./emitter.js";
+import { getDaysInMonth } from "date-fns";
+import {objToCard} from "./interfacer.js";
 
 const cook = job.makeTask("Cook", 2021, "high", "Cook yummy food", "Pizza and ice cream for dessert", "task", "Dailies");
 const read = job.makeTask("Read", 2021, "low", "Read a book!", "War and Peace", "task", "Dailies");
@@ -32,11 +34,11 @@ const goToForm = () => {
 document.getElementById("formTab").addEventListener("click", goToForm);
 dom.assignTaskClass();
 
+
 emitter.on("editRequested", dom.replaceEdit);
 emitter.on("editSubmitted", dom.submitEdit);
 emitter.on("priorityChanged", dom.changePriority)
 emitter.on("delBtnPressed", dom.removeObj);
-emitter.on("editSubmitted", dom.goToList);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
 emitter.on("projectExpandBtnPressed", dom.toggleAddElement);
 emitter.on("projectExpandBtnPressed", dom.toggleTaskList);

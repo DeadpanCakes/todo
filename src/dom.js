@@ -2,7 +2,8 @@ import { animationController } from "./anmationController.js";
 import { objToCard } from "./interfacer.js";
 import { emitter } from "./emitter.js";
 import { projectList } from "./projectList.js";
-import * as card from "./card.js";
+import * as card from "./card.js";import { format } from "date-fns";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 const makeDiv = () => document.createElement("div");
 const makeSpan = () => document.createElement("span");
@@ -102,13 +103,45 @@ const editObj = (obj, newContent, className) => {
     }
 }
 
+const makeEditedElement = (elementContent, className) => {
+    let newElement;
+    switch (className) {
+        case "cardName":
+            newElement = makeH1();
+            break;
+        case "cardDate":
+            newElement = makeH2();
+            break;
+        case "cardDesc":
+            newElement = makeH3();
+            break;
+        case "cardNotes":
+            newElement = makeP();
+            break;
+    }
+    newElement.textContent = elementContent;
+    return newElement;
+}
+
+const formatDate = (className, formInput) => {
+    return format(new Date(zonedTimeToUtc(formInput.toString())), "PPP");
+}
+
 const submitEdit = (newElementContent, oldElement, className) => {
     if (!!objToCard.getProject(oldElement)) {
         const project = objToCard.getProject(oldElement);
         editObj(project, newElementContent, className);
+        if (className === "cardDate") {
+            newElementContent = formatDate(className,newElementContent);
+        }
+        replaceElement(makeEditedElement(newElementContent,className), oldElement);
     } else {
         const task = objToCard.findTask(oldElement);
         editObj(task, newElementContent, className);
+        if (className === "cardDate") {
+            newElementContent = formatDate(className,newElementContent);
+        }
+        replaceElement(makeEditedElement(newElementContent,className), oldElement);
     }
 }
 
