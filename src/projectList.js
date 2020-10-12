@@ -24,6 +24,10 @@ const projectList = (() => {
                 medArr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
                 highArr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
                 projectArr = highArr.concat(medArr.concat(lowArr));
+                break;
+            case "added":
+                console.log("reached");
+                projectArr.sort((a,b) => a.timeOfCreation - b.timeOfCreation);
         };
     };
     return {

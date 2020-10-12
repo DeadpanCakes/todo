@@ -26,6 +26,7 @@ const getToggleTasks = () => document.getElementById("toggleTasks")
 const getProjectElements = () => document.querySelectorAll(".cardContainer");
 const getSortByDate = () => document.getElementById("sortDate");
 const getSortByPriority = () => document.getElementById("sortPriority")
+const getSortByAdded = () => document.getElementById("sortAdded");
 
 const initContainer = container => {
     for (let i = 0; 0 < container.childElementCount; i++) {
@@ -230,6 +231,7 @@ export {
     getProjectElements,
     getSortByDate,
     getSortByPriority,
+    getSortByAdded,
     initContainer,
     toggleAddElement,
     replaceEdit,

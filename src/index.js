@@ -26,6 +26,8 @@ dom.getSortByDate().addEventListener("click", () => projectList.sortProjects("da
 
 dom.getSortByPriority().addEventListener("click", () => projectList.sortProjects("priority"))
 
+dom.getSortByAdded().addEventListener("click", () => projectList.sortProjects("added"));
+
 dom.getContentContainer().appendChild(card.projectListRenderer(projectList.projectArr).renderProjectList());
 
 document.getElementById("listTab").addEventListener("click", dom.goToList);
