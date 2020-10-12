@@ -21,11 +21,11 @@ const makeSelect = () => document.createElement("select");
 const makeOption = () => document.createElement("option");
 const makeTextArea = () => document.createElement("textarea");
 
-const getContentContainer = () => {
-    return document.getElementById("contentContainer")
-}
+const getContentContainer = () => document.getElementById("contentContainer")
 const getToggleTasks = () => document.getElementById("toggleTasks")
 const getProjectElements = () => document.querySelectorAll(".cardContainer");
+const getSortByDate = () => document.getElementById("sortDate");
+const getSortByPriority = () => document.getElementById("sortPriority")
 
 const initContainer = container => {
     for (let i = 0; 0 < container.childElementCount; i++) {
@@ -228,6 +228,8 @@ export {
     getContentContainer,
     getToggleTasks,
     getProjectElements,
+    getSortByDate,
+    getSortByPriority,
     initContainer,
     toggleAddElement,
     replaceEdit,

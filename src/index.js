@@ -10,8 +10,8 @@ import {objToCard} from "./interfacer.js";
 const cook = job.makeTask("Cook", 2021, "high", "Cook yummy food", "Pizza and ice cream for dessert", "task", "Dailies");
 const read = job.makeTask("Read", 2021, "low", "Read a book!", "War and Peace", "task", "Dailies");
 const gym = job.makeTask("Gym", 2021, "medium", "Go to the gym!", "Actually probably don't there's a pandemic!", "task", "Weeklies")
-const dailies = job.makeProject("Dailies", 2021, "high", "Stuff to do every day", "Boring chores", "project", "daily");
-const weeklies = job.makeProject("Weeklies", 2021, "medium", "Things to do throughout the week", "Less boring chores", "project", "weekly")
+const dailies = job.makeProject("Dailies", "2023-03-10", "high", "Stuff to do every day", "Boring chores", "project", "daily");
+const weeklies = job.makeProject("Weeklies", "2021-03-10", "medium", "Things to do throughout the week", "Less boring chores", "project", "weekly")
 
 projectList.addProject(dailies);
 projectList.addProject(weeklies);
@@ -22,8 +22,11 @@ weeklies.addTask(gym);
 emitter.on("allTasksBtnPressed", dom.toggleAllTasks);
 dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPressed"));
 
-dom.getContentContainer().appendChild(card.projectListRenderer(projectList.projectArr).renderProjectList());
+dom.getSortByDate().addEventListener("click", () => projectList.sortProjects("date"))
 
+dom.getSortByPriority().addEventListener("click", () => projectList.sortProjects("priority"))
+
+dom.getContentContainer().appendChild(card.projectListRenderer(projectList.projectArr).renderProjectList());
 
 document.getElementById("listTab").addEventListener("click", dom.goToList);
 

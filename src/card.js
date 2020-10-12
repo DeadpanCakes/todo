@@ -119,7 +119,7 @@ const projectCardObj = (name, dueDate, priority, desc, notes, taskArr) => {
 
 const populateTaskListMixin = objArr => {
     const taskList = []
-    objArr.forEach((obj) => taskList.push(card(obj.name, obj.dueDate, obj.priority, obj.desc, obj.notes).renderCard()));
+    objArr.forEach((obj) => taskList.push(card(obj.name, obj.formattedDueDate, obj.priority, obj.desc, obj.notes).renderCard()));
     taskList.forEach(task => task.classList.add("tasks"));
     return taskList;
 };
@@ -135,7 +135,7 @@ const projectListRenderer = (projectArr) => {
             const taskList = dom.makeUl();
             taskList.classList.add("taskLists");
 
-            const cardObj = projectCardObj(project.name, project.dueDate, project.priority, project.desc, project.notes, project.getTaskArr());
+            const cardObj = projectCardObj(project.name, project.formattedDueDate, project.priority, project.desc, project.notes, project.getTaskArr());
             cardObj.expandBtn.addEventListener("click", () => emitter.emit("projectExpandBtnPressed", taskCardArr, taskList))
 
             const projectCard = cardObj.renderCard();

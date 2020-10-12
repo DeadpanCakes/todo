@@ -9,7 +9,8 @@ const makeJob = (name, dueDate, priority, desc, notes) => {
     const changeNotes = (newNotes) => notes = newNotes;
     return {
         get name() { return name },
-        get dueDate() { return format(new Date(zonedTimeToUtc(dueDate.toString())), "PPP") },
+        get dueDate() { return dueDate },
+        get formattedDueDate() { return format(new Date(zonedTimeToUtc(dueDate.toString())), "PPP") },
         get priority() { return priority },
         get desc() { return desc },
         get notes() { return notes },
