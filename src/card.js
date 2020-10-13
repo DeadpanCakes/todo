@@ -64,7 +64,7 @@ const card = (name, dueDate, priority, description, notes) => {
 
     const cardDate = dom.makeH2();
     cardDate.classList.add("cardDate");
-    cardDate.textContent = dueDate;
+    cardDate.textContent = `Due Date: ${dueDate}`;
     cardDate.addEventListener("click", (e) => emitter.emit("editRequested", e.target));
 
     const expandBtn = dom.makeBtn();
@@ -137,14 +137,21 @@ const projectListRenderer = (projectArr) => {
 
             const toggleExpand = () => {
                 if (taskList.hasChildNodes()) {
-                    dom.initContainer(taskList)
+                    hideExpand();
                 } else {
-                    taskCardArr.forEach(task => taskList.appendChild(task));
+                    showExpand();
                 }
             }
 
+            const showExpand = () => {
+                taskCardArr.forEach(task => taskList.appendChild(task));
+            }
+
+            const hideExpand = () => {
+                dom.initContainer(taskList)
+            }
+
             const cardObj = projectCardObj(project.name, project.formattedDueDate, project.priority, project.desc, project.notes, project.getTaskArr());
-            //cardObj.expandBtn.addEventListener("click", () => emitter.emit("projectExpandBtnPressed", taskCardArr, taskList))
             cardObj.expandBtn.addEventListener("click", () => toggleExpand(taskCardArr, taskList));
 
             const projectCard = cardObj.renderCard();
@@ -152,7 +159,7 @@ const projectListRenderer = (projectArr) => {
 
             const taskCardArr = cardObj.populateTaskList();
 
-            emitter.on("allTasksBtnPressed", toggleExpand);
+            emitter.on("allTasksBtnPressed", showExpand);
 
             projectContainer.appendChild(projectCard);
             projectContainer.appendChild(taskList);
