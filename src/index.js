@@ -45,8 +45,6 @@ emitter.on("editSubmitted", dom.submitEdit);
 emitter.on("priorityChanged", dom.changePriority)
 emitter.on("delBtnPressed", dom.removeObj);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
-emitter.on("projectExpandBtnPressed", dom.toggleAddElement);
-emitter.on("projectExpandBtnPressed", dom.toggleTaskList);
 /*
 Making a to-do list
 Parts:

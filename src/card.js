@@ -135,13 +135,24 @@ const projectListRenderer = (projectArr) => {
             const taskList = dom.makeUl();
             taskList.classList.add("taskLists");
 
+            const toggleExpand = () => {
+                if (taskList.hasChildNodes()) {
+                    dom.initContainer(taskList)
+                } else {
+                    taskCardArr.forEach(task => taskList.appendChild(task));
+                }
+            }
+
             const cardObj = projectCardObj(project.name, project.formattedDueDate, project.priority, project.desc, project.notes, project.getTaskArr());
-            cardObj.expandBtn.addEventListener("click", () => emitter.emit("projectExpandBtnPressed", taskCardArr, taskList))
+            //cardObj.expandBtn.addEventListener("click", () => emitter.emit("projectExpandBtnPressed", taskCardArr, taskList))
+            cardObj.expandBtn.addEventListener("click", () => toggleExpand(taskCardArr, taskList));
 
             const projectCard = cardObj.renderCard();
             projectCard.classList.add("projects");
 
             const taskCardArr = cardObj.populateTaskList();
+
+            emitter.on("allTasksBtnPressed", toggleExpand);
 
             projectContainer.appendChild(projectCard);
             projectContainer.appendChild(taskList);
