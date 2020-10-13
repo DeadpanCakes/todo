@@ -43,6 +43,11 @@ const assignTaskClass = () => {
     });
 };
 
+const sortList = (criteria) => {
+    projectList.sortProjects(criteria);
+    goToList();
+}
+
 const toggleAddElement = (elementArr, container) => {
     for (let i = 0; i < elementArr.length; i++) {
         if (container.contains(elementArr[i])) {
@@ -233,6 +238,7 @@ export {
     getSortByPriority,
     getSortByAdded,
     initContainer,
+    sortList,
     toggleAddElement,
     replaceEdit,
     makeEditElement,

@@ -2,7 +2,10 @@ import { lastDayOfWeek } from "date-fns";
 
 const projectList = (() => {
     let projectArr = [];
-    const addProject = newProject => projectArr.push(newProject);
+
+    const addProject = newProject => {
+        projectArr.push(newProject);
+    }
     const removeProject = project => {
         if (projectArr.indexOf(project) > -1) {
             let newArr;

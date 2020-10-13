@@ -5,7 +5,7 @@ import * as dom from "./dom.js";
 import * as card from "./card.js";
 import { emitter } from "./emitter.js";
 import { getDaysInMonth } from "date-fns";
-import {objToCard} from "./interfacer.js";
+import { objToCard, objToStorage } from "./interfacer.js";
 
 const cook = job.makeTask("Cook", 2021, "high", "Cook yummy food", "Pizza and ice cream for dessert", "task", "Dailies");
 const read = job.makeTask("Read", 2021, "low", "Read a book!", "War and Peace", "task", "Dailies");
@@ -22,11 +22,12 @@ weeklies.addTask(gym);
 emitter.on("allTasksBtnPressed", dom.toggleAllTasks);
 dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPressed"));
 
-dom.getSortByDate().addEventListener("click", () => projectList.sortProjects("date"))
+dom.getSortByDate().addEventListener("click", () => emitter.emit("sortBtnPressed", "date"))
 
-dom.getSortByPriority().addEventListener("click", () => projectList.sortProjects("priority"))
+//dom.getSortByPriority().addEventListener("click", () => emitter.emit("sortBtnPressed", "priority"))
+dom.getSortByPriority().addEventListener("click", () => objToStorage.storeAllObj());
 
-dom.getSortByAdded().addEventListener("click", () => projectList.sortProjects("added"));
+dom.getSortByAdded().addEventListener("click", () => emitter.emit("sortBtnPressed", "added"));
 
 dom.getContentContainer().appendChild(card.projectListRenderer(projectList.projectArr).renderProjectList());
 
@@ -45,6 +46,8 @@ emitter.on("editSubmitted", dom.submitEdit);
 emitter.on("priorityChanged", dom.changePriority)
 emitter.on("delBtnPressed", dom.removeObj);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
+emitter.on("sortBtnPressed", dom.sortList);
+console.log(projectList.projectArr[0])
 /*
 Making a to-do list
 Parts:
