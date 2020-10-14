@@ -44,7 +44,9 @@ dom.assignTaskClass();
 
 emitter.on("editRequested", dom.replaceEdit);
 emitter.on("editSubmitted", dom.submitEdit);
+emitter.on("editSubmitted", objToStorage.storeAllObj);
 emitter.on("priorityChanged", dom.changePriority)
+emitter.on("priorityChanged", objToStorage.storeAllObj);
 emitter.on("delBtnPressed", dom.removeObj);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
 emitter.on("sortBtnPressed", dom.sortList);

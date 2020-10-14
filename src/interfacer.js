@@ -49,6 +49,7 @@ const objToStorage = (() => {
         } else {
             objInfo.push(obj.getProject());
         }
+        
         objInfo.push(obj.getTimeCreated());
         return objInfo;
     }
