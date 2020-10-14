@@ -7,25 +7,26 @@ import { emitter } from "./emitter.js";
 import { getDaysInMonth } from "date-fns";
 import { objToCard, objToStorage } from "./interfacer.js";
 
-const cook = job.makeTask("Cook", 2021, "high", "Cook yummy food", "Pizza and ice cream for dessert", "task", "Dailies");
-const read = job.makeTask("Read", 2021, "low", "Read a book!", "War and Peace", "task", "Dailies");
-const gym = job.makeTask("Gym", 2021, "medium", "Go to the gym!", "Actually probably don't there's a pandemic!", "task", "Weeklies")
-const dailies = job.makeProject("Dailies", "2023-03-10", "high", "Stuff to do every day", "Boring chores", "project", "daily");
-const weeklies = job.makeProject("Weeklies", "2021-03-10", "medium", "Things to do throughout the week", "Less boring chores", "project", "weekly")
+// const cook = job.makeTask("Cook", 2021, "high", "Cook yummy food", "Pizza and ice cream for dessert", "Dailies");
+// const read = job.makeTask("Read", 2021, "low", "Read a book!", "War and Peace", "Dailies");
+// const gym = job.makeTask("Gym", 2021, "medium", "Go to the gym!", "Actually probably don't there's a pandemic!", "Weeklies")
+// const dailies = job.makeProject("Dailies", "2023-03-10", "high", "Stuff to do every day", "Boring chores", "daily");
+// const weeklies = job.makeProject("Weeklies", "2021-03-10", "medium", "Things to do throughout the week", "Less boring chores", "weekly")
 
-projectList.addProject(dailies);
-projectList.addProject(weeklies);
-dailies.addTask(cook);
-dailies.addTask(read);
-weeklies.addTask(gym);
+// projectList.addProject(dailies);
+// projectList.addProject(weeklies);
+// dailies.addTask(cook);
+// dailies.addTask(read);
+// weeklies.addTask(gym);
+
+objToStorage.retrieveAllObj();
 
 emitter.on("allTasksBtnPressed", dom.toggleAllTasks);
 dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPressed"));
 
 dom.getSortByDate().addEventListener("click", () => emitter.emit("sortBtnPressed", "date"))
 
-//dom.getSortByPriority().addEventListener("click", () => emitter.emit("sortBtnPressed", "priority"))
-dom.getSortByPriority().addEventListener("click", () => objToStorage.storeAllObj());
+dom.getSortByPriority().addEventListener("click", () => emitter.emit("sortBtnPressed", "priority"))
 
 dom.getSortByAdded().addEventListener("click", () => emitter.emit("sortBtnPressed", "added"));
 

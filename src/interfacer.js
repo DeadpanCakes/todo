@@ -18,7 +18,7 @@ const objToCard = (() => {
 
     const findProjectCat = (taskInfo) => {
         const id = getId(taskInfo);
-        for (let i=0;i<projectList.projectArr.length;i++) {
+        for (let i = 0; i < projectList.projectArr.length; i++) {
             if (projectList.projectArr[i].getTaskNames().some(j => j === id)) {
                 return projectList.projectArr[i];
             }
@@ -44,7 +44,7 @@ const objToStorage = (() => {
         objInfo.push(obj.desc);
         objInfo.push(obj.notes);
 
-        if (projectList.projectNames.indexOf(obj.name)>-1) {
+        if (projectList.projectNames.indexOf(obj.name) > -1) {
             console.log(obj.name);
             objInfo.push(obj.getProjectType());
         } else {
@@ -69,19 +69,49 @@ const objToStorage = (() => {
         })
     }
 
-    const retrieveAllObj = () => {
-        for (obj in localStorage) {
-            const parsedObj = JSON.parse(obj);
-            if (parsedObj.project) {
-                projectList.addProject(job.makeProject(parsedObj))
-            } else {
-                const task = job.makeTask(parsedObj)
-                const projectIndex = projectList.projectNames.indexOf(task.project)
-                projectList.projectArr[projectIndex].addTask(task);
+    const checkForProject = (arr) => {
+        const category = arr[arr.length - 1];
+        switch (category) {
+            case "daily":
+                return true;
+            case "weekly":
+                return true;
+            case "longTerm":
+                return true;
+            default:
+                return false
+        }
+    }
+
+    const retrieveProjects = () => {
+        for (let obj in localStorage) {
+            if (localStorage.hasOwnProperty(obj)) {
+                const parsedObj = JSON.parse(localStorage[obj]);
+                if (checkForProject(parsedObj)) {
+                    projectList.addProject(job.makeProject(...parsedObj));
+                }
             }
         }
     }
-    return { storeAllObj, retrieveAllObj}
+
+    const retrieveTasks = () => {
+        for (let obj in localStorage) {
+            if (localStorage.hasOwnProperty(obj)) {
+                const parsedObj = JSON.parse(localStorage[obj]);
+                if (!checkForProject(parsedObj)) {
+                    const task = job.makeTask(...parsedObj)
+                    const projectIndex = projectList.projectNames.indexOf(task.getProject())
+                    projectList.projectArr[projectIndex].addTask(task);
+                }
+            }
+        }
+    }
+
+    const retrieveAllObj = () => {
+        retrieveProjects();
+        retrieveTasks();
+    }
+    return { storeAllObj, retrieveAllObj }
 })();
 
 /*

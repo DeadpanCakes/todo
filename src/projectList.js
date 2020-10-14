@@ -1,16 +1,19 @@
 import { lastDayOfWeek } from "date-fns";
+import { objToStorage } from "./interfacer.js";
 
 const projectList = (() => {
     let projectArr = [];
 
     const addProject = newProject => {
         projectArr.push(newProject);
+        objToStorage.storeAllObj();
     }
     const removeProject = project => {
         if (projectArr.indexOf(project) > -1) {
             let newArr;
             newArr = (projectArr.slice(0, projectArr.indexOf(project))).concat(projectArr.slice(projectArr.indexOf(project) + 1))
             projectArr = newArr;
+            objToStorage.storeAllObj();
         }
     }
     const sortProjects = (criteria) => {
@@ -30,7 +33,7 @@ const projectList = (() => {
                 break;
             case "added":
                 console.log("reached");
-                projectArr.sort((a,b) => a.timeOfCreation - b.timeOfCreation);
+                projectArr.sort((a, b) => a.timeOfCreation - b.timeOfCreation);
         };
     };
     return {
