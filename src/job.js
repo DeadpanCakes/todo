@@ -3,14 +3,13 @@ import { zonedTimeToUtc } from "date-fns-tz";
 import { objToStorage } from "./interfacer";
 
 const makeJob = (name, dueDate, priority, desc, notes) => {
-    const timeCreated = new Date;
+    //const timeCreated = new Date;
     const changeName = (newName) => name = newName;
     const changeDueDate = (newDueDate) => dueDate = newDueDate;
     const changePriority = (newPriority) => priority = newPriority;
     const changeDesc = (newDesc) => desc = newDesc;
     const changeNotes = (newNotes) => notes = newNotes;
     return {
-        get timeOfCreation() { return timeCreated },
         get name() { return name },
         get dueDate() { return dueDate },
         get formattedDueDate() { return format(new Date(zonedTimeToUtc(dueDate.toString())), "PPP") },
@@ -50,11 +49,22 @@ const projectMixin = (job, projectType) => {
     });
 };
 
-const makeTask = (name, dueDate, priority, desc, notes, project) => {
-    return taskMixin(Object.create(makeJob(name, dueDate, priority, desc, notes)), project)
+const dateMixin = (job, time) => {
+    let timeCreated;
+    if (!time) {
+        timeCreated = new Date
+    } else {
+        timeCreated = time;
+    }
+    const getTimeCreated = () => timeCreated;
+    return Object.assign(Object.create(job), { getTimeCreated })
+}
+
+const makeTask = (name, dueDate, priority, desc, notes, project, time) => {
+    return dateMixin(Object.create(taskMixin(Object.create(makeJob(name, dueDate, priority, desc, notes)), project)),time);
 };
-const makeProject = (name, dueDate, priority, desc, notes, type) => {
-    return projectMixin(Object.create(makeJob(name, dueDate, priority, desc, notes, type)), type)
+const makeProject = (name, dueDate, priority, desc, notes, type, time) => {
+    return dateMixin(Object.create(projectMixin(Object.create(makeJob(name, dueDate, priority, desc, notes, type)), type)), time);
 };
 
 export {

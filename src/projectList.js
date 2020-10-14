@@ -17,6 +17,7 @@ const projectList = (() => {
         }
     }
     const sortProjects = (criteria) => {
+        console.log(projectArr[0].name,projectArr[1].name)
         switch (criteria) {
             case "date":
                 projectArr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
@@ -32,15 +33,19 @@ const projectList = (() => {
                 projectArr = highArr.concat(medArr.concat(lowArr));
                 break;
             case "added":
-                projectArr.sort((a, b) => a.timeOfCreation - b.timeOfCreation);
+                projectArr.sort((a, b) => new Date(a.getTimeCreated()) - new Date(b.getTimeCreated()));
+                break;
         };
+        console.log(projectArr[0].name,projectArr[1].name)
     };
+
     return {
         addProject,
         removeProject,
         sortProjects,
         get projectArr() { return projectArr },
-        get projectNames() { return projectArr.map((obj) => obj.name) }
+        get projectNames() { return projectArr.map((obj) => obj.name)
+        }
     };
 })();
 

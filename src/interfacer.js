@@ -47,9 +47,9 @@ const objToStorage = (() => {
         if (projectList.projectNames.indexOf(objInfo[0]) > -1) {
             objInfo.push(obj.getProjectType());
         } else {
-            console.log(projectList.projectNames.indexOf(objInfo[0]) > -1)
             objInfo.push(obj.getProject());
         }
+        objInfo.push(obj.getTimeCreated());
         return objInfo;
     }
 
@@ -69,7 +69,7 @@ const objToStorage = (() => {
     }
 
     const checkForProject = (arr) => {
-        const category = arr[arr.length - 1];
+        const category = arr[arr.length - 2];
         switch (category) {
             case "daily":
                 return true;
