@@ -44,11 +44,10 @@ const objToStorage = (() => {
         objInfo.push(obj.desc);
         objInfo.push(obj.notes);
 
-        if (projectList.projectNames.indexOf(obj.name) > -1) {
-            console.log(obj.name);
+        if (projectList.projectNames.indexOf(objInfo[0]) > -1) {
             objInfo.push(obj.getProjectType());
         } else {
-            console.log(obj.name);
+            console.log(projectList.projectNames.indexOf(objInfo[0]) > -1)
             objInfo.push(obj.getProject());
         }
         return objInfo;
@@ -101,9 +100,19 @@ const objToStorage = (() => {
                 if (!checkForProject(parsedObj)) {
                     const task = job.makeTask(...parsedObj)
                     const projectIndex = projectList.projectNames.indexOf(task.getProject())
-                    projectList.projectArr[projectIndex].addTask(task);
+                    if (projectIndex <0) {
+                        console.log(task.getProject())
+                    } else {
+                        projectList.projectArr[projectIndex].addTask(task);
+                    }
                 }
             }
+        }
+    }
+
+    const removeObj = (name) => {
+        if (localStorage[name]) {
+            localStorage.removeItem(name);
         }
     }
 
@@ -111,7 +120,7 @@ const objToStorage = (() => {
         retrieveProjects();
         retrieveTasks();
     }
-    return { storeAllObj, retrieveAllObj }
+    return { storeAllObj, retrieveAllObj, removeObj }
 })();
 
 /*

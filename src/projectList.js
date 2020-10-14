@@ -13,7 +13,7 @@ const projectList = (() => {
             let newArr;
             newArr = (projectArr.slice(0, projectArr.indexOf(project))).concat(projectArr.slice(projectArr.indexOf(project) + 1))
             projectArr = newArr;
-            objToStorage.storeAllObj();
+            objToStorage.removeObj(project.name)
         }
     }
     const sortProjects = (criteria) => {
@@ -32,7 +32,6 @@ const projectList = (() => {
                 projectArr = highArr.concat(medArr.concat(lowArr));
                 break;
             case "added":
-                console.log("reached");
                 projectArr.sort((a, b) => a.timeOfCreation - b.timeOfCreation);
         };
     };

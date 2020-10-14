@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { zonedTimeToUtc } from "date-fns-tz";
+import { objToStorage } from "./interfacer";
 
 const makeJob = (name, dueDate, priority, desc, notes) => {
     const timeCreated = new Date;
@@ -31,12 +32,16 @@ const taskMixin = (job, project) => {
 const projectMixin = (job, projectType) => {
     return Object.assign(Object.create(job), {
         taskArr: [],
-        addTask(task) { this.taskArr.push(task) },
+        addTask(task) { 
+            this.taskArr.push(task)
+            objToStorage.storeAllObj();
+        },
         removeTask(task) {
             if (this.taskArr.indexOf(task) > -1) {
                 let newArr;
                 newArr = (this.taskArr.slice(0, this.taskArr.indexOf(task))).concat(this.taskArr.slice(this.taskArr.indexOf(task) + 1))
                 this.taskArr = newArr;
+                objToStorage.removeObj(task.name);
             };
         },
         getTaskArr() { return this.taskArr },

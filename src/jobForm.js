@@ -61,6 +61,7 @@ const genCatElements = catArr => {
         const newOption = dom.makeOption();
         newOption.value = catArr[i];
         newOption.textContent = catArr[i];
+        newOption.classList.add("catOption")
         catElementArr.push(newOption);
     }
     return catElementArr;
@@ -139,7 +140,7 @@ taskSubmitInput.type = "submit";
 taskSubmitInput.value = "Sumbit";
 taskSubmitInput.addEventListener("click", e => {
     e.preventDefault();
-    const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value);
+    const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value,categorySelect.value);
     const findIndex = (projectArr,categoryName) => projectArr.indexOf(categoryName);
     const addNewTask = (projectIndex, task) => projectList.projectArr[projectIndex].addTask(task);
     addNewTask(findIndex(projectList.projectNames,categorySelect.value), newTask);

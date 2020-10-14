@@ -26,7 +26,7 @@ dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPr
 
 dom.getSortByDate().addEventListener("click", () => emitter.emit("sortBtnPressed", "date"))
 
-dom.getSortByPriority().addEventListener("click", () => emitter.emit("sortBtnPressed", "priority"))
+dom.getSortByPriority().addEventListener("click", () => emitter.emit("sortBtnPressed", "priority"));
 
 dom.getSortByAdded().addEventListener("click", () => emitter.emit("sortBtnPressed", "added"));
 
@@ -48,7 +48,6 @@ emitter.on("priorityChanged", dom.changePriority)
 emitter.on("delBtnPressed", dom.removeObj);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
 emitter.on("sortBtnPressed", dom.sortList);
-console.log(projectList.projectArr[0])
 /*
 Making a to-do list
 Parts:
