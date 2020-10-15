@@ -6,25 +6,14 @@ import * as card from "./card.js";
 import { emitter } from "./emitter.js";
 import { getDaysInMonth } from "date-fns";
 import { objToCard, objToStorage } from "./interfacer.js";
-
-// const cook = job.makeTask("Cook", 2021, "high", "Cook yummy food", "Pizza and ice cream for dessert", "Dailies");
-// const read = job.makeTask("Read", 2021, "low", "Read a book!", "War and Peace", "Dailies");
-// const gym = job.makeTask("Gym", 2021, "medium", "Go to the gym!", "Actually probably don't there's a pandemic!", "Weeklies")
-// const dailies = job.makeProject("Dailies", "2023-03-10", "high", "Stuff to do every day", "Boring chores", "daily");
-// const weeklies = job.makeProject("Weeklies", "2021-03-10", "medium", "Things to do throughout the week", "Less boring chores", "weekly")
-
-// projectList.addProject(dailies);
-// projectList.addProject(weeklies);
-// dailies.addTask(cook);
-// dailies.addTask(read);
-// weeklies.addTask(gym);
+import * as popUp from "./popUp.js"
 
 objToStorage.retrieveAllObj();
 
 emitter.on("allTasksBtnPressed", dom.toggleAllTasks);
 dom.getToggleTasks().addEventListener("click", () => emitter.emit("allTasksBtnPressed"));
 
-dom.getSortByDate().addEventListener("click", () => emitter.emit("sortBtnPressed", "date"))
+dom.getSortByDate().addEventListener("click", () => emitter.emit("sortBtnPressed", "date"));
 
 dom.getSortByPriority().addEventListener("click", () => emitter.emit("sortBtnPressed", "priority"));
 
@@ -50,53 +39,3 @@ emitter.on("priorityChanged", objToStorage.storeAllObj);
 emitter.on("delBtnPressed", dom.removeObj);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
 emitter.on("sortBtnPressed", dom.sortList);
-/*
-Making a to-do list
-Parts:
-    TopNav
-        Expand All Tasks (Minimizes Groups)
-    Project List
-        Project Card
-            Completion Checkbox
-            Name
-            Priority
-            Due Date
-            Expand for more info
-                Description
-                Notes
-                Task Card
-                    Name
-                    Priority
-                    Due Date
-                    Expand for more info
-                        Description
-                        Notes
-                    Delete Btn (With Confirmation)
-            Delete Btn (With Confirmation)
-    Form Tab
-        Form Tab Has Two Tabs
-            Project Tab
-                Name
-                Project Type
-                    Dailies
-                    Weekly
-                    Long Term
-                Due Date
-                    Greyed Out If Daily
-                    Pick A Day of the Week if Weekly (Sunday By Default)
-                Priority
-                    Greyed Out If Daily or Weekly
-                Description
-                Notes
-            New Task Tab
-                Name
-                Due Date
-                Priority
-                Description
-                What Project They Belong To
-                Notes
-Interface?
-    Main section that contains the main list or form to add items to the list depending on what tab is currently selected
-    Nav at the bottom of the screen to jump between tabs
-    Nav at the top of the page that offers extra controls, like expanding all tasks and hiding/minimizing groupings
-*/

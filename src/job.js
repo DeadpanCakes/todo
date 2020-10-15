@@ -3,7 +3,6 @@ import { zonedTimeToUtc } from "date-fns-tz";
 import { objToStorage } from "./interfacer";
 
 const makeJob = (name, dueDate, priority, desc, notes) => {
-    //const timeCreated = new Date;
     const changeName = (newName) => name = newName;
     const changeDueDate = (newDueDate) => dueDate = newDueDate;
     const changePriority = (newPriority) => priority = newPriority;
@@ -61,10 +60,10 @@ const dateMixin = (job, time) => {
 }
 
 const makeTask = (name, dueDate, priority, desc, notes, project, time) => {
-    return dateMixin(Object.create(taskMixin(Object.create(makeJob(name, dueDate, priority, desc, notes)), project)),time);
+    return dateMixin((taskMixin((makeJob(name, dueDate, priority, desc, notes)), project)),time);
 };
 const makeProject = (name, dueDate, priority, desc, notes, type, time) => {
-    return dateMixin(Object.create(projectMixin(Object.create(makeJob(name, dueDate, priority, desc, notes, type)), type)), time);
+    return dateMixin((projectMixin((makeJob(name, dueDate, priority, desc, notes, type)), type)), time);
 };
 
 export {

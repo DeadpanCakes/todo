@@ -2,7 +2,8 @@ import { animationController } from "./anmationController.js";
 import { objToCard } from "./interfacer.js";
 import { emitter } from "./emitter.js";
 import { projectList } from "./projectList.js";
-import * as card from "./card.js";import { format } from "date-fns";
+import * as card from "./card.js";
+import { format } from "date-fns";
 import { zonedTimeToUtc } from "date-fns-tz";
 
 const makeDiv = () => document.createElement("div");

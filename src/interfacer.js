@@ -49,7 +49,7 @@ const objToStorage = (() => {
         } else {
             objInfo.push(obj.getProject());
         }
-        
+
         objInfo.push(obj.getTimeCreated());
         return objInfo;
     }
@@ -123,16 +123,5 @@ const objToStorage = (() => {
     }
     return { storeAllObj, retrieveAllObj, removeObj }
 })();
-
-/*
-write an obj with methods to facilitate communication between objects and corresponding elements to avoid coupling
-input card elements
-output corresponding object
-get an element of a card
-find some identifier for that element
-reach the identifier from the input
-loop through object list to find index of that object by comparing against id
-return index of object in object arr arr
-*/
 
 export { objToCard, objToStorage }
