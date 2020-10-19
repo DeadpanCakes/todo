@@ -1,5 +1,6 @@
 import * as dom from "./dom"
 import { emitter } from "./emitter";
+import * as interfacer from "./interfacer.js";
 
 const popUp = () => {
     const window = dom.makeDiv();
@@ -21,11 +22,16 @@ const delConfirmMixin = () => {
             this.window.appendChild(this.cancelBtn);
         },
         addBtnEvents(obj) {
-            this.confirmBtn.addEventListener("click", () => emitter.emit("confirmDel"), obj);
+            const confirmDel = (obj) => emitter.emit("confirmDel", obj);
+            this.confirmBtn.addEventListener("click", (e) => {
+                confirmDel(obj);
+                e.target.removeEventListener("click", confirmDel);
+            });
             this.cancelBtn.addEventListener("click", () => this.hideWindow());
         },
         displayWindow(container, context) {
-            this.populateText(context);
+            const objName = findObj(context).name
+            this.populateText(objName);
             this.populateBtns();
             this.addBtnEvents(context);
             container.appendChild(this.window);
@@ -76,6 +82,14 @@ const findField = (element) => {
             return "Notes"
     };
 };
+
+const findObj = (element) => {
+    if (!!interfacer.objToCard.getProject(element)) {
+        return interfacer.objToCard.getProject(element);
+    } else {
+        return interfacer.objToCard.findTask(element);
+    }
+}
 
 const delConfirm = (() => delConfirmMixin())();
 const failValid = (() => failValidMixin())();

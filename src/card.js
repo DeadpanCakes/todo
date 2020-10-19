@@ -72,14 +72,17 @@ const card = (name, dueDate, priority, description, notes) => {
     expandBtn.textContent = "V";
     expandBtn.addEventListener("click", () => {
         emitter.emit("expandBtnPressed", card, expandDiv);
-    })
+    });
 
     const delBtn = dom.makeBtn();
     delBtn.classList.add("delBtn");
     delBtn.textContent = "X";
     delBtn.addEventListener("click", (e) => {
-        emitter.emit("delBtnPressed", e.target);
+        emitter.emit("delBtnPressed", dom.getContentContainer(), e.target)
     })
+    // delBtn.addEventListener("click", (e) => {
+    //     emitter.emit("delBtnPressed", e.target);
+    // });
 
     const expandDiv = dom.makeDiv();
     expandDiv.classList.add("expandDiv");
