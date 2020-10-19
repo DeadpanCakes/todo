@@ -1,7 +1,7 @@
 import * as job from "./job.js";
 import { projectList } from "./projectList.js";
 import * as dom from "./dom.js";
-import { validate } from "./formValidation.js";
+import { validate, checkForDupe } from "./formValidation.js";
 import * as popUp from "./popUp.js";
 import { emitter } from "./emitter.js";
 
@@ -137,7 +137,10 @@ const jobForm = (() => {
     //Making Arr Of Input Fields For Validation
     const inputFields = [nameInput,dateInput,descTextArea,notesTextArea];
 
-    const validateInputs = () => {
+    const findInvalidInputs = () => {
+        if (projectList.projectNames.some((name) => name === nameField.value)) {
+            return [nameInput];
+        }
         const invalidFields = validate(inputFields);
         invalidFields.forEach((input) => {
             console.log(input);
@@ -151,13 +154,13 @@ const jobForm = (() => {
     projectSubmitInput.type = "submit";
     projectSubmitInput.value = "Submit";
     projectSubmitInput.addEventListener("click", e => {
-        if (!validateInputs()[0]) {
+        if (!findInvalidInputs()[0]) {
             e.preventDefault();
             projectList.addProject(job.makeProject(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, typeSelect.value));
             clearForm();
         } else {
             e.preventDefault();
-            emitter.emit("validationFailed", dom.getContentContainer(), validateInputs()[0]);
+            emitter.emit("validationFailed", dom.getContentContainer(), findInvalidInputs()[0]);
         }
     })
 
@@ -167,11 +170,15 @@ const jobForm = (() => {
     taskSubmitInput.value = "Sumbit";
     taskSubmitInput.addEventListener("click", e => {
         e.preventDefault();
-        const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, categorySelect.value);
-        const findIndex = (projectArr, categoryName) => projectArr.indexOf(categoryName);
-        const addNewTask = (projectIndex, task) => projectList.projectArr[projectIndex].addTask(task);
-        addNewTask(findIndex(projectList.projectNames, categorySelect.value), newTask);
-        clearForm();
+        if (!findInvalidInputs()[0]) {
+            const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, categorySelect.value);
+            const findIndex = (projectArr, categoryName) => projectArr.indexOf(categoryName);
+            const addNewTask = (projectIndex, task) => projectList.projectArr[projectIndex].addTask(task);
+            addNewTask(findIndex(projectList.projectNames, categorySelect.value), newTask);
+            clearForm();
+        } else {
+            emitter.emit("validationFailed", dom.getContentContainer(), findInvalidInputs()[0])
+        }
     })
 
     //Method for clearing form between changes
