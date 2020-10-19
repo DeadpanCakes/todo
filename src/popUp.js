@@ -4,8 +4,8 @@ import { emitter } from "./emitter";
 const popUp = () => {
     const window = dom.makeDiv();
     window.classList.add("popUp");
-    return { window }
-}
+    return { window };
+};
 
 const delConfirmMixin = () => {
     return Object.assign(popUp(), {
@@ -34,9 +34,32 @@ const delConfirmMixin = () => {
             const container = this.window.parentElement;
             container.removeChild(this.window);
         }
-    })
-}
+    });
+};
+
+const failValidMixin = () => {
+    return Object.assign(popUp(), {
+        confirmBtn: dom.makeBtn(),
+        populateText (context) {
+            this.window.textContent = `${context} Field Not Properly Filled Out`;
+        },
+        populateBtn() {
+            confirmBtn.textContent = "OK";
+            this.window.appendChild(confirmBtn);
+        },
+        addBtnEvents() {
+            this.confirmBtn.addEventListener("click", () => this.hideWindow())
+        },
+        displayWindow(container, context) {
+            this.populateText(context);
+            this.populateBtn();
+            this.addBtnEvents();
+            container.appendChild(this.window);
+        }
+    });
+};
 
 const delConfirm = (() => delConfirmMixin())();
+const failValid = (() => failValidMixin())();
 
-export { delConfirm }
+export { delConfirm, failValid };

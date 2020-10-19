@@ -1,181 +1,172 @@
 import * as job from "./job.js";
-import {projectList} from "./projectList.js";
+import { projectList } from "./projectList.js";
 import * as dom from "./dom.js";
 
-const formContainerDiv = dom.makeDiv();
-const formTabDiv = dom.makeDiv();
-const taskTab = dom.makeSpan();
-taskTab.id = "taskTab";
-taskTab.textContent = "Add Task";
-taskTab.addEventListener("click", () => {
-    dom.initContainer(formContainerDiv);
-    renderCatOptions(projectList.projectNames);
-    populateFormContainer("task");
-});
-const projectTab = dom.makeSpan();
-projectTab.id = "projectTab";
-projectTab.textContent = "Add Project";
-projectTab.addEventListener("click", () => {
-    dom.initContainer(formContainerDiv);
-    populateFormContainer("project");
-});
+//FormTabDiv not showing up for some reason
 
-formTabDiv.appendChild(projectTab);
-formTabDiv.appendChild(taskTab);
+const jobForm = (() => {
+    const formContainerDiv = dom.makeDiv();
+    const formTabDiv = dom.makeDiv();
 
-const typeLabel = dom.makeLabel();
-typeLabel.for = "typeField";
-typeLabel.textContent = "Project Type";
-const typeSelect = dom.makeSelect();
-typeSelect.id = "typeField";
-const dailyOption = dom.makeOption();
-dailyOption.value = "daily";
-dailyOption.textContent = "Daily";
-const weeklyOption = dom.makeOption();
-weeklyOption.value = "weekly";
-weeklyOption.textContent = "Weekly";
-const longTermOption = dom.makeOption();
-longTermOption.value = "longTerm";
-longTermOption.textContent = "Long Term";
-typeSelect.appendChild(dailyOption);
-typeSelect.appendChild(weeklyOption);
-typeSelect.appendChild(longTermOption);
+    const taskTab = dom.makeSpan();
+    taskTab.id = "taskTab";
+    taskTab.textContent = "Add Task";
+    taskTab.addEventListener("click", () => {
+        dom.initContainer(formContainerDiv);
+        renderCatOptions(projectList.projectNames);
+        populateFormContainer("task");
+    });
+    const projectTab = dom.makeSpan();
+    projectTab.id = "projectTab";
+    projectTab.textContent = "Add Project";
+    projectTab.addEventListener("click", () => {
+        dom.initContainer(formContainerDiv);
+        populateFormContainer("project");
+    });
 
-const categoryLabel = dom.makeLabel();
-categoryLabel.for = "categoryField";
-categoryLabel.textContent = "Belongs To:";
-const categorySelect = dom.makeSelect();
-categorySelect.id = "categoryField";
+    formTabDiv.appendChild(projectTab);
+    formTabDiv.appendChild(taskTab);
 
-const genCatOptions = projects => {
-    const optionsArr = []
-    for (let i=0;i<projects.length;i++){
-        optionsArr.push(projects[i]);
+    //Making Selector For Project Type
+    const typeLabel = dom.makeLabel();
+    typeLabel.for = "typeField";
+    typeLabel.textContent = "Project Type";
+    const typeSelect = dom.makeSelect();
+    typeSelect.id = "typeField";
+    const dailyOption = dom.makeOption();
+    dailyOption.value = "daily";
+    dailyOption.textContent = "Daily";
+    const weeklyOption = dom.makeOption();
+    weeklyOption.value = "weekly";
+    weeklyOption.textContent = "Weekly";
+    const longTermOption = dom.makeOption();
+    longTermOption.value = "longTerm";
+    longTermOption.textContent = "Long Term";
+    typeSelect.appendChild(dailyOption);
+    typeSelect.appendChild(weeklyOption);
+    typeSelect.appendChild(longTermOption);
+
+    //Makngi Selector For Task Category and Fn's For Dynamically Populating them w/ Options
+    const categoryLabel = dom.makeLabel();
+    categoryLabel.for = "categoryField";
+    categoryLabel.textContent = "Belongs To:";
+    const categorySelect = dom.makeSelect();
+    categorySelect.id = "categoryField";
+
+    const genCatOptions = projects => {
+        const optionsArr = []
+        for (let i = 0; i < projects.length; i++) {
+            optionsArr.push(projects[i]);
+        }
+        return optionsArr;
     }
-    return optionsArr;
-}
 
-const genCatElements = catArr => {
-    const catElementArr = []
-    for (let i=0;i<catArr.length;i++) {
-        const newOption = dom.makeOption();
-        newOption.value = catArr[i];
-        newOption.textContent = catArr[i];
-        newOption.classList.add("catOption")
-        catElementArr.push(newOption);
+    const genCatElements = catArr => {
+        const catElementArr = []
+        for (let i = 0; i < catArr.length; i++) {
+            const newOption = dom.makeOption();
+            newOption.value = catArr[i];
+            newOption.textContent = catArr[i];
+            newOption.classList.add("catOption")
+            catElementArr.push(newOption);
+        }
+        return catElementArr;
     }
-    return catElementArr;
-}
 
-const populateCatOptions = catElementArr => {
-    dom.initContainer(categorySelect)
-    for (let i=0;i<catElementArr.length;i++){
-        categorySelect.appendChild(catElementArr[i])
+    const populateCatOptions = catElementArr => {
+        dom.initContainer(categorySelect)
+        for (let i = 0; i < catElementArr.length; i++) {
+            categorySelect.appendChild(catElementArr[i])
+        }
     }
-}
 
-const renderCatOptions = (projectArr) => {
-    const optionsArr = genCatOptions(projectArr);
-    const catElementArr = genCatElements(optionsArr);
-    populateCatOptions(catElementArr);
-}
+    const renderCatOptions = (projectArr) => {
+        const optionsArr = genCatOptions(projectArr);
+        const catElementArr = genCatElements(optionsArr);
+        populateCatOptions(catElementArr);
+    }
 
-const nameLabel = dom.makeLabel();
-nameLabel.for = 'nameField';
-nameLabel.textContent = 'Name';
-const nameInput = dom.makeInput();
-nameInput.id = "nameField";
-nameInput.type = "text";
+    //Makning Inputs for name, date, priority, description, and notes
+    const nameLabel = dom.makeLabel();
+    nameLabel.for = 'nameField';
+    nameLabel.textContent = 'Name';
+    const nameInput = dom.makeInput();
+    nameInput.id = "nameField";
+    nameInput.type = "text";
 
-const dateLabel = dom.makeLabel();
-dateLabel.for = "dateField";
-dateLabel.textContent = "Due Date";
-const dateInput = dom.makeInput();
-dateInput.id = "dateField";
-dateInput.type = "date";
+    const dateLabel = dom.makeLabel();
+    dateLabel.for = "dateField";
+    dateLabel.textContent = "Due Date";
+    const dateInput = dom.makeInput();
+    dateInput.id = "dateField";
+    dateInput.type = "date";
 
-const priorityLabel = dom.makeLabel();
-priorityLabel.for = "priorityField";
-priorityLabel.textContent = "Priority"
-const prioritySelect = dom.makeSelect();
-prioritySelect.id = "priorityField";
-const highOption = dom.makeOption();
-highOption.value = "high";
-highOption.textContent = "High";
-const mediumOption = dom.makeOption();
-mediumOption.value = "medium";
-mediumOption.textContent = "Medium";
-const lowOption = dom.makeOption();
-lowOption.value = "low";
-lowOption.textContent = "Low";
-prioritySelect.appendChild(highOption);
-prioritySelect.appendChild(mediumOption);
-prioritySelect.appendChild(lowOption);
+    const priorityLabel = dom.makeLabel();
+    priorityLabel.for = "priorityField";
+    priorityLabel.textContent = "Priority"
+    const prioritySelect = dom.makeSelect();
+    prioritySelect.id = "priorityField";
+    const highOption = dom.makeOption();
+    highOption.value = "high";
+    highOption.textContent = "High";
+    const mediumOption = dom.makeOption();
+    mediumOption.value = "medium";
+    mediumOption.textContent = "Medium";
+    const lowOption = dom.makeOption();
+    lowOption.value = "low";
+    lowOption.textContent = "Low";
+    prioritySelect.appendChild(highOption);
+    prioritySelect.appendChild(mediumOption);
+    prioritySelect.appendChild(lowOption);
 
-const descLabel = dom.makeLabel();
-descLabel.for = "descField";
-descLabel.textContent = "Description";
-const descTextArea = dom.makeTextArea();
-descTextArea.id = "descField";
+    const descLabel = dom.makeLabel();
+    descLabel.for = "descField";
+    descLabel.textContent = "Description";
+    const descTextArea = dom.makeTextArea();
+    descTextArea.id = "descField";
 
-const notesLabel = dom.makeLabel();
-notesLabel.for = "notesField";
-notesLabel.textContent = "Notes";
-const notesTextArea = dom.makeTextArea();
-notesTextArea.id = "notesField";
+    const notesLabel = dom.makeLabel();
+    notesLabel.for = "notesField";
+    notesLabel.textContent = "Notes";
+    const notesTextArea = dom.makeTextArea();
+    notesTextArea.id = "notesField";
 
-const projectSubmitInput = dom.makeInput();
-projectSubmitInput.id = "projectSubmitBtn";
-projectSubmitInput.type = "submit";
-projectSubmitInput.value = "Submit";
-projectSubmitInput.addEventListener("click", e => {
-    e.preventDefault();
-    projectList.addProject(job.makeProject(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, typeSelect.value));
-    clearForm();
-})
+    //Making separate submit inputs for projects and tasks
+    const projectSubmitInput = dom.makeInput();
+    projectSubmitInput.id = "projectSubmitBtn";
+    projectSubmitInput.type = "submit";
+    projectSubmitInput.value = "Submit";
+    projectSubmitInput.addEventListener("click", e => {
+        e.preventDefault();
+        projectList.addProject(job.makeProject(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, typeSelect.value));
+        clearForm();
+    })
 
-const taskSubmitInput = dom.makeInput();
-taskSubmitInput.id = "projectSubmitBtn";
-taskSubmitInput.type = "submit";
-taskSubmitInput.value = "Sumbit";
-taskSubmitInput.addEventListener("click", e => {
-    e.preventDefault();
-    const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value,categorySelect.value);
-    const findIndex = (projectArr,categoryName) => projectArr.indexOf(categoryName);
-    const addNewTask = (projectIndex, task) => projectList.projectArr[projectIndex].addTask(task);
-    addNewTask(findIndex(projectList.projectNames,categorySelect.value), newTask);
-    clearForm();
-})
+    const taskSubmitInput = dom.makeInput();
+    taskSubmitInput.id = "projectSubmitBtn";
+    taskSubmitInput.type = "submit";
+    taskSubmitInput.value = "Sumbit";
+    taskSubmitInput.addEventListener("click", e => {
+        e.preventDefault();
+        const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, categorySelect.value);
+        const findIndex = (projectArr, categoryName) => projectArr.indexOf(categoryName);
+        const addNewTask = (projectIndex, task) => projectList.projectArr[projectIndex].addTask(task);
+        addNewTask(findIndex(projectList.projectNames, categorySelect.value), newTask);
+        clearForm();
+    })
 
-const clearForm = () => {
-    nameInput.value = "";
-    dateInput.value =  "";
-    descTextArea.value = "";
-    notesTextArea.value = "";
-}
-
-const populateFormContainer = (tab) => {
-    const formContainer = formContainerDiv;
-    dom.initContainer(formContainer);
-    formContainerDiv.appendChild(formTabDiv);
-    let form;
-    let formArr;
-    const projectFormArr = [
+    //Method for clearing form between changes
+    const clearForm = () => {
+        nameInput.value = "";
+        dateInput.value = "";
+        descTextArea.value = "";
+        notesTextArea.value = "";
+    }
+    return {
+        formContainerDiv,
+        formTabDiv,
         typeLabel,
         typeSelect,
-        nameLabel,
-        nameInput,
-        dateLabel,
-        dateInput,
-        priorityLabel,
-        prioritySelect,
-        descLabel,
-        descTextArea,
-        notesLabel,
-        notesTextArea,
-        projectSubmitInput
-    ];
-    const taskFormArr = [
         categoryLabel,
         categorySelect,
         nameLabel,
@@ -188,7 +179,48 @@ const populateFormContainer = (tab) => {
         descTextArea,
         notesLabel,
         notesTextArea,
-        taskSubmitInput
+        projectSubmitInput,
+        taskSubmitInput,
+        clearForm
+    }
+})();
+
+const populateFormContainer = (tab) => {
+    console.log(jobForm.formContainerDiv.childNodes)
+    const formContainer = jobForm.formContainerDiv;
+    dom.initContainer(formContainer);
+    jobForm.formContainerDiv.appendChild(jobForm.formTabDiv);
+    let form;
+    let formArr;
+    const projectFormArr = [
+        jobForm.typeLabel,
+        jobForm.typeSelect,
+        jobForm.nameLabel,
+        jobForm.nameInput,
+        jobForm.dateLabel,
+        jobForm.dateInput,
+        jobForm.priorityLabel,
+        jobForm.prioritySelect,
+        jobForm.descLabel,
+        jobForm.descTextArea,
+        jobForm.notesLabel,
+        jobForm.notesTextArea,
+        jobForm.projectSubmitInput
+    ];
+    const taskFormArr = [
+        jobForm.categoryLabel,
+        jobForm.categorySelect,
+        jobForm.nameLabel,
+        jobForm.nameInput,
+        jobForm.dateLabel,
+        jobForm.dateInput,
+        jobForm.priorityLabel,
+        jobForm.prioritySelect,
+        jobForm.descLabel,
+        jobForm.descTextArea,
+        jobForm.notesLabel,
+        jobForm.notesTextArea,
+        jobForm.taskSubmitInput
     ];
     const projectForm = dom.makeForm();
     const taskForm = dom.makeForm();
@@ -209,3 +241,155 @@ const populateFormContainer = (tab) => {
 };
 
 export { populateFormContainer }
+
+// const formContainerDiv = dom.makeDiv();
+// const formTabDiv = dom.makeDiv();
+// const taskTab = dom.makeSpan();
+// taskTab.id = "taskTab";
+// taskTab.textContent = "Add Task";
+// taskTab.addEventListener("click", () => {
+//     dom.initContainer(formContainerDiv);
+//     renderCatOptions(projectList.projectNames);
+//     populateFormContainer("task");
+// });
+// const projectTab = dom.makeSpan();
+// projectTab.id = "projectTab";
+// projectTab.textContent = "Add Project";
+// projectTab.addEventListener("click", () => {
+//     dom.initContainer(formContainerDiv);
+//     populateFormContainer("project");
+// });
+
+// formTabDiv.appendChild(projectTab);
+// formTabDiv.appendChild(taskTab);
+
+// const typeLabel = dom.makeLabel();
+// typeLabel.for = "typeField";
+// typeLabel.textContent = "Project Type";
+// const typeSelect = dom.makeSelect();
+// typeSelect.id = "typeField";
+// const dailyOption = dom.makeOption();
+// dailyOption.value = "daily";
+// dailyOption.textContent = "Daily";
+// const weeklyOption = dom.makeOption();
+// weeklyOption.value = "weekly";
+// weeklyOption.textContent = "Weekly";
+// const longTermOption = dom.makeOption();
+// longTermOption.value = "longTerm";
+// longTermOption.textContent = "Long Term";
+// typeSelect.appendChild(dailyOption);
+// typeSelect.appendChild(weeklyOption);
+// typeSelect.appendChild(longTermOption);
+
+// const categoryLabel = dom.makeLabel();
+// categoryLabel.for = "categoryField";
+// categoryLabel.textContent = "Belongs To:";
+// const categorySelect = dom.makeSelect();
+// categorySelect.id = "categoryField";
+
+// const genCatOptions = projects => {
+//     const optionsArr = []
+//     for (let i = 0; i < projects.length; i++) {
+//         optionsArr.push(projects[i]);
+//     }
+//     return optionsArr;
+// }
+
+// const genCatElements = catArr => {
+//     const catElementArr = []
+//     for (let i = 0; i < catArr.length; i++) {
+//         const newOption = dom.makeOption();
+//         newOption.value = catArr[i];
+//         newOption.textContent = catArr[i];
+//         newOption.classList.add("catOption")
+//         catElementArr.push(newOption);
+//     }
+//     return catElementArr;
+// }
+
+// const populateCatOptions = catElementArr => {
+//     dom.initContainer(categorySelect)
+//     for (let i = 0; i < catElementArr.length; i++) {
+//         categorySelect.appendChild(catElementArr[i])
+//     }
+// }
+
+// const renderCatOptions = (projectArr) => {
+//     const optionsArr = genCatOptions(projectArr);
+//     const catElementArr = genCatElements(optionsArr);
+//     populateCatOptions(catElementArr);
+// }
+
+// const nameLabel = dom.makeLabel();
+// nameLabel.for = 'nameField';
+// nameLabel.textContent = 'Name';
+// const nameInput = dom.makeInput();
+// nameInput.id = "nameField";
+// nameInput.type = "text";
+
+// const dateLabel = dom.makeLabel();
+// dateLabel.for = "dateField";
+// dateLabel.textContent = "Due Date";
+// const dateInput = dom.makeInput();
+// dateInput.id = "dateField";
+// dateInput.type = "date";
+
+// const priorityLabel = dom.makeLabel();
+// priorityLabel.for = "priorityField";
+// priorityLabel.textContent = "Priority"
+// const prioritySelect = dom.makeSelect();
+// prioritySelect.id = "priorityField";
+// const highOption = dom.makeOption();
+// highOption.value = "high";
+// highOption.textContent = "High";
+// const mediumOption = dom.makeOption();
+// mediumOption.value = "medium";
+// mediumOption.textContent = "Medium";
+// const lowOption = dom.makeOption();
+// lowOption.value = "low";
+// lowOption.textContent = "Low";
+// prioritySelect.appendChild(highOption);
+// prioritySelect.appendChild(mediumOption);
+// prioritySelect.appendChild(lowOption);
+
+// const descLabel = dom.makeLabel();
+// descLabel.for = "descField";
+// descLabel.textContent = "Description";
+// const descTextArea = dom.makeTextArea();
+// descTextArea.id = "descField";
+
+// const notesLabel = dom.makeLabel();
+// notesLabel.for = "notesField";
+// notesLabel.textContent = "Notes";
+// const notesTextArea = dom.makeTextArea();
+// notesTextArea.id = "notesField";
+
+// const projectSubmitInput = dom.makeInput();
+// projectSubmitInput.id = "projectSubmitBtn";
+// projectSubmitInput.type = "submit";
+// projectSubmitInput.value = "Submit";
+// projectSubmitInput.addEventListener("click", e => {
+//     e.preventDefault();
+//     projectList.addProject(job.makeProject(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, typeSelect.value));
+//     clearForm();
+// })
+
+// const taskSubmitInput = dom.makeInput();
+// taskSubmitInput.id = "projectSubmitBtn";
+// taskSubmitInput.type = "submit";
+// taskSubmitInput.value = "Sumbit";
+// taskSubmitInput.addEventListener("click", e => {
+//     e.preventDefault();
+//     const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, categorySelect.value);
+//     const findIndex = (projectArr, categoryName) => projectArr.indexOf(categoryName);
+//     const addNewTask = (projectIndex, task) => projectList.projectArr[projectIndex].addTask(task);
+//     addNewTask(findIndex(projectList.projectNames, categorySelect.value), newTask);
+//     clearForm();
+// })
+
+// const clearForm = () => {
+//     nameInput.value = "";
+//     dateInput.value = "";
+//     descTextArea.value = "";
+//     notesTextArea.value = "";
+// }
