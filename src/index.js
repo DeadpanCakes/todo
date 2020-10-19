@@ -27,9 +27,9 @@ const goToForm = () => {
     dom.initContainer(dom.getContentContainer());
     dom.getContentContainer().appendChild(populateFormContainer("project"));
 };
+
 document.getElementById("formTab").addEventListener("click", goToForm);
 dom.assignTaskClass();
-
 
 emitter.on("editRequested", dom.replaceEdit);
 emitter.on("editSubmitted", dom.submitEdit);
@@ -39,3 +39,4 @@ emitter.on("priorityChanged", objToStorage.storeAllObj);
 emitter.on("delBtnPressed", dom.removeObj);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
 emitter.on("sortBtnPressed", dom.sortList);
+emitter.on("validationFailed", popUp.failValid.displayWindow.bind(popUp.failValid));

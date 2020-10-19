@@ -1,5 +1,5 @@
-const checkIfEmpty = (value) => {
-    return !value;
+const checkIfEmpty = (string) => {
+    return !string;
 };
 
 const validate = (arr) => {

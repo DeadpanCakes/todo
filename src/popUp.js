@@ -38,25 +38,43 @@ const delConfirmMixin = () => {
 };
 
 const failValidMixin = () => {
-    return Object.assign(popUp(), {
+    return Object.assign({
         confirmBtn: dom.makeBtn(),
-        populateText (context) {
+        populateText: function (context) {
             this.window.textContent = `${context} Field Not Properly Filled Out`;
         },
         populateBtn() {
-            confirmBtn.textContent = "OK";
-            this.window.appendChild(confirmBtn);
+            this.confirmBtn.textContent = "OK";
+            this.window.appendChild(this.confirmBtn);
         },
         addBtnEvents() {
             this.confirmBtn.addEventListener("click", () => this.hideWindow())
         },
         displayWindow(container, context) {
-            this.populateText(context);
+            console.log(container, context)
+            this.populateText(findField(context));
             this.populateBtn();
             this.addBtnEvents();
             container.appendChild(this.window);
+        },
+        hideWindow() {
+            const container = this.window.parentElement;
+            container.removeChild(this.window);
         }
-    });
+    }, popUp());
+};
+
+const findField = (element) => {
+    switch (element.id) {
+        case "nameField":
+            return "Name";
+        case "dateField":
+            return "Date";
+        case "descField":
+            return "Description";
+        case "notesField":
+            return "Notes"
+    };
 };
 
 const delConfirm = (() => delConfirmMixin())();

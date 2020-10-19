@@ -1,6 +1,9 @@
 import * as job from "./job.js";
 import { projectList } from "./projectList.js";
 import * as dom from "./dom.js";
+import { validate } from "./formValidation.js";
+import * as popUp from "./popUp.js";
+import { emitter } from "./emitter.js";
 
 //FormTabDiv not showing up for some reason
 
@@ -46,7 +49,7 @@ const jobForm = (() => {
     typeSelect.appendChild(weeklyOption);
     typeSelect.appendChild(longTermOption);
 
-    //Makngi Selector For Task Category and Fn's For Dynamically Populating them w/ Options
+    //Making Selector For Task Category and Fn's For Dynamically Populating them w/ Options
     const categoryLabel = dom.makeLabel();
     categoryLabel.for = "categoryField";
     categoryLabel.textContent = "Belongs To:";
@@ -131,15 +134,31 @@ const jobForm = (() => {
     const notesTextArea = dom.makeTextArea();
     notesTextArea.id = "notesField";
 
+    //Making Arr Of Input Fields For Validation
+    const inputFields = [nameInput,dateInput,descTextArea,notesTextArea];
+
+    const validateInputs = () => {
+        const invalidFields = validate(inputFields);
+        invalidFields.forEach((input) => {
+            console.log(input);
+        })
+        return invalidFields;
+    }
+
     //Making separate submit inputs for projects and tasks
     const projectSubmitInput = dom.makeInput();
     projectSubmitInput.id = "projectSubmitBtn";
     projectSubmitInput.type = "submit";
     projectSubmitInput.value = "Submit";
     projectSubmitInput.addEventListener("click", e => {
-        e.preventDefault();
-        projectList.addProject(job.makeProject(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, typeSelect.value));
-        clearForm();
+        if (!validateInputs()[0]) {
+            e.preventDefault();
+            projectList.addProject(job.makeProject(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, typeSelect.value));
+            clearForm();
+        } else {
+            e.preventDefault();
+            emitter.emit("validationFailed", dom.getContentContainer(), validateInputs()[0]);
+        }
     })
 
     const taskSubmitInput = dom.makeInput();
