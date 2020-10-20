@@ -1,5 +1,5 @@
 import { animationController } from "./anmationController.js";
-import { objToCard } from "./interfacer.js";
+import { objToCard, objToStorage } from "./interfacer.js";
 import { emitter } from "./emitter.js";
 import { projectList } from "./projectList.js";
 import * as card from "./card.js";
@@ -216,6 +216,28 @@ const changePriority = (element) => {
     }
 }
 
+const toggleCompletion = (element) => {
+    if (!!objToCard.getProject(element)) {
+        const project = objToCard.getProject(element);
+        project.changeCompletion();
+        if (project.completion) {
+            element.textContent = "X"
+        } else {
+            element.textContent = "";
+        }
+        console.log(project.completion)
+    } else {
+        const task = objToCard.findTask(element);
+        task.changeCompletion();
+        if (task.completion) {
+            element.textContent = "X"
+        } else {
+            element.textContent = "";
+        }
+    }
+    objToStorage.storeAllObj();
+}
+
 export {
     makeDiv,
     makeSpan,
@@ -252,5 +274,6 @@ export {
     renderList,
     goToList,
     removeObj,
-    changePriority
+    changePriority,
+    toggleCompletion
 }

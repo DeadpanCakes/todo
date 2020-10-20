@@ -3,7 +3,7 @@ import { emitter } from "./emitter.js";
 import { objToCard } from "./interfacer.js";
 import { projectList } from "./projectList.js";
 
-const card = (name, dueDate, priority, description, notes) => {
+const card = (name, dueDate, priority, description, notes, completion) => {
     const card = dom.makeDiv();
     card.id = name;
     card.classList.add("card");
@@ -11,19 +11,14 @@ const card = (name, dueDate, priority, description, notes) => {
     const minCardContainer = dom.makeDiv();
     minCardContainer.classList.add("minCardContainer");
 
-    const checkRegion = dom.makeDiv();
-    checkRegion.classList.add("checkRegion");
+    const checkBtn = dom.makeBtn();
+    checkBtn.classList.add("checkBtn");
 
-    const animateCheck = (event) => {
-        if (event.target.classList.contains("checkedRegion")) {
-            event.target.classList.remove("checkedRegion");
-            setTimeout(() => event.target.textContent = "", 550);
-        } else {
-            event.target.textContent = "X";
-            event.target.classList.add("checkedRegion");
-        };
-    };
-    checkRegion.addEventListener("click", e => animateCheck(e));
+    if (completion) {
+        checkBtn.textContent = "X";
+    }
+
+    checkBtn.addEventListener("click", e => emitter.emit("completionBtnPressed", e.target));
 
     const prioritySelectLabel = dom.makeLabel();
     prioritySelectLabel.for = "priority";
@@ -98,7 +93,7 @@ const card = (name, dueDate, priority, description, notes) => {
     cardNotes.addEventListener("click", (e) => emitter.emit("editRequested", e.target));
 
     const renderCard = () => {
-        minCardContainer.appendChild(checkRegion);
+        minCardContainer.appendChild(checkBtn);
         minCardContainer.appendChild(prioritySelectLabel);
         minCardContainer.appendChild(prioritySelect);
         setDefaultSelect(priority);
@@ -116,13 +111,13 @@ const card = (name, dueDate, priority, description, notes) => {
     return { renderCard, expandBtn };
 };
 
-const projectCardObj = (name, dueDate, priority, desc, notes, taskArr) => {
-    return Object.assign(Object.create(card(name, dueDate, priority, desc, notes)), { populateTaskList() { return populateTaskListMixin(taskArr) } });
+const projectCardObj = (name, dueDate, priority, desc, notes, completion, taskArr) => {
+    return Object.assign(Object.create(card(name, dueDate, priority, desc, notes, completion)), { populateTaskList() { return populateTaskListMixin(taskArr) } });
 };
 
 const populateTaskListMixin = objArr => {
     const taskList = []
-    objArr.forEach((obj) => taskList.push(card(obj.name, obj.formattedDueDate, obj.priority, obj.desc, obj.notes).renderCard()));
+    objArr.forEach((obj) => taskList.push(card(obj.name, obj.formattedDueDate, obj.priority, obj.desc, obj.notes, obj.completion).renderCard()));
     taskList.forEach(task => task.classList.add("tasks"));
     return taskList;
 };
@@ -154,7 +149,7 @@ const projectListRenderer = (projectArr) => {
                 dom.initContainer(taskList)
             }
 
-            const cardObj = projectCardObj(project.name, project.formattedDueDate, project.priority, project.desc, project.notes, project.getTaskArr());
+            const cardObj = projectCardObj(project.name, project.formattedDueDate, project.priority, project.desc, project.notes, project.completion, project.getTaskArr());
             cardObj.expandBtn.addEventListener("click", () => toggleExpand(taskCardArr, taskList));
 
             const projectCard = cardObj.renderCard();

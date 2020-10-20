@@ -57,7 +57,6 @@ const failValidMixin = () => {
             this.confirmBtn.addEventListener("click", () => this.hideWindow())
         },
         displayWindow(container, context) {
-            console.log(container, context)
             this.populateText(findField(context));
             this.populateBtn();
             this.addBtnEvents();

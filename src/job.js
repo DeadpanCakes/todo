@@ -2,12 +2,13 @@ import { format } from "date-fns";
 import { zonedTimeToUtc } from "date-fns-tz";
 import { objToStorage } from "./interfacer";
 
-const makeJob = (name, dueDate, priority, desc, notes) => {
+const makeJob = (name, dueDate, priority, desc, notes, completion) => {
     const changeName = (newName) => name = newName;
     const changeDueDate = (newDueDate) => dueDate = newDueDate;
     const changePriority = (newPriority) => priority = newPriority;
     const changeDesc = (newDesc) => desc = newDesc;
     const changeNotes = (newNotes) => notes = newNotes;
+    const changeCompletion = () => completion ? completion = false : completion = true;
     return {
         get name() { return name },
         get dueDate() { return dueDate },
@@ -15,11 +16,13 @@ const makeJob = (name, dueDate, priority, desc, notes) => {
         get priority() { return priority },
         get desc() { return desc },
         get notes() { return notes },
+        get completion() { return completion },
         changeName,
         changeDueDate,
         changePriority,
         changeDesc,
-        changeNotes
+        changeNotes,
+        changeCompletion,
     };
 }
 
@@ -59,11 +62,11 @@ const dateMixin = (job, time) => {
     return Object.assign(Object.create(job), { getTimeCreated })
 }
 
-const makeTask = (name, dueDate, priority, desc, notes, project, time) => {
-    return dateMixin((taskMixin((makeJob(name, dueDate, priority, desc, notes)), project)),time);
+const makeTask = (name, dueDate, priority, desc, notes, completion, project, time) => {
+    return dateMixin((taskMixin((makeJob(name, dueDate, priority, desc, notes, completion)), project)),time);
 };
-const makeProject = (name, dueDate, priority, desc, notes, type, time) => {
-    return dateMixin((projectMixin((makeJob(name, dueDate, priority, desc, notes, type)), type)), time);
+const makeProject = (name, dueDate, priority, desc, notes, completion, type, time) => {
+    return dateMixin(projectMixin(makeJob(name, dueDate, priority, desc, notes, completion), type), time);
 };
 
 export {

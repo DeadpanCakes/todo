@@ -156,7 +156,7 @@ const jobForm = (() => {
     projectSubmitInput.addEventListener("click", e => {
         if (!findInvalidInputs()[0]) {
             e.preventDefault();
-            projectList.addProject(job.makeProject(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, typeSelect.value));
+            projectList.addProject(job.makeProject(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, false, typeSelect.value));
             clearForm();
         } else {
             e.preventDefault();
@@ -171,7 +171,7 @@ const jobForm = (() => {
     taskSubmitInput.addEventListener("click", e => {
         e.preventDefault();
         if (!findInvalidInputs()[0]) {
-            const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, categorySelect.value);
+            const newTask = job.makeTask(nameInput.value, dateInput.value, prioritySelect.value, descTextArea.value, notesTextArea.value, false, categorySelect.value);
             const findIndex = (projectArr, categoryName) => projectArr.indexOf(categoryName);
             const addNewTask = (projectIndex, task) => projectList.projectArr[projectIndex].addTask(task);
             addNewTask(findIndex(projectList.projectNames, categorySelect.value), newTask);

@@ -17,7 +17,6 @@ const projectList = (() => {
         }
     }
     const sortProjects = (criteria) => {
-        console.log(projectArr[0].name,projectArr[1].name)
         switch (criteria) {
             case "date":
                 projectArr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))

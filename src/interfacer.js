@@ -43,6 +43,7 @@ const objToStorage = (() => {
         objInfo.push(obj.priority);
         objInfo.push(obj.desc);
         objInfo.push(obj.notes);
+        objInfo.push(obj.completion)
 
         if (projectList.projectNames.indexOf(objInfo[0]) > -1) {
             objInfo.push(obj.getProjectType());

@@ -36,9 +36,9 @@ emitter.on("editSubmitted", dom.submitEdit);
 emitter.on("editSubmitted", objToStorage.storeAllObj);
 emitter.on("priorityChanged", dom.changePriority)
 emitter.on("priorityChanged", objToStorage.storeAllObj);
-//emitter.on("delBtnPressed", dom.removeObj);
 emitter.on("delBtnPressed", popUp.delConfirm.displayWindow.bind(popUp.delConfirm));
 emitter.on("confirmDel", dom.removeObj);
 emitter.on("expandBtnPressed", dom.toggleExpandDiv);
 emitter.on("sortBtnPressed", dom.sortList);
 emitter.on("validationFailed", popUp.failValid.displayWindow.bind(popUp.failValid));
+emitter.on("completionBtnPressed", dom.toggleCompletion);
