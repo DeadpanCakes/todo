@@ -21,9 +21,11 @@ const card = (name, dueDate, priority, description, notes, completion) => {
     checkBtn.addEventListener("click", e => emitter.emit("completionBtnPressed", e.target));
 
     const prioritySelectLabel = dom.makeLabel();
+    prioritySelectLabel.classList = "prioritySelectLabel"
     prioritySelectLabel.for = "priority";
     prioritySelectLabel.textContent = "Priority";
     const prioritySelect = dom.makeSelect();
+    prioritySelect.classList.add("prioritySelect");
     prioritySelect.name = "priority";
     const highOption = dom.makeOption();
     highOption.value = "high";
