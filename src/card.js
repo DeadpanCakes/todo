@@ -1,3 +1,4 @@
+import { min } from "date-fns";
 import * as dom from "./dom.js";
 import { emitter } from "./emitter.js";
 import { objToCard } from "./interfacer.js";
@@ -54,6 +55,27 @@ const card = (name, dueDate, priority, description, notes, completion) => {
     }
     prioritySelect.addEventListener("change", (e) => emitter.emit("priorityChanged", e.target))
 
+    const determineColor = () => {
+        if (completion) {
+            minCardContainer.style.backgroundColor = "gray";
+            expandDiv.style.backgroundColor = "lightgray";
+        } else {
+            switch (priority) {
+                case "high":
+                    minCardContainer.style.backgroundColor = "red";
+                    expandDiv.style.backgroundColor = "pink";
+                    break;
+                case "medium":
+                    minCardContainer.style.backgroundColor = "yellow";
+                    expandDiv.style.backgroundColor = "palegoldenrod";
+                    break;
+                case "low":
+                    minCardContainer.style.backgroundColor = "blue";
+                    expandDiv.style.backgroundColor = "paleturquoise";
+            }
+        }
+    }
+
     const cardName = dom.makeH1();
     cardName.textContent = name;
     cardName.classList.add("cardName");
@@ -76,10 +98,7 @@ const card = (name, dueDate, priority, description, notes, completion) => {
     delBtn.textContent = "X";
     delBtn.addEventListener("click", (e) => {
         emitter.emit("delBtnPressed", dom.getContentContainer(), e.target)
-    })
-    // delBtn.addEventListener("click", (e) => {
-    //     emitter.emit("delBtnPressed", e.target);
-    // });
+    });
 
     const expandDiv = dom.makeDiv();
     expandDiv.classList.add("expandDiv");
@@ -99,6 +118,7 @@ const card = (name, dueDate, priority, description, notes, completion) => {
         minCardContainer.appendChild(prioritySelectLabel);
         minCardContainer.appendChild(prioritySelect);
         setDefaultSelect(priority);
+        determineColor();
         minCardContainer.appendChild(cardName);
         minCardContainer.appendChild(cardDate);
         minCardContainer.appendChild(expandBtn);

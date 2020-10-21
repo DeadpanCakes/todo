@@ -46,3 +46,44 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+button {
+	padding: 0;
+}
+
+#contentContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.minCardContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.expandDiv {
+	display: none;
+}
+
+.expandedDiv {
+	display: flex;
+}
+
+.checkBtn {
+	min-width: 50px;
+	min-height: 25px;
+	max-width: 50px;
+	max-height: 25px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.cardName {
+	margin-right: auto;
+}
+
+.cardDate {
+	margin-left: auto;
+}
