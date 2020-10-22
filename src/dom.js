@@ -115,19 +115,31 @@ const makeEditedElement = (elementContent, className) => {
     switch (className) {
         case "cardName":
             newElement = makeH1();
+            newElement.classList.add("cardName");
+            newElement.textContent = elementContent;
             break;
         case "cardDate":
             newElement = makeH2();
+            newElement.classList.add("cardDate");
+            newElement.textContent = `Due Date: ${elementContent}`;
             break;
         case "cardDesc":
             newElement = makeH3();
+            newElement.classList.add("cardDesc");
+            newElement.textContent = elementContent;
             break;
         case "cardNotes":
             newElement = makeP();
+            newElement.classList.add("cardNotes");
+            newElement.textContent = elementContent;
             break;
     }
-    newElement.textContent = elementContent;
     return newElement;
+}
+
+const delOldObjName = (oldObjName) => {
+    console.log(oldObjName, localStorage[oldObjName]);
+    localStorage.removeItem(oldObjName);
 }
 
 const formatDate = (className, formInput) => {
@@ -137,17 +149,23 @@ const formatDate = (className, formInput) => {
 const submitEdit = (newElementContent, oldElement, className) => {
     if (!!objToCard.getProject(oldElement)) {
         const project = objToCard.getProject(oldElement);
+        if (className === "cardName") {
+            delOldObjName(project.name)
+        };
         editObj(project, newElementContent, className);
         if (className === "cardDate") {
             newElementContent = formatDate(className,newElementContent);
-        }
+        };
         replaceElement(makeEditedElement(newElementContent,className), oldElement);
     } else {
         const task = objToCard.findTask(oldElement);
+        if (className === "cardName") {
+            delOldObjName(task.name)
+        };
         editObj(task, newElementContent, className);
         if (className === "cardDate") {
             newElementContent = formatDate(className,newElementContent);
-        }
+        };
         replaceElement(makeEditedElement(newElementContent,className), oldElement);
     }
 }

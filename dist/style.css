@@ -104,6 +104,7 @@ h1 {
 	min-height: 700px;
 	max-height: 8000px;
 	border-radius: 30px;
+	box-shadow: 3px 3px 10px #322A26;
 }
 
 .card {
@@ -121,6 +122,7 @@ h1 {
 	height: 35px;
 	padding: 5px;
 	border-radius: 8px;
+	box-shadow: 3px 3px 10px #322A26;
 }
 
 .prioritySelectLabel {
@@ -150,6 +152,7 @@ h1 {
 
 .expandedDiv {
 	display: flex;
+	box-shadow: 3px 3px 10px #322A26;
 }
 
 .checkBtn {
