@@ -3,10 +3,10 @@ import * as job from "./job.js";
 
 const objToCard = (() => {
 
-    const getId = (element) => element.parentNode.parentNode.id;
+    const getObjId = (element) => element.parentNode.parentNode.id;
 
     const getProject = (elementInfo) => {
-        const id = getId(elementInfo);
+        const id = getObjId(elementInfo);
         let objIndex
         if (projectList.projectNames.some(name => name === id)) {
             objIndex = projectList.projectNames.indexOf(id);
@@ -17,7 +17,7 @@ const objToCard = (() => {
     const getCard = (projectName) => document.getElementById(projectName);
 
     const findProjectCat = (taskInfo) => {
-        const id = getId(taskInfo);
+        const id = getObjId(taskInfo);
         for (let i = 0; i < projectList.projectArr.length; i++) {
             if (projectList.projectArr[i].getTaskNames().some(j => j === id)) {
                 return projectList.projectArr[i];
@@ -26,7 +26,7 @@ const objToCard = (() => {
     }
 
     const findTask = (taskInfo) => {
-        const id = getId(taskInfo);
+        const id = getObjId(taskInfo);
         const project = findProjectCat(taskInfo)
         const taskIndex = project.getTaskNames().indexOf(id)
         return project.getTaskArr()[taskIndex];

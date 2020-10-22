@@ -82,6 +82,7 @@ const makeEditElement = (element) => {
             break;
     }
     editForm.addEventListener("submit", (e) => {
+        console.log("eventlisteneradded")
         e.preventDefault();
         emitter.emit("editSubmitted", editInput.value, e.target, element.classList[0])
     });
@@ -134,6 +135,7 @@ const makeEditedElement = (elementContent, className) => {
             newElement.textContent = elementContent;
             break;
     }
+    newElement.addEventListener("click", (e) => emitter.emit("editRequested", e.target));
     return newElement;
 }
 
@@ -142,21 +144,30 @@ const delOldObjName = (oldObjName) => {
     localStorage.removeItem(oldObjName);
 }
 
+const changeOldElementName = (elementName, newName) => {
+    console.log(elementName)
+    const element = document.getElementById(elementName)
+    element.id = newName;
+    console.log(element)
+}
+
 const formatDate = (className, formInput) => {
     return format(new Date(zonedTimeToUtc(formInput.toString())), "PPP");
 }
 
 const submitEdit = (newElementContent, oldElement, className) => {
+    console.log(oldElement.parentNode.parentNode.id);
     if (!!objToCard.getProject(oldElement)) {
         const project = objToCard.getProject(oldElement);
         if (className === "cardName") {
-            delOldObjName(project.name)
+            delOldObjName(project.name);
+            changeOldElementName(project.name, newElementContent);
         };
         editObj(project, newElementContent, className);
         if (className === "cardDate") {
-            newElementContent = formatDate(className,newElementContent);
+            newElementContent = formatDate(className, newElementContent);
         };
-        replaceElement(makeEditedElement(newElementContent,className), oldElement);
+        replaceElement(makeEditedElement(newElementContent, className), oldElement);
     } else {
         const task = objToCard.findTask(oldElement);
         if (className === "cardName") {
@@ -164,9 +175,12 @@ const submitEdit = (newElementContent, oldElement, className) => {
         };
         editObj(task, newElementContent, className);
         if (className === "cardDate") {
-            newElementContent = formatDate(className,newElementContent);
+            newElementContent = formatDate(className, newElementContent);
         };
-        replaceElement(makeEditedElement(newElementContent,className), oldElement);
+        replaceElement(makeEditedElement(newElementContent, className), oldElement);
+        if (className === "cardName") {
+            changeOldElementName(task.name, newElementContent);
+        };
     }
 }
 
