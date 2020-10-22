@@ -172,6 +172,31 @@ h1 {
 	margin-left: auto;
 }
 
+.projectContainers {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: start;
+}
+
+.taskLists {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+}
+
+.taskLists>.card {
+	margin-top: 0;
+}
+
+.taskLists, .taskLists>.card>.minCardContainer {
+	width: 800px;
+}
+
+.taskLists>.card>.expandDiv {
+	width: 750px;
+}
+
 #bottomTabContainer {
 	display: flex;
 	justify-content: center;
