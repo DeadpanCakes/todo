@@ -51,20 +51,101 @@ button {
 	padding: 0;
 }
 
+*  {
+	color: #322A26;
+}
+
+html {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	min-height: 100%;
+	background-color: #f0f6ec;
+	background: rgb(125,131,255);
+	background: linear-gradient(127deg, rgba(125,131,255,1) 0%, rgba(212,220,255,1) 100%);
+	background-image: url("../img/bgpattern.jpg");
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;;
+}
+
+h1 {
+	font-size: 1.5em;
+}
+
+#title {
+	max-width: 100%;
+	min-width: 100%;
+	text-align: center;
+	background-color: #ead2ac;
+	color: #f5f7f3;
+	text-shadow: 1px 1px #322A26;
+	padding: 20px 0;
+	font-size: 2em;
+	margin-bottom: 20px;
+}
+
+#topBtns {
+	width: 900px;
+	display: flex;
+	justify-content: space-between;
+}
+
 #contentContainer {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	background-color: #f5f7f3;
+	margin-left: 10%;
+	margin-right: 10%;
+	min-height: 700px;
+	max-height: 8000px;
+	border-radius: 30px;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 30px;
 }
 
 .minCardContainer {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	width: 1000px;
+	height: 35px;
+	padding: 5px;
+	border-radius: 8px;
+}
+
+.prioritySelectLabel {
+	padding: 0 5px 0 5px;
+	color: #f0f6ec;
+	text-shadow: 1px 1px #322A26;
+}
+
+.cardName {
+	padding: 0 5px 0 5px;
+	color: #f0f6ec;
+	text-shadow: 1px 1px #322A26;
+}
+
+.cardDate {
+	padding: 0 5px 0 5px;
+	color: #f0f6ec;
+	text-shadow: 1px 1px #322A26;
 }
 
 .expandDiv {
 	display: none;
+	width: 950px;
+	padding: 5px;
+	border-radius: 0 0 8px 8px;
 }
 
 .expandedDiv {
@@ -86,4 +167,26 @@ button {
 
 .cardDate {
 	margin-left: auto;
+}
+
+#bottomTabContainer {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	background-color: #ead2ac;
+	margin-top: auto;
+}
+
+#bottomTabContainer * {
+	padding: 10px
+}
+
+.popUp {
+	position: absolute;
+	bottom: 50%;
+	background-color: #f0f6ec;
+	border: 1px solid #858882;
+	padding: 20px;
+	box-shadow: 3px 3px 10px #322A26;
+	border-radius: 5px;
 }

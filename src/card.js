@@ -62,16 +62,16 @@ const card = (name, dueDate, priority, description, notes, completion) => {
         } else {
             switch (priority) {
                 case "high":
-                    minCardContainer.style.backgroundColor = "red";
+                    minCardContainer.style.backgroundColor = "#f45B69";
                     expandDiv.style.backgroundColor = "pink";
                     break;
                 case "medium":
-                    minCardContainer.style.backgroundColor = "yellow";
+                    minCardContainer.style.backgroundColor = "#d17a22";
                     expandDiv.style.backgroundColor = "palegoldenrod";
                     break;
                 case "low":
-                    minCardContainer.style.backgroundColor = "blue";
-                    expandDiv.style.backgroundColor = "paleturquoise";
+                    minCardContainer.style.backgroundColor = "#454B66";
+                    expandDiv.style.backgroundColor = "#8EB1C7";
             }
         }
     }
