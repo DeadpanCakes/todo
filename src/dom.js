@@ -238,6 +238,43 @@ const removeObj = (element) => {
     }
 }
 
+const updateCompletion = (btn) => {
+    const minCard = btn.parentNode;
+    const expandCard = minCard.parentNode.lastElementChild
+    if (btn.textContent === "") {
+        updatePriorityColor(btn)
+    } else {
+        minCard.style.backgroundColor = "gray";
+        expandCard.style.backgroundColor = "lightgray";
+    }
+}
+
+const updatePriorityColor = (element) => {
+    const minCard = element.parentNode;
+    const expandCard = minCard.parentNode.lastElementChild;
+    let priority
+    if (!!objToCard.getProject(element)) {
+        priority = objToCard.getProject(element).priority;
+    } else {
+        priority = objToCard.findTask(element).priority;
+    }
+    console.log(priority)
+    switch (priority) {
+        case "high":
+            minCard.style.backgroundColor = "#f45B69";
+            expandCard.style.backgroundColor = "pink";
+            break;
+        case "medium":
+            minCard.style.backgroundColor = "#d17a22";
+            expandCard.style.backgroundColor = "palegoldenrod";
+            break;
+        case "low":
+            minCard.style.backgroundColor = "#454B66";
+            expandCard.style.backgroundColor = "#8EB1C7";
+    }
+
+}
+
 const changePriority = (element) => {
     if (!!objToCard.getProject(element)) {
         const project = objToCard.getProject(element);
@@ -257,7 +294,7 @@ const toggleCompletion = (element) => {
         } else {
             element.textContent = "";
         }
-        console.log(project.completion)
+        updateCompletion(element);
     } else {
         const task = objToCard.findTask(element);
         task.changeCompletion();
@@ -266,6 +303,7 @@ const toggleCompletion = (element) => {
         } else {
             element.textContent = "";
         }
+        updateCompletion(element);
     }
     objToStorage.storeAllObj();
 }
