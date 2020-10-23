@@ -52,7 +52,9 @@ button {
 }
 
 *  {
+	font-family: 'Josefin Sans', sans-serif;
 	color: #322A26;
+	text-shadow: 1px 1px 1px #f0f6ec;
 }
 
 html {
@@ -73,6 +75,7 @@ body {
 }
 
 h1 {
+	font-family: 'Fira Sans', sans-serif;
 	font-size: 1.5em;
 }
 
@@ -82,7 +85,7 @@ h1 {
 	text-align: center;
 	background-color: #ead2ac;
 	color: #f5f7f3;
-	text-shadow: 1px 1px #322A26;
+	text-shadow: 2px 2px 1px #322A26;
 	padding: 20px 0;
 	font-size: 2em;
 	margin-bottom: 20px;
@@ -94,6 +97,36 @@ h1 {
 	justify-content: space-between;
 }
 
+#topBtns>button {
+	border: 0;
+	background-color: #ead2ac;
+	padding: 7px;
+	border-radius: 10px 10px 0 0;
+}
+
+#topBtns>button:hover {
+	cursor: pointer;
+	text-decoration: underline;	
+}
+
+#formContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 20px;
+}
+
+#formContainer * {
+	margin: 10px;
+}
+
+#projectForm {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: auto;
+	margin: 20px;
+}
+
 #contentContainer {
 	display: flex;
 	flex-direction: column;
@@ -102,9 +135,12 @@ h1 {
 	margin-left: 10%;
 	margin-right: 10%;
 	min-height: 700px;
-	max-height: 8000px;
+	max-height: 700px;
+	min-width: 1100px;
+	max-width: 1100px;
 	border-radius: 30px;
 	box-shadow: 3px 3px 10px #322A26;
+	overflow: scroll;
 }
 
 .card {
@@ -132,15 +168,27 @@ h1 {
 }
 
 .cardName {
+	font-size: 2em;
+	font-family: 'Fira Sans', sans-serif;
+	font-weight: 600;
 	padding: 0 5px 0 5px;
 	color: #f0f6ec;
-	text-shadow: 1px 1px #322A26;
+	text-shadow: 2px 2px 1px #322A26;
+	margin-right: auto;
 }
 
 .cardDate {
+	font-family: 'Josefin Sans', sans-serif;
 	padding: 0 5px 0 5px;
 	color: #f0f6ec;
 	text-shadow: 1px 1px #322A26;
+	margin-left: auto;
+}
+
+.cardName:hover, .cardDate:hover, .cardDesc:hover, .cardNotes:hover {
+	text-shadow: 1px 1px 5px #f0f6ec;
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .expandDiv {
@@ -155,6 +203,12 @@ h1 {
 	box-shadow: 3px 3px 10px #322A26;
 }
 
+.cardDesc, .cardNotes {
+	width: 300px;
+	white-space: pre;
+	margin: 10px;
+}
+
 .checkBtn {
 	min-width: 50px;
 	min-height: 25px;
@@ -162,14 +216,6 @@ h1 {
 	max-height: 25px;
 	text-align: center;
 	vertical-align: middle;
-}
-
-.cardName {
-	margin-right: auto;
-}
-
-.cardDate {
-	margin-left: auto;
 }
 
 .projectContainers {
@@ -207,6 +253,12 @@ h1 {
 
 #bottomTabContainer * {
 	padding: 10px
+}
+
+.bottomTabs:hover {
+	cursor: pointer;
+	text-shadow: 1px 1px 10px #f5f7f3;
+	font-style: italic;
 }
 
 .popUp {

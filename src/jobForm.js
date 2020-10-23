@@ -9,6 +9,7 @@ import { emitter } from "./emitter.js";
 
 const jobForm = (() => {
     const formContainerDiv = dom.makeDiv();
+    formContainerDiv.id = "formContainer";
     const formTabDiv = dom.makeDiv();
 
     const taskTab = dom.makeSpan();
