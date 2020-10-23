@@ -203,7 +203,7 @@ const toggleExpandDiv = (container, element) => {
         element.classList.remove("expandedDiv");
         container.classList.remove("expandedCard");
     } else {
-        setTimeout(() => element.classList.add("expandedDiv"), 200);
+        element.classList.add("expandedDiv");
         container.classList.add("expandedCard");
     }
 }
